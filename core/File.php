@@ -31,7 +31,14 @@ class File {
 	public function __construct($path, $name) {
 		$this->path = realpath($path);
 		$this->name = $name;
-		$this->extension = !is_dir($this->path) ? strtolower(pathinfo($this->path)['extension']) : null;
+
+		if (!is_dir($this->path)) {
+			$pathinfo = pathinfo($this->path);
+			$this->extension =  isset($pathinfo['extension']) ? strtolower($pathinfo['extension']) : null;
+		} else {
+			$this->extension = null;
+		}
+
 		$this->glyphicon = $this->generateGlyphicon();
 		$this->logicalPath = $this->generateLogicalPath();
 		$this->url = "http://" . $_SERVER['HTTP_HOST'] . FileSystem::getLogicalRoot() . $this->logicalPath;

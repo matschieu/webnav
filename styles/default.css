@@ -17,6 +17,8 @@
 	color: #FFF;
 }
 
+.navbar-default .navbar-brand:active,
+.navbar-default .navbar-nav > li > a:active,
 .navbar-default .navbar-brand:hover,
 .navbar-default .navbar-nav > li > a:hover {
 	color: #5BC0DE;
@@ -76,6 +78,10 @@
 .row .file .label {
 	max-width: 30px;
 	overflow: hidden;
+}
+
+.noext {
+	background-color: transparent;
 }
 
 .pdf {

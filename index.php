@@ -175,7 +175,7 @@ function displayRow() {
 					</a>
 				</td>
 				<td>
-					<span class="label label-info <?php echo $file->getExtension() ?>">
+					<span class="label label-info <?php echo $file->getExtension() != null ? $file->getExtension() : "noext" ?>">
 						<?php echo $file->getExtension() ?>
 					</span>
 				</td>
@@ -231,7 +231,7 @@ function displayRow() {
 						<div class="icon">
 							<span class="glyphicon <?php echo $file->getGlyphicon() ?>"></span>
 						</div>
-						<span class="label label-info <?php echo $file->getExtension() ?>">
+						<span class="label label-info <?php echo $file->getExtension() != null ? $file->getExtension() : "noext" ?>">
 							<?php echo $file->getExtension() ?>
 						</span>
 					</div>
@@ -253,8 +253,8 @@ function displayRow() {
 
 		<?php } ?>
 
-		<!-- EMPTY CONTENT MESSAGE -->
 		<?php if (count($folders) === 0 && count($files) === 0) { ?>
+		<!-- EMPTY CONTENT MESSAGE -->
 		<div id="noContent" class="row">
 			<div class="col-md-12">
 				<div class="alert alert-warning">
