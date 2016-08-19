@@ -11,6 +11,10 @@ class Application {
 
 	const CORE_DIR = "./core";
 	const HTTP_PARAM_PATH = "!";
+	const HTTP_PARAM_VIEW = "v";
+
+	const VIEW_BLOCK = "bk";
+	const VIEW_LIST = "ls";
 
 	private static $application = null;
 
@@ -76,11 +80,22 @@ class Application {
 	 *
 	 * @return string
 	 */
-	public function getContext() {
+	public function getFolderContext() {
 		if (isset($_GET[self::HTTP_PARAM_PATH]) && !empty($_GET[self::HTTP_PARAM_PATH])) {
 			return $_GET[self::HTTP_PARAM_PATH];
 		}
-		return "";
+		return null;
+	}
+
+	/**
+	 *
+	 * @return string
+	 */
+	public function getViewContext() {
+		if (isset($_GET[self::HTTP_PARAM_VIEW]) && !empty($_GET[self::HTTP_PARAM_VIEW])) {
+			return $_GET[self::HTTP_PARAM_VIEW];
+		}
+		return null;
 	}
 
 	/**
@@ -103,8 +118,24 @@ class Application {
 	 *
 	 * @return string
 	 */
-	public function getFolderUrl() {
-		return $this->getUrl() . "?" . self::HTTP_PARAM_PATH . "=";
+	public function getParameterizedUrl(Folder $folder = null, $view = null) {
+		$url = $this->getUrl();
+
+		if (isset($folder) || isset($view)) {
+			$url .= "?";
+		}
+
+		if (isset($folder)) {
+			$url .= self::HTTP_PARAM_PATH . "=" . $folder->getLogicalPath();
+		}
+
+		if (isset($view)) {
+			$url .= "&" . self::HTTP_PARAM_VIEW . "=" . $view;
+		} else {
+			$url .= "&" . self::HTTP_PARAM_VIEW . "=" . $this->getViewContext();
+		}
+
+		return $url;
 	}
 
 	/**

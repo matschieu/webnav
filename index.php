@@ -87,6 +87,19 @@ function displayRow() {
 							<span class="glyphicon glyphicon-arrow-right"></span> Next
 						</a>
 					</li>
+					<?php if (Application::getInstance()->getViewContext() == Application::VIEW_LIST) { ?>
+					<li>
+						<a href="<?php echo Application::getInstance()->getParameterizedUrl($currentFolder, Application::VIEW_BLOCK) ?>">
+							<span class="glyphicon glyphicon-th"></span> Block view
+						</a>
+					</li>
+					<?php } else {?>
+					<li>
+						<a href="<?php echo Application::getInstance()->getParameterizedUrl($currentFolder, Application::VIEW_LIST) ?>">
+							<span class="glyphicon glyphicon-list"></span> List view
+						</a>
+					</li>
+					<?php } ?>
 				</ul>
 				<ul class="nav navbar-nav navbar-right">
 					<li>
@@ -110,6 +123,81 @@ function displayRow() {
 			</div>
 		</div>
 
+		<?php if (Application::getInstance()->getViewContext() == Application::VIEW_LIST) { ?>
+
+		<!-- LIST VIEW -->
+		<table id="list" class="table table-striped">
+			<thead>
+				<tr>
+					<th></th>
+					<th>Name</th>
+					<th>Type</th>
+					<th>Size</th>
+					<th>Date</th>
+					<th>Actions</th>
+				</tr>
+			</thead>
+
+			<!-- FOLDERS -->
+			<?php foreach ($folders as $folder) { ?>
+			<tr class="folder">
+				<td class="icon">
+					<span class="glyphicon <?php echo $folder->getGlyphicon() ?>"></span>
+				</td>
+				<td>
+					<a href="<?php echo Application::getInstance()->getParameterizedUrl($folder) ?>">
+						<?php echo $folder->getDisplayName() ?>
+					</a>
+				</td>
+				<td></td>
+				<td>
+					<?php echo FileSystem::convertSize($folder->getSize()) ?>
+				</td>
+				<td>
+					<?php echo $folder->getDate() ?>
+				</td>
+				<td>
+					<a href="<?php echo Application::getInstance()->getParameterizedUrl($folder) ?>" title="Open folder">
+							<span class="glyphicon glyphicon-circle-arrow-right"></span></a>
+				</td>
+			</tr>
+			<?php } ?>
+
+			<!--FILES -->
+			<?php foreach ($files as $file) { ?>
+			<tr class="file">
+				<td class="icon">
+					<span class="glyphicon <?php echo $file->getGlyphicon() ?>"></span>
+				</td>
+				<td>
+					<a href="<?php echo $file->getUrl() ?>" target="_new">
+						<?php echo $file->getName() ?>
+					</a>
+				</td>
+				<td>
+					<span class="label label-info <?php echo $file->getExtension() ?>">
+						<?php echo $file->getExtension() ?>
+					</span>
+				</td>
+				<td>
+					<?php echo FileSystem::convertSize($file->getSize()) ?>
+				</td>
+				<td>
+					<?php echo $file->getDate() ?>
+				</td>
+				<td>
+					<a href="<?php echo $file->getUrl() ?>" target="_<?php echo $file->getName() ?>" title="Open file in new window">
+						<span class="glyphicon glyphicon-new-window"></span></a>
+					<a href="<?php echo $file->getUrl() ?>" download="<?php echo $file->getName() ?>" title="Save file">
+						<span class="glyphicon glyphicon-save"></span></a>
+				</td>
+			</tr>
+			<?php } ?>
+		</table>
+
+		<?php } else { ?>
+
+		<!-- BLOCK VIEW -->
 		<div id="list" class="row">
 			<!-- FOLDERS -->
 			<?php foreach ($folders as $folder) { ?>
@@ -122,12 +210,12 @@ function displayRow() {
 						</div>
 					</div>
 					<div class="info col-md-offset-3">
-						<a href="<?php echo Application::getInstance()->getFolderUrl() . $folder->getLogicalPath() ?>">
+						<a href="<?php echo Application::getInstance()->getParameterizedUrl($folder) ?>">
 							<?php echo $folder->getDisplayName() ?>
 						</a><br />
 						<p><?php echo FileSystem::convertSize($folder->getSize()) ?></p>
 						<p><?php echo $folder->getDate() ?></p>
-						<a href="<?php echo Application::getInstance()->getFolderUrl() . $folder->getLogicalPath() ?>" title="Open folder">
+						<a href="<?php echo Application::getInstance()->getParameterizedUrl($folder) ?>" title="Open folder">
 							<span class="glyphicon glyphicon-circle-arrow-right"></span></a>
 					</div>
 				</div>
@@ -162,6 +250,8 @@ function displayRow() {
 			</div>
 			<?php } ?>
 		</div>
+
+		<?php } ?>
 
 		<!-- EMPTY CONTENT MESSAGE -->
 		<?php if (count($folders) === 0 && count($files) === 0) { ?>
