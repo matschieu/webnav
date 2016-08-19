@@ -8,21 +8,21 @@ const PHP_EXT = ".php";
  */
 function autoloadScan($dirpath, $className) {
 	$dir = dir($dirpath);
-	
+
 	while (false !== ($entry = $dir->read())) {
-		if ($entry != "." && $entry != ".." && is_dir($dir->path . DIRECTORY_SEPARATOR . $entry)) {
+		if ($entry !== "." && $entry !== ".." && is_dir($dir->path . DIRECTORY_SEPARATOR . $entry)) {
 			autoloadScan($dir->path . DIRECTORY_SEPARATOR . $entry, $className);
-		} else if ($entry == $className . PHP_EXT) {
+		} else if ($entry === $className . PHP_EXT) {
 			if (Config::DEBUG) {
 				include_once($dir->path . DIRECTORY_SEPARATOR . $className . PHP_EXT);
 			} else {
 				@include_once($dir->path . DIRECTORY_SEPARATOR . $className . PHP_EXT);
 			}
-			
+
 			break;
 		}
 	}
-	
+
 	$dir->close();
 }
 

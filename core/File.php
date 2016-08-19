@@ -13,7 +13,7 @@ class File {
 	const GLYPHICON_EXECUTABLE = "glyphicon-cog";
 	const GLYPHICON_COMPRESSED = "glyphicon-compressed";
 	const GLYPHICON_ARCHIVE = "glyphicon-briefcase";
-	
+
 	protected $path;
 	protected $logicalPath;
 	protected $name;
@@ -24,7 +24,7 @@ class File {
 	protected $url;
 
 	/**
-	 * 
+	 *
 	 * @param type $path
 	 * @param type $name
 	 */
@@ -34,18 +34,16 @@ class File {
 		$this->extension = !is_dir($this->path) ? strtolower(pathinfo($this->path)['extension']) : null;
 		$this->glyphicon = $this->generateGlyphicon();
 		$this->logicalPath = $this->generateLogicalPath();
-		
-		//$this->url = str_replace($_SERVER['DOCUMENT_ROOT'], "http://" . $_SERVER['HTTP_HOST'], $this->path);
 		$this->url = "http://" . $_SERVER['HTTP_HOST'] . FileSystem::getLogicalRoot() . $this->logicalPath;
-		
-		if ($this->isValid() && $name != FileSystem::SELF_DIR && $name != FileSystem::PARENT_DIR) {
+
+		if ($this->isValid() && $name !== FileSystem::SELF_DIR && $name !== FileSystem::PARENT_DIR) {
 			$this->size = filesize($this->path);
 			$this->date = date(Config::DATE_FORMAT, filectime($this->path));
 		}
 	}
-	
+
 	/**
-	 * 
+	 *
 	 * @return string
 	 */
 	private function generateLogicalPath() {
@@ -54,14 +52,14 @@ class File {
 	}
 
 	/**
-	 * 
+	 *
 	 * @return string
 	 */
 	private function generateGlyphicon() {
 		if (is_dir($this->path)) {
 			return self::GLYPHICON_FOLDER;
 		}
-		
+
 		if (in_array($this->extension, FileSystem::FILE_IMAGE_EXTENSIONS)) {
 			return self::GLYPHICON_IMAGE;
 		}
@@ -80,12 +78,12 @@ class File {
 		if (in_array($this->extension, FileSystem::FILE_ARCHIVE_EXTENSIONS)) {
 			return self::GLYPHICON_ARCHIVE;
 		}
-		
-		return self::GLYPHICON_DEFAULT_FILE;		
+
+		return self::GLYPHICON_DEFAULT_FILE;
 	}
 
 	/**
-	 * 
+	 *
 	 * @return boolean
 	 */
 	public function isValid() {
@@ -93,47 +91,47 @@ class File {
 	}
 
 	/**
-	 * 
+	 *
 	 * @return string
 	 */
 	public function getPath() {
 		return $this->path;
 	}
-	
+
 	/**
-	 * 
+	 *
 	 * @return string
 	 */
 	public function getLogicalPath() {
 		return $this->logicalPath;
 	}
-	
+
 	/**
-	 * 
+	 *
 	 * @return string
 	 */
-	public function getName() { 
-		return $this->name; 
+	public function getName() {
+		return $this->name;
 	}
-	
+
 	/**
-	 * 
+	 *
 	 * @return string
 	 */
-	public function getSize() { 
-		return $this->size; 
+	public function getSize() {
+		return $this->size;
 	}
-	
+
 	/**
-	 * 
+	 *
 	 * @return string
 	 */
-	public function getdate() { 
-		return $this->date; 
+	public function getdate() {
+		return $this->date;
 	}
-	
+
 	/**
-	 * 
+	 *
 	 * @return string
 	 */
 	public function getExtension() {
@@ -141,27 +139,27 @@ class File {
 	}
 
 	/**
-	 * 
+	 *
 	 * @return string
 	 */
 	public function getGlyphicon() {
 		return $this->glyphicon;
 	}
-	
+
 	/**
-	 * 
+	 *
 	 * @return string
 	 */
 	public function getUrl() {
 		return $this->url;
 	}
-	
+
 	/**
-	 * 
+	 *
 	 * @return string
 	 */
-	public function __toString() { 
+	public function __toString() {
 		return $this->path;
 	}
-	
+
 }

@@ -21,7 +21,7 @@ abstract class Config {
 
 	// The root dir of the file system to explore
 	// It can be a relative (to the index.php) path or an absolute path
-	const FILE_SYSTEM_ROOT = "/home/mathieu/www";
+	const FILE_SYSTEM_ROOT = "..";
 
 	// Date format used to display file date/time
 	const DATE_FORMAT = "Y-m-d G:i";

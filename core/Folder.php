@@ -6,172 +6,185 @@
 class Folder extends File {
 
 	/**
-	 * 
+	 *
 	 * @param type $path
 	 * @param type $name
 	 */
-	public function __construct($path, $name) { 
+	public function __construct($path, $name) {
 		parent::__construct($path, $name);
 	}
-	
+
 	/**
-	 * 
+	 *
 	 * @return number
 	 */
-	public function getFolderSize() { 
-		$files = $this->getFolderList(false);
+	public function getFolderChildrenSize() {
+		$files = $this->getFolderChildren();
 		$totalSize = 0;
-		
+
 		for($i = 0; $i < count($files); $i++) {
 			$totalSize += $files[$i]->getSize();
 		}
-		
+
 		return $totalSize;
 	}
-	
+
 	/**
-	 * 
+	 *
 	 * @return number
 	 */
-	public function getFileSize() {
-		$files = $this->getFileList();
+	public function getFileChildrenSize() {
+		$files = $this->getFileChildren();
 		$totalSize = 0;
-		
+
 		for($i = 0; $i < count($files); $i++) {
 			$totalSize += $files[$i]->getSize();
 		}
-		
+
 		return $totalSize;
 	}
-	
+
 	/**
-	 * 
+	 *
 	 * @return number
 	 */
-	public function getTotalSize() {
-		return $this->getFileSize() + $this->getFolderSize();
-	}
-	
-	/**
-	 * 
-	 * @return number
-	 */
-	public function getFileCount() { 
-		return count($this->getFileList()); 
-	}
-	
-	/**
-	 * 
-	 * @return number
-	 */
-	public function getFolderCount() { 
-		return count($this->getFolderList(false));
-	}
-	
-	/**
-	 * 
-	 * @return number
-	 */
-	public function getTotalCount() { 
-		return $this->getFolderCount() + $this->getFileCount();
-	}
-	
-	/**
-	 * 
-	 * @return string
-	 */
-	public function getDisplayFilesInfo() { 
-		$nbFiles = $this->getFileCount();
-		return $nbFiles . " file" . ($nbFiles > 1 ? "s" : "");
+	public function getChildrenSize() {
+		return $this->getFileChildrenSize() + $this->getFolderChildrenSize();
 	}
 
 	/**
-	 * 
-	 * @return string
+	 *
+	 * @return number
 	 */
-	public function getDisplayFoldersInfo() { 
-		$nbDirs  = $this->getFolderCount();
-		return $nbDirs . " folder" . ($nbDirs > 1 ? "s" : "");
+	public function getFileChildrenCount() {
+		return count($this->getFileChildren());
 	}
 
 	/**
-	 * 
+	 *
+	 * @return number
+	 */
+	public function getFolderChildrenCount() {
+		return count($this->getFolderChildren());
+	}
+
+	/**
+	 *
+	 * @return number
+	 */
+	public function getChildrenCount() {
+		return $this->getFolderChildrenCount() + $this->getFileChildrenCount();
+	}
+
+	/**
+	 *
 	 * @param boolean $addParent
-	 * @return array of Folder
+	 * @return Folder[]
 	 */
-	public function getFolderList($addParent) {
+	public function getFolderChildren() {
 		if (!$this->isValid()) {
 			return array();
 		}
-		
-		$content = opendir($this->path);
+
+		$content = opendir($this->getPath());
 		$filesList = array();
 		$idx = 0;
-		$tmp = explode(DIRECTORY_SEPARATOR, $_SERVER['PHP_SELF']);
-		
+
 		while ($files[] = readdir($content));
 		sort($files, SORT_STRING);
-		
+
 		foreach($files as $file) {
+			$filePath = $this->getPath() . DIRECTORY_SEPARATOR . $file;
+			$appFolder = Application::getInstance()->getApplicationFolder();
+
+			// If the folder is the one where the application is installed, it's not added to the list
+			if ($appFolder === $filePath) {
+				continue;
+			}
+
 			switch($file) {
-				// This application folder (security)
-				case $tmp[count($tmp) - 2] :
-				case "": 
+				case "":
 				case FileSystem::SELF_DIR:
 					break;
 				case FileSystem::PARENT_DIR:
-					if (!$addParent) {
+					if (FileSystem::isRoot($this)) {
 						break;
 					}
-				default: 
-					$filePath = $this->path . DIRECTORY_SEPARATOR . $file;
+				default:
 					if (file_exists($filePath) && is_dir($filePath)) {
 						$filesList[$idx++] = new Folder($filePath, $file);
 					}
 			}
 		}
-		
+
 		return $filesList;
 	}
 
 	/**
-	 * 
-	 * @return array of File
+	 *
+	 * @return File[]
 	 */
-	public function getFileList() { 
+	public function getFileChildren() {
 		if (!$this->isValid()) {
 			return array();
 		}
-		
-		$content = opendir($this->path);
+
+		$content = opendir($this->getPath());
 		$filesList = array();
 		$idx = 0;
-		
+
 		while ($files[] = readdir($content));
 		sort($files, SORT_STRING);
-		
+
 		foreach($files as $file) {
 			switch($file) {
-				case "": 
+				case "":
 				case FileSystem::SELF_DIR:
 				case FileSystem::PARENT_DIR:
 					continue;
-				default: 
-					$filePath = $this->path . DIRECTORY_SEPARATOR . $file;
+				default:
+					$filePath = $this->getPath() . DIRECTORY_SEPARATOR . $file;
+
 					if (file_exists($filePath) && !is_dir($filePath)) {
 						$filesList[$idx++] = new File($filePath, $file);
 					}
 			}
 		}
-		
+
 		return $filesList;
 	}
 
 	/**
-	 * 
+	 *
+	 * @return File[]
+	 */
+	public function getChildren() {
+		return array_merge($this->getFolderChildren(), $this->getFileChildren());
+	}
+
+	/**
+	 *
 	 * @return string
 	 */
-	public function getDisplayName() { 
+	public function getDisplayFilesInfo() {
+		$nbFiles = $this->getFileChildrenCount();
+		return $nbFiles . " file" . ($nbFiles > 1 ? "s" : "");
+	}
+
+	/**
+	 *
+	 * @return string
+	 */
+	public function getDisplayFoldersInfo() {
+		$nbDirs  = $this->getFolderChildrenCount();
+		return $nbDirs . " folder" . ($nbDirs > 1 ? "s" : "");
+	}
+
+	/**
+	 *
+	 * @return string
+	 */
+	public function getDisplayName() {
 		switch($this->name) {
 			case FileSystem::SELF_DIR:
 				return $this->name . " (current folder)";
@@ -183,10 +196,10 @@ class Folder extends File {
 	}
 
 	/**
-	 * 
+	 *
 	 * @return string
 	 */
-	public function __toString() { 
+	public function __toString() {
 		return $this->getDisplayName();
 	}
 

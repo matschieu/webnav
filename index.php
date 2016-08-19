@@ -5,8 +5,9 @@ Application::getInstance()->init();
 
 $currentFolder = FileSystem::getCurrentFolder();
 
-$folders = $currentFolder->getFolderList(!FileSystem::isRoot($currentFolder));
-$files = $currentFolder->getFileList();
+$folders = $currentFolder->getFolderChildren();
+$files = $currentFolder->getFileChildren();
+
 $element = 0;
 
 /**
@@ -16,7 +17,7 @@ $element = 0;
 function displayRow() {
 	global $element;
 
-	if ($element % 6 == 0) {
+	if ($element % 6 === 0) {
 		if ($element > 1) {
 			echo '</div>' . PHP_EOL;
 		}
@@ -163,7 +164,7 @@ function displayRow() {
 		</div>
 
 		<!-- EMPTY CONTENT MESSAGE -->
-		<?php if (count($folders) == 0 && count($files) == 0) { ?>
+		<?php if (count($folders) === 0 && count($files) === 0) { ?>
 		<div id="noContent" class="row">
 			<div class="col-md-12">
 				<div class="alert alert-warning">
@@ -184,7 +185,7 @@ function displayRow() {
 				<span class="glyphicon glyphicon-stats"></span>
 				<?php echo $currentFolder->getDisplayFoldersInfo() ?> -
 				<?php echo $currentFolder->getDisplayFilesInfo() ?> -
-				<?php echo FileSystem::convertSize($currentFolder->getTotalSize()) ?>
+				<?php echo FileSystem::convertSize($currentFolder->getChildrenSize()) ?>
 			</div>
 		</div>
 	</div>

@@ -16,43 +16,43 @@ class FileSystem {
 	const FILE_EXECUTABLE_EXTENSIONS = array("action", "apk", "app", "bat", "bin", "cmd", "com", "command", "cpl", "csh", "exe", "gadget", "inf1", "ins", "inx", "ipa", "isu", "job", "jse", "ksh", "lnk", "msc", "msi", "msp", "mst", "osx", "out", "paf", "pif", "prg", "ps1", "reg", "rgs", "run", "scr", "sct", "shb", "shs", "u3p", "vb", "vbe", "vbs", "vbscript", "workflow", "ws", "wsf", "wsh");
 	const FILE_COMPRESSED_EXTENSIONS = array("bz2", "f", "gz", "lz", "lzma", "lzo", "rz", "sfark", "sz", "xz", "z", "Z", "infl", "7z", "s7z", "ace", "afa", "alz", "apk", "arc", "arj", "b1", "ba", "bh", "cab", "car", "cfs", "cpt", "dar", "dd", "dgc", "dmg", "ear", "gca", "ha", "hki", "ice", "jar", "kgb", "lzh", "lha", "lzx", "pak", "partimg", "paq6", "paq7", "paq8", "pea", "pim", "pit", "qda", "rar", "rk", "sda", "sea", "sen", "sfx", "shk", "sit", "sitx", "sqx", "tar.gz", "tgz", "tar.Z", "tar.bz2", "tbz2", "tar.lzma", "tlz", "uc", "uc0", "uc2", "ucn", "ur2", "ue2", "uca", "uha", "war", "wim", "xar", "xp3", "yz1", "zip", "zipx", "zoo", "zpaq", "zz");
 	const FILE_ARCHIVE_EXTENSIONS = array("a", "ar", "cpio", "shar", "lbr", "iso", "lbr", "mar", "tar");
-	
+
 	/**
-	 * 
+	 *
 	 * @return string
 	 */
 	public static function getLogicalRoot() {
-		if (substr(Config::FILE_SYSTEM_ROOT, 0, 1) != self::ROOT) {
+		if (substr(Config::FILE_SYSTEM_ROOT, 0, 1) !== self::ROOT) {
 			return dirname($_SERVER['SCRIPT_NAME']) . DIRECTORY_SEPARATOR . Config::FILE_SYSTEM_ROOT;
 		}
-		
+
 		return SELF::ROOT;
 	}
-	
+
 	/**
-	 * 
+	 *
 	 * @return string
 	 */
 	public static function getRoot() {
 		// If the root is a relative path, then the path is transformed to an absolute path
-		if (substr(Config::FILE_SYSTEM_ROOT, 0, 1) != self::ROOT) {
+		if (substr(Config::FILE_SYSTEM_ROOT, 0, 1) !== self::ROOT) {
 			return realpath(dirname($_SERVER['SCRIPT_FILENAME']) . DIRECTORY_SEPARATOR . Config::FILE_SYSTEM_ROOT);
 		}
-		
+
 		return Config::FILE_SYSTEM_ROOT;
 	}
-	
+
 	/**
-	 * 
+	 *
 	 * @param Folder $folder
 	 * @return boolean
 	 */
 	public static function isRoot(Folder $folder) {
-		return $folder != null && $folder->getPath() === FileSystem::getRoot();
+		return $folder !== null && $folder->getPath() === FileSystem::getRoot();
 	}
-	
+
 	/**
-	 * 
+	 *
 	 * @return Folder
 	 */
 	final public static function getCurrentFolder() {
@@ -69,17 +69,17 @@ class FileSystem {
 		} else {
 			$path = $rootPath;
 		}
-		
+
 		// Security: check that the root + logical path is not above the root, else using the root
 		if (strpos($path, $rootPath) === FALSE) {
 			$path = $rootPath;
 		}
-		
+
 		return new Folder($path, "/");
 	}
 
 	/**
-	 * 
+	 *
 	 * @param number $fileSize
 	 * @return string
 	 */
