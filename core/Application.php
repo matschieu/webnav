@@ -76,7 +76,18 @@ class Application {
 	 *
 	 * @return string
 	 */
-	public function getApplicationFolder() {
+	public function getContext() {
+		if (isset($_GET[self::HTTP_PARAM_PATH]) && !empty($_GET[self::HTTP_PARAM_PATH])) {
+			return $_GET[self::HTTP_PARAM_PATH];
+		}
+		return "";
+	}
+
+	/**
+	 *
+	 * @return string
+	 */
+	public function getInstallationFolder() {
 		return dirname($_SERVER['SCRIPT_FILENAME']);
 	}
 
