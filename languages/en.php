@@ -20,6 +20,8 @@ return array(
 	"statebar.folder" => " folder",
 	"statebar.folders" => " folders",
 	// Content
+	"content.parentFolder" => " (parent folder)",
+	"content.currentFolder" => " (current folder)",
 	"content.name" => "Name",
 	"content.type" => "Type",
 	"content.size" => "Size",

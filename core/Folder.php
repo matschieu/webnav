@@ -169,9 +169,9 @@ class Folder extends File {
 	public function getDisplayName() {
 		switch($this->name) {
 			case FileSystem::SELF_FOLDER:
-				return $this->name . " (current folder)";
+				return $this->name . Translation::get("content.parentFolder");
 			case FileSystem::PARENT_FOLDER:
-				return $this->name . " (parent folder)";
+				return $this->name . Translation::get("content.currentFolder");
 			default:
 				return $this->name;
 		}
