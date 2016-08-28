@@ -43,7 +43,7 @@ class File {
 		$this->logicalPath = $this->generateLogicalPath();
 		$this->url = "http://" . $_SERVER['HTTP_HOST'] . FileSystem::getLogicalRoot() . $this->logicalPath;
 
-		if ($this->isValid() && $name !== FileSystem::SELF_DIR && $name !== FileSystem::PARENT_DIR) {
+		if ($this->isValid() && $name !== FileSystem::SELF_FOLDER && $name !== FileSystem::PARENT_FOLDER) {
 			$this->size = filesize($this->path);
 			$this->date = date(Config::DATE_FORMAT, filectime($this->path));
 		}

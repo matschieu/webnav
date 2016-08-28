@@ -104,9 +104,9 @@ class Folder extends File {
 
 			switch($file) {
 				case "":
-				case FileSystem::SELF_DIR:
+				case FileSystem::SELF_FOLDER:
 					break;
-				case FileSystem::PARENT_DIR:
+				case FileSystem::PARENT_FOLDER:
 					if (FileSystem::isRoot($this)) {
 						break;
 					}
@@ -139,8 +139,8 @@ class Folder extends File {
 		foreach($files as $file) {
 			switch($file) {
 				case "":
-				case FileSystem::SELF_DIR:
-				case FileSystem::PARENT_DIR:
+				case FileSystem::SELF_FOLDER:
+				case FileSystem::PARENT_FOLDER:
 					continue;
 				default:
 					$filePath = $this->getPath() . DIRECTORY_SEPARATOR . $file;
@@ -186,9 +186,9 @@ class Folder extends File {
 	 */
 	public function getDisplayName() {
 		switch($this->name) {
-			case FileSystem::SELF_DIR:
+			case FileSystem::SELF_FOLDER:
 				return $this->name . " (current folder)";
-			case FileSystem::PARENT_DIR:
+			case FileSystem::PARENT_FOLDER:
 				return $this->name . " (parent folder)";
 			default:
 				return $this->name;

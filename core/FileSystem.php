@@ -7,8 +7,8 @@
 class FileSystem {
 
 	const ROOT = "/";
-	const SELF_DIR = ".";
-	const PARENT_DIR = "..";
+	const SELF_FOLDER = ".";
+	const PARENT_FOLDER = "..";
 
 	const FILE_IMAGE_EXTENSIONS = array("tif", "tiff", "gif", "jpeg", "jpg", "jif", "jfif", "jp2", "jpx", "j2k", "j2c", "fpx", "pcd", "png", "bmp");
 	const FILE_VIDEO_EXTENSIONS = array("webm", "mkv", "flv", "flv", "vob", "ogv", "ogg", "drc", "gif", "gifv", "mng", "avi", "mov", "qt", "wmv", "yuv", "rm", "rmvb", "asf", "amv", "mp4", "m4p", "m4v", "mpg", "mp2", "mpeg", "mpe", "mpv", "mpg", "mpeg", "m2v", "m4v", "svi", "3gp", "3g2", "mxf", "roq", "nsv", "flv", "f4v", "f4p", "f4a", "f4b");
@@ -40,6 +40,21 @@ class FileSystem {
 		}
 
 		return Config::FILE_SYSTEM_ROOT;
+	}
+
+	/**
+	 *
+	 * @return Folder
+	 */
+	public static function getRootFolder() {
+		$path = Config::FILE_SYSTEM_ROOT;
+
+		// If the root is a relative path, then the path is transformed to an absolute path
+		if (substr(Config::FILE_SYSTEM_ROOT, 0, 1) !== self::ROOT) {
+			$path = realpath(dirname($_SERVER['SCRIPT_FILENAME']) . DIRECTORY_SEPARATOR . Config::FILE_SYSTEM_ROOT);
+		}
+
+		return new Folder($path, self::ROOT);
 	}
 
 	/**

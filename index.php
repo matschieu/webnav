@@ -41,6 +41,9 @@ function displayRow() {
 	<link rel="stylesheet" type="text/css" href="./styles/default.css" media="screen" />
 	<link rel="stylesheet" type="text/css" href="./styles/custom.css" media="screen" />
 
+	<!-- JQuery -->
+	<script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
+
 	<!--Bootstrap -->
 	<!-- Latest compiled and minified CSS -->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
@@ -72,6 +75,11 @@ function displayRow() {
 
 			<div class="collapse navbar-collapse">
 				<ul class="nav navbar-nav">
+					<li>
+						<a href="#" data-toggle="modal" data-target="#folderTreeModal">
+							<span class="glyphicon glyphicon-star"></span> Folder tree
+						</a>
+					</li>
 					<li>
 						<a href="#" onclick="javascript:window.location.reload();">
 							<span class="glyphicon glyphicon-refresh"></span> Refresh
@@ -126,74 +134,76 @@ function displayRow() {
 		<?php if (Application::getInstance()->getViewContext() == Application::VIEW_LIST) { ?>
 
 		<!-- LIST VIEW -->
-		<table id="list" class="table table-striped">
-			<thead>
-				<tr>
-					<th></th>
-					<th>Name</th>
-					<th>Type</th>
-					<th>Size</th>
-					<th>Date</th>
-					<th>Actions</th>
+		<div id="list" class="row">
+			<table class="table table-striped">
+				<thead>
+					<tr>
+						<th></th>
+						<th>Name</th>
+						<th>Type</th>
+						<th>Size</th>
+						<th>Date</th>
+						<th>Actions</th>
+					</tr>
+				</thead>
+
+				<!-- FOLDERS -->
+				<?php foreach ($folders as $folder) { ?>
+				<tr class="folder">
+					<td class="icon">
+						<span class="glyphicon <?php echo $folder->getGlyphicon() ?>"></span>
+					</td>
+					<td>
+						<a href="<?php echo Application::getInstance()->getParameterizedUrl($folder) ?>">
+							<?php echo $folder->getDisplayName() ?>
+						</a>
+					</td>
+					<td></td>
+					<td>
+						<?php echo FileSystem::convertSize($folder->getSize()) ?>
+					</td>
+					<td>
+						<?php echo $folder->getDate() ?>
+					</td>
+					<td>
+						<a href="<?php echo Application::getInstance()->getParameterizedUrl($folder) ?>" title="Open folder">
+								<span class="glyphicon glyphicon-circle-arrow-right"></span></a>
+					</td>
 				</tr>
-			</thead>
+				<?php } ?>
 
-			<!-- FOLDERS -->
-			<?php foreach ($folders as $folder) { ?>
-			<tr class="folder">
-				<td class="icon">
-					<span class="glyphicon <?php echo $folder->getGlyphicon() ?>"></span>
-				</td>
-				<td>
-					<a href="<?php echo Application::getInstance()->getParameterizedUrl($folder) ?>">
-						<?php echo $folder->getDisplayName() ?>
-					</a>
-				</td>
-				<td></td>
-				<td>
-					<?php echo FileSystem::convertSize($folder->getSize()) ?>
-				</td>
-				<td>
-					<?php echo $folder->getDate() ?>
-				</td>
-				<td>
-					<a href="<?php echo Application::getInstance()->getParameterizedUrl($folder) ?>" title="Open folder">
-							<span class="glyphicon glyphicon-circle-arrow-right"></span></a>
-				</td>
-			</tr>
-			<?php } ?>
-
-			<!--FILES -->
-			<?php foreach ($files as $file) { ?>
-			<tr class="file">
-				<td class="icon">
-					<span class="glyphicon <?php echo $file->getGlyphicon() ?>"></span>
-				</td>
-				<td>
-					<a href="<?php echo $file->getUrl() ?>" target="_new">
-						<?php echo $file->getName() ?>
-					</a>
-				</td>
-				<td>
-					<span class="label label-info <?php echo $file->getExtension() != null ? $file->getExtension() : "noext" ?>">
-						<?php echo $file->getExtension() ?>
-					</span>
-				</td>
-				<td>
-					<?php echo FileSystem::convertSize($file->getSize()) ?>
-				</td>
-				<td>
-					<?php echo $file->getDate() ?>
-				</td>
-				<td>
-					<a href="<?php echo $file->getUrl() ?>" target="_<?php echo $file->getName() ?>" title="Open file in new window">
-						<span class="glyphicon glyphicon-new-window"></span></a>
-					<a href="<?php echo $file->getUrl() ?>" download="<?php echo $file->getName() ?>" title="Save file">
-						<span class="glyphicon glyphicon-save"></span></a>
-				</td>
-			</tr>
-			<?php } ?>
-		</table>
+				<!--FILES -->
+				<?php foreach ($files as $file) { ?>
+				<tr class="file">
+					<td class="icon">
+						<span class="glyphicon <?php echo $file->getGlyphicon() ?>"></span>
+					</td>
+					<td>
+						<a href="<?php echo $file->getUrl() ?>" target="_new">
+							<?php echo $file->getName() ?>
+						</a>
+					</td>
+					<td>
+						<span class="label label-info <?php echo $file->getExtension() != null ? $file->getExtension() : "noext" ?>">
+							<?php echo $file->getExtension() ?>
+						</span>
+					</td>
+					<td>
+						<?php echo FileSystem::convertSize($file->getSize()) ?>
+					</td>
+					<td>
+						<?php echo $file->getDate() ?>
+					</td>
+					<td>
+						<a href="<?php echo $file->getUrl() ?>" target="_<?php echo $file->getName() ?>" title="Open file in new window">
+							<span class="glyphicon glyphicon-new-window"></span></a>
+						<a href="<?php echo $file->getUrl() ?>" download="<?php echo $file->getName() ?>" title="Save file">
+							<span class="glyphicon glyphicon-save"></span></a>
+					</td>
+				</tr>
+				<?php } ?>
+			</table>
+		</div>
 
 		<?php } else { ?>
 
@@ -283,6 +293,44 @@ function displayRow() {
 	<!-- FOOTER -->
 	<div id="footer">
 		<?php echo Application::getInstance()->getFooter() ?>
+	</div>
+
+	<!-- Folder tree modal -->
+	<div class="modal fade" id="folderTreeModal" tabindex="-1" role="dialog" aria-labelledby="folderTreeModalLabel">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					<h4 class="modal-title" id="myModalLabel">Folder tree</h4>
+				</div>
+				<div class="modal-body" style="max-height: 400px; overflow-y: scroll">
+
+					<?php
+					/**
+					 *
+					 * @param Folder $folder
+					 * @param number $level
+					 */
+					function displayFolders(Folder $folder, $level = 0) {
+						if (isset($folder) && $folder->getName() !== FileSystem::PARENT_FOLDER) {
+							echo "<a href=\"" . Application::getInstance()->getParameterizedUrl($folder) . "\" class=\"list-group-item\" style=\"padding-left: " . (20 + $level * 20) . "px\">";
+							echo "<span class=\"glyphicon " . $folder->getGlyphicon() . "\"></span> " . $folder->getName() . "</a>";
+							if ($folder->getChildrenCount() > 0) {
+								foreach ($folder->getFolderChildren() as $child) {
+									displayFolders($child, $level + 1);
+								}
+							}
+						}
+					}
+
+					displayFolders(FileSystem::getRootFolder());
+					?>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				</div>
+			</div>
+		</div>
 	</div>
 
 </body>
