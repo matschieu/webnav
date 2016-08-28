@@ -17,6 +17,7 @@
 .navbar-default .navbar-nav > .active > a:hover,
 .navbar-default .navbar-nav > .active > a:focus {
 	color: #337AB7;
+	background-color: #5BC0DE;
 }
 
 .navbar-default .navbar-brand,
