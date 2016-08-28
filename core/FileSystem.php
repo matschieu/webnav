@@ -72,7 +72,7 @@ class FileSystem {
 	 */
 	final public static function getCurrentFolder() {
 		$rootPath = FileSystem::getRoot();
-		$logical = Application::getInstance()->getFolderContext();
+		$logical = Application::build()->getFolderContext();
 
 		// If a logical path is specified in the URL and is valid then it's added to the path.
 		if (realpath($rootPath . $logical)) {

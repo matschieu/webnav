@@ -12,17 +12,20 @@ class Application {
 	const CORE_DIR = "./core";
 	const HTTP_PARAM_PATH = "!";
 	const HTTP_PARAM_VIEW = "v";
+	const HTTP_PARAM_LANG = "l";
 
 	const VIEW_BLOCK = "bk";
 	const VIEW_LIST = "ls";
 
 	private static $application = null;
 
+	private $startExecTime;
+
 	/**
 	 *
 	 * @return Application
 	 */
-	public static function getInstance() {
+	public static function build() {
 		if (self::$application == null){
 			self::$application = new Application();
 		}
@@ -34,6 +37,7 @@ class Application {
 	 *
 	 */
 	private function __construct() {
+		$this->startExecTime = microtime(true);
 	}
 
 	/**
@@ -67,8 +71,8 @@ class Application {
 			ini_set('display_errors', 'On');
 			error_reporting(E_ALL | E_WARNING);
 
-			echo "PHP version = " . phpversion() . "<br/>";
-			echo "SCRIPT_FILENAME = " . $_SERVER['SCRIPT_FILENAME'] . "<br/>";
+			echo "PHP version = " . phpversion() . "<br />";
+			echo "SCRIPT_FILENAME = " . $_SERVER['SCRIPT_FILENAME'] . "<br />";
 		} else {
 			error_reporting(E_ERROR | E_PARSE);
 		}
@@ -76,13 +80,28 @@ class Application {
 		require_once("./core/autoload.php");
 	}
 
+	final public function postLoad() {
+		if(Config::DEBUG) {
+			echo "Page generation time = " . $this->getExecTime() . " s<br />";
+			echo "Memory used = " . memory_get_usage() . " o (max = " . memory_get_peak_usage() . " o)<br />";
+		}
+	}
+
+	/**
+	 *
+	 * @return number
+	 */
+	final public function getExecTime() {
+		return (microtime(true) - $this->startExecTime);
+	}
+
 	/**
 	 *
 	 * @return string
 	 */
-	public function getFolderContext() {
-		if (isset($_GET[self::HTTP_PARAM_PATH]) && !empty($_GET[self::HTTP_PARAM_PATH])) {
-			return $_GET[self::HTTP_PARAM_PATH];
+	private function getHttpParam($param) {
+		if (isset($_GET[$param]) && !empty($_GET[$param])) {
+			return $_GET[$param];
 		}
 		return null;
 	}
@@ -91,11 +110,24 @@ class Application {
 	 *
 	 * @return string
 	 */
+	public function getFolderContext() {
+		return $this->getHttpParam(self::HTTP_PARAM_PATH);
+	}
+
+	/**
+	 *
+	 * @return string
+	 */
 	public function getViewContext() {
-		if (isset($_GET[self::HTTP_PARAM_VIEW]) && !empty($_GET[self::HTTP_PARAM_VIEW])) {
-			return $_GET[self::HTTP_PARAM_VIEW];
-		}
-		return null;
+		return $this->getHttpParam(self::HTTP_PARAM_VIEW);
+	}
+
+	/**
+	 *
+	 * @return string
+	 */
+	public function getLanguageContext() {
+		return $this->getHttpParam(self::HTTP_PARAM_LANG);
 	}
 
 	/**
@@ -118,22 +150,67 @@ class Application {
 	 *
 	 * @return string
 	 */
-	public function getParameterizedUrl(Folder $folder = null, $view = null) {
-		$url = $this->getUrl();
+	public function getChangeLanguageUrl($language) {
+		$url = $this->getUrl() . "?";
 
-		if (isset($folder) || isset($view)) {
-			$url .= "?";
+		$folder = $this->getFolderContext();
+		$view = $this->getViewContext();
+
+		if ($folder != null) {
+			$url .= self::HTTP_PARAM_PATH . "=" . $folder . "&";
 		}
 
-		if (isset($folder)) {
-			$url .= self::HTTP_PARAM_PATH . "=" . $folder->getLogicalPath();
+		if ($view != null) {
+			$url .= self::HTTP_PARAM_VIEW . "=" . $view . "&";
 		}
 
-		if (isset($view)) {
-			$url .= "&" . self::HTTP_PARAM_VIEW . "=" . $view;
-		} else {
-			$url .= "&" . self::HTTP_PARAM_VIEW . "=" . $this->getViewContext();
+		$url .= self::HTTP_PARAM_LANG . "=" . $language;
+
+		return $url;
+	}
+
+	/**
+	 *
+	 * @return string
+	 */
+	public function getChangeViewUrl($view) {
+		$url = $this->getUrl() . "?";
+
+		$folder = $this->getFolderContext();
+		$language = $this->getLanguageContext();
+
+		if ($folder != null) {
+			$url .= self::HTTP_PARAM_PATH . "=" . $folder . "&";
 		}
+
+		if ($language != null) {
+			$url .= self::HTTP_PARAM_LANG . "=" . $language . "&";
+		}
+
+		$url .= self::HTTP_PARAM_VIEW . "=" . $view;
+
+		return $url;
+	}
+
+	/**
+	 *
+	 * @return string
+	 */
+	public function getChangeFolderUrl(Folder $folder) {
+		$url = $this->getUrl() . "?";
+
+		$view = $this->getViewContext();
+		$language = $this->getLanguageContext();
+
+		if ($view != null) {
+			$url .= self::HTTP_PARAM_VIEW . "=" . $view . "&";
+		}
+
+		if ($language != null) {
+			$url .= self::HTTP_PARAM_LANG . "=" . $language . "&";
+		}
+
+		$url .= self::HTTP_PARAM_PATH . "=" . $folder->getLogicalPath();
 
 		return $url;
 	}

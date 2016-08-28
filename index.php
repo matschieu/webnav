@@ -1,7 +1,7 @@
 <?php
 require_once("./core/Application.php");
 
-Application::getInstance()->init();
+Application::build()->init();
 
 $currentFolder = FileSystem::getCurrentFolder();
 
@@ -34,42 +34,38 @@ function displayRow() {
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="fr" lang="fr">
 
 <head>
-	<title><?php echo Application::getInstance()->getName() ?></title>
+	<title><?php echo Application::build()->getName() ?></title>
 	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 	<meta name="Author" content="Matschieu" />
-	<link rel="icon" type="image/png" href="<?php echo Application::getInstance()->getFavicon() ?>" />
+	<link rel="icon" type="image/png" href="<?php echo Application::build()->getFavicon() ?>" />
 	<link rel="stylesheet" type="text/css" href="./styles/default.css" media="screen" />
 	<link rel="stylesheet" type="text/css" href="./styles/custom.css" media="screen" />
-
 	<!-- JQuery -->
 	<script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
-
+	<script src="https://code.jquery.com/ui/1.12.0/jquery-ui.min.js"></script>
 	<!--Bootstrap -->
-	<!-- Latest compiled and minified CSS -->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-	<!-- Optional theme -->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
-	<!-- Latest compiled and minified JavaScript -->
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-
 	<!-- Application styles -->
 	<link rel="stylesheet" type="text/css" href="./styles/default.css" media="screen" />
-	<link rel="stylesheet" type="text/css" href="<?php echo Application::getInstance()->getCustomCss() ?>" media="screen" />
+	<link rel="stylesheet" type="text/css" href="<?php echo Application::build()->getCustomCss() ?>" media="screen" />
 </head>
 
 <body>
 
 	<!-- HEADER -->
 	<div id="header">
-		<?php echo Application::getInstance()->getHeader() ?>
+		<?php echo Application::build()->getHeader() ?>
 	</div>
 
 	<!-- MENU -->
 	<nav class="navbar navbar-default">
 		<div class="container-fluid">
 			<div class="navbar-header">
-				<a class="navbar-brand" href="<?php echo Application::getInstance()->getUrl() ?>" >
-					<span class="glyphicon glyphicon-home"></span> Root
+				<a class="navbar-brand" href="<?php echo Application::build()->getUrl() ?>" >
+					<span class="glyphicon glyphicon-home"></span>
+					<?php echo Translation::get('menu.root') ?>
 				</a>
 			</div>
 
@@ -77,42 +73,74 @@ function displayRow() {
 				<ul class="nav navbar-nav">
 					<li>
 						<a href="#" data-toggle="modal" data-target="#folderTreeModal">
-							<span class="glyphicon glyphicon-star"></span> Folder tree
+							<span class="glyphicon glyphicon-star"></span>
+							<?php echo Translation::get('menu.folderTree') ?>
 						</a>
 					</li>
 					<li>
 						<a href="#" onclick="javascript:window.location.reload();">
-							<span class="glyphicon glyphicon-refresh"></span> Refresh
+							<span class="glyphicon glyphicon-refresh"></span>
+							<?php echo Translation::get('menu.refresh') ?>
 						</a>
 					</li>
 					<li>
 						<a href="#" onclick="javascript:window.history.back();">
-							<span class="glyphicon glyphicon-arrow-left"></span> Back
+							<span class="glyphicon glyphicon-arrow-left"></span>
+							<?php echo Translation::get('menu.back') ?>
 						</a>
 					</li>
 					<li>
 						<a href="#" onclick="javascript:window.history.forward();">
-							<span class="glyphicon glyphicon-arrow-right"></span> Next
+							<span class="glyphicon glyphicon-arrow-right"></span>
+							<?php echo Translation::get('menu.next') ?>
 						</a>
 					</li>
-					<?php if (Application::getInstance()->getViewContext() == Application::VIEW_LIST) { ?>
+					<?php if (Application::build()->getViewContext() == Application::VIEW_LIST) { ?>
 					<li>
-						<a href="<?php echo Application::getInstance()->getParameterizedUrl($currentFolder, Application::VIEW_BLOCK) ?>">
-							<span class="glyphicon glyphicon-th"></span> Block view
+						<a href="<?php echo Application::build()->getChangeViewUrl(Application::VIEW_BLOCK) ?>">
+							<span class="glyphicon glyphicon-th"></span>
+							<?php echo Translation::get('menu.blockView') ?>
 						</a>
 					</li>
 					<?php } else {?>
 					<li>
-						<a href="<?php echo Application::getInstance()->getParameterizedUrl($currentFolder, Application::VIEW_LIST) ?>">
-							<span class="glyphicon glyphicon-list"></span> List view
+						<a href="<?php echo Application::build()->getChangeViewUrl(Application::VIEW_LIST) ?>">
+							<span class="glyphicon glyphicon-list"></span>
+							<?php echo Translation::get('menu.listView') ?>
 						</a>
 					</li>
 					<?php } ?>
 				</ul>
 				<ul class="nav navbar-nav navbar-right">
+					<li class="dropdown">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+							<span class="glyphicon glyphicon-flag"></span>
+							Language
+							<span class="caret"></span>
+						</a>
+						<ul class="dropdown-menu">
+							<li>
+								<a href="<?php echo Application::build()->getChangeLanguageUrl("en") ?>">
+									<?php echo Translation::get('menu.english') ?>
+									<?php if (Application::build()->getLanguageContext() === "en") { ?>
+									<span class="glyphicon glyphicon-ok-circle"></span>
+									<?php } ?>
+								</a>
+							</li>
+							<li>
+								<a href="<?php echo Application::build()->getChangeLanguageUrl("fr") ?>">
+									<?php echo Translation::get('menu.french') ?>
+									<?php if (Application::build()->getLanguageContext() === "fr") { ?>
+									<span class="glyphicon glyphicon-ok-circle"></span>
+									<?php } ?>
+								</a>
+							</li>
+						</ul>
+					</li>
 					<li>
 						<a href="#" onclick="javascript:open(location, '_self').close(); return true;">
-							<span class="glyphicon glyphicon-remove"></span> Close
+							<span class="glyphicon glyphicon-remove"></span>
+							<?php echo Translation::get('menu.close') ?>
 						</a>
 					</li>
 				</ul>
@@ -127,11 +155,11 @@ function displayRow() {
 		<div id="statebarTop" class="row bg-primary">
 			<div class="col-md-12">
 				<span class="glyphicon glyphicon-folder-open"></span>
-				Navigation in <?php echo $currentFolder->getLogicalPath() ?>
+				<?php echo Translation::get('statebar.navigation') . $currentFolder->getLogicalPath() ?>
 			</div>
 		</div>
 
-		<?php if (Application::getInstance()->getViewContext() == Application::VIEW_LIST) { ?>
+		<?php if (Application::build()->getViewContext() == Application::VIEW_LIST) { ?>
 
 		<!-- LIST VIEW -->
 		<div id="list" class="row">
@@ -139,11 +167,11 @@ function displayRow() {
 				<thead>
 					<tr>
 						<th></th>
-						<th>Name</th>
-						<th>Type</th>
-						<th>Size</th>
-						<th>Date</th>
-						<th>Actions</th>
+						<th><?php echo Translation::get('content.name') ?></th>
+						<th><?php echo Translation::get('content.type') ?></th>
+						<th><?php echo Translation::get('content.size') ?></th>
+						<th><?php echo Translation::get('content.date') ?></th>
+						<th><?php echo Translation::get('content.actions') ?></th>
 					</tr>
 				</thead>
 
@@ -154,7 +182,7 @@ function displayRow() {
 						<span class="glyphicon <?php echo $folder->getGlyphicon() ?>"></span>
 					</td>
 					<td>
-						<a href="<?php echo Application::getInstance()->getParameterizedUrl($folder) ?>">
+						<a href="<?php echo Application::build()->getChangeFolderUrl($folder) ?>">
 							<?php echo $folder->getDisplayName() ?>
 						</a>
 					</td>
@@ -166,7 +194,7 @@ function displayRow() {
 						<?php echo $folder->getDate() ?>
 					</td>
 					<td>
-						<a href="<?php echo Application::getInstance()->getParameterizedUrl($folder) ?>" title="Open folder">
+						<a href="<?php echo Application::build()->getChangeFolderUrl($folder) ?>" title="<?php echo Translation::get('content.openFolder') ?>">
 								<span class="glyphicon glyphicon-circle-arrow-right"></span></a>
 					</td>
 				</tr>
@@ -179,7 +207,7 @@ function displayRow() {
 						<span class="glyphicon <?php echo $file->getGlyphicon() ?>"></span>
 					</td>
 					<td>
-						<a href="<?php echo $file->getUrl() ?>" target="_new">
+						<a href="<?php echo $file->getUrl() ?>" download="<?php echo $file->getName() ?>">
 							<?php echo $file->getName() ?>
 						</a>
 					</td>
@@ -195,9 +223,9 @@ function displayRow() {
 						<?php echo $file->getDate() ?>
 					</td>
 					<td>
-						<a href="<?php echo $file->getUrl() ?>" target="_<?php echo $file->getName() ?>" title="Open file in new window">
+						<a href="<?php echo $file->getUrl() ?>" target="_<?php echo $file->getName() ?>" title="<?php echo Translation::get('content.openFile') ?>">
 							<span class="glyphicon glyphicon-new-window"></span></a>
-						<a href="<?php echo $file->getUrl() ?>" download="<?php echo $file->getName() ?>" title="Save file">
+						<a href="<?php echo $file->getUrl() ?>" download="<?php echo $file->getName() ?>" title="<?php echo Translation::get('content.saveFile') ?>">
 							<span class="glyphicon glyphicon-save"></span></a>
 					</td>
 				</tr>
@@ -220,12 +248,12 @@ function displayRow() {
 						</div>
 					</div>
 					<div class="info col-md-offset-3">
-						<a href="<?php echo Application::getInstance()->getParameterizedUrl($folder) ?>">
+						<a href="<?php echo Application::build()->getChangeFolderUrl($folder) ?>">
 							<?php echo $folder->getDisplayName() ?>
 						</a><br />
 						<p><?php echo FileSystem::convertSize($folder->getSize()) ?></p>
 						<p><?php echo $folder->getDate() ?></p>
-						<a href="<?php echo Application::getInstance()->getParameterizedUrl($folder) ?>" title="Open folder">
+						<a href="<?php echo Application::build()->getChangeFolderUrl($folder) ?>" title="<?php echo Translation::get('content.openFolder') ?>">
 							<span class="glyphicon glyphicon-circle-arrow-right"></span></a>
 					</div>
 				</div>
@@ -246,14 +274,15 @@ function displayRow() {
 						</span>
 					</div>
 					<div class="info col-md-offset-3">
-						<a href="<?php echo $file->getUrl() ?>" target="_new">
+						<a href="<?php echo $file->getUrl() ?>" download="<?php echo $file->getName() ?>">
 							<?php echo $file->getName() ?>
 						</a><br />
 						<p><?php echo FileSystem::convertSize($file->getSize()) ?></p>
 						<p><?php echo $file->getDate() ?></p>
-						<a href="<?php echo $file->getUrl() ?>" target="_<?php echo $file->getName() ?>" title="Open file in new window">
+						<a href="<?php echo $file->getUrl() ?>" target="_<?php echo $file->getName() ?>" title="<?php echo Translation::get('content.openFile') ?>"
+						    data-toggle="tooltip" data-placement="right">
 							<span class="glyphicon glyphicon-new-window"></span></a>
-						<a href="<?php echo $file->getUrl() ?>" download="<?php echo $file->getName() ?>" title="Save file">
+						<a href="<?php echo $file->getUrl() ?>" download="<?php echo $file->getName() ?>" title="<?php echo Translation::get('content.saveFile') ?>">
 							<span class="glyphicon glyphicon-save"></span></a>
 					</div>
 				</div>
@@ -268,12 +297,13 @@ function displayRow() {
 		<div id="noContent" class="row">
 			<div class="col-md-12">
 				<div class="alert alert-warning">
-					No content to display
+					<?php echo Translation::get('content.noContent') ?>
 				</div>
 			</div>
 			<div class="col-md-offset-11">
 				<a class="btn btn-default" href="#" onclick="javascript:window.history.back();">
-					<span class="glyphicon glyphicon-arrow-left"></span> Back
+					<span class="glyphicon glyphicon-arrow-left"></span>
+					<?php echo Translation::get('menu.back') ?>
 				</a>
 			</div>
 		</div>
@@ -283,8 +313,10 @@ function displayRow() {
 		<div id="statebarBottom" class="row bg-primary">
 			<div class="col-md-12">
 				<span class="glyphicon glyphicon-stats"></span>
-				<?php echo $currentFolder->getDisplayFoldersInfo() ?> -
-				<?php echo $currentFolder->getDisplayFilesInfo() ?> -
+				<?php echo $currentFolder->getFolderChildrenCount() . Translation::get('statebar.folders') ?>
+				-
+				<?php echo $currentFolder->getFileChildrenCount() . Translation::get('statebar.files') ?>
+				-
 				<?php echo FileSystem::convertSize($currentFolder->getChildrenSize()) ?>
 			</div>
 		</div>
@@ -292,7 +324,7 @@ function displayRow() {
 
 	<!-- FOOTER -->
 	<div id="footer">
-		<?php echo Application::getInstance()->getFooter() ?>
+		<?php echo Application::build()->getFooter() ?>
 	</div>
 
 	<!-- Folder tree modal -->
@@ -301,7 +333,7 @@ function displayRow() {
 			<div class="modal-content">
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-					<h4 class="modal-title" id="myModalLabel">Folder tree</h4>
+					<h4 class="modal-title" id="myModalLabel"><?php echo Translation::get('modal.tree.title') ?></h4>
 				</div>
 				<div class="modal-body" style="max-height: 400px; overflow-y: scroll">
 
@@ -313,7 +345,7 @@ function displayRow() {
 					 */
 					function displayFolders(Folder $folder, $level = 0) {
 						if (isset($folder) && $folder->getName() !== FileSystem::PARENT_FOLDER) {
-							echo "<a href=\"" . Application::getInstance()->getParameterizedUrl($folder) . "\" class=\"list-group-item\" style=\"padding-left: " . (20 + $level * 20) . "px\">";
+							echo "<a href=\"" . Application::build()->getChangeFolderUrl($folder) . "\" class=\"list-group-item\" style=\"padding-left: " . (20 + $level * 20) . "px\">";
 							echo "<span class=\"glyphicon " . $folder->getGlyphicon() . "\"></span> " . $folder->getName() . "</a>";
 							if ($folder->getChildrenCount() > 0) {
 								foreach ($folder->getFolderChildren() as $child) {
@@ -327,7 +359,7 @@ function displayRow() {
 					?>
 				</div>
 				<div class="modal-footer">
-					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					<button type="button" class="btn btn-default" data-dismiss="modal"><?php echo Translation::get('modal.close') ?></button>
 				</div>
 			</div>
 		</div>
@@ -336,3 +368,5 @@ function displayRow() {
 </body>
 
 </html>
+
+<?php Application::build()->postLoad() ?>

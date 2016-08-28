@@ -95,7 +95,7 @@ class Folder extends File {
 
 		foreach($files as $file) {
 			$filePath = $this->getPath() . DIRECTORY_SEPARATOR . $file;
-			$appFolder = Application::getInstance()->getInstallationFolder();
+			$appFolder = Application::build()->getInstallationFolder();
 
 			// If the folder is the one where the application is installed, it's not added to the list
 			if ($appFolder === $filePath) {
@@ -160,24 +160,6 @@ class Folder extends File {
 	 */
 	public function getChildren() {
 		return array_merge($this->getFolderChildren(), $this->getFileChildren());
-	}
-
-	/**
-	 *
-	 * @return string
-	 */
-	public function getDisplayFilesInfo() {
-		$nbFiles = $this->getFileChildrenCount();
-		return $nbFiles . " file" . ($nbFiles > 1 ? "s" : "");
-	}
-
-	/**
-	 *
-	 * @return string
-	 */
-	public function getDisplayFoldersInfo() {
-		$nbDirs  = $this->getFolderChildrenCount();
-		return $nbDirs . " folder" . ($nbDirs > 1 ? "s" : "");
 	}
 
 	/**
