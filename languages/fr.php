@@ -20,8 +20,8 @@ return array(
 	"statebar.folder" => " dossier",
 	"statebar.folders" => " dossiers",
 	// Content
-	"content.parentFolder" => " (Dossier parent)",
-	"content.currentFolder" => " (Dossier courant)",
+	"content.parentFolder" => " (dossier parent)",
+	"content.currentFolder" => " (dossier courant)",
 	"content.name" => "Nom",
 	"content.type" => "Type",
 	"content.size" => "Taille",
