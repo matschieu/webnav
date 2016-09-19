@@ -63,7 +63,7 @@ function displayRow() {
 	<nav class="navbar navbar-default">
 		<div class="container-fluid">
 			<div class="navbar-header">
-				<a class="navbar-brand" href="<?php echo Application::build()->getUrl() ?>" >
+				<a class="navbar-brand" href="<?php echo Application::build()->getRootUrl() ?>" >
 					<span class="glyphicon glyphicon-home"></span>
 					<?php echo Translation::get('menu.root') ?>
 				</a>

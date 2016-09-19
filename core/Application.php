@@ -150,6 +150,21 @@ class Application {
 	 *
 	 * @return string
 	 */
+	public function getRootUrl() {
+		$url = $this->getUrl();
+		$language = $this->getLanguageContext();
+
+		if ($language != null) {
+			$url .= "?". self::HTTP_PARAM_LANG . "=" . $language;
+		}
+
+		return $url;
+	}
+
+	/**
+	 *
+	 * @return string
+	 */
 	public function getChangeLanguageUrl($language) {
 		$url = $this->getUrl() . "?";
 
