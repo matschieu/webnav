@@ -141,6 +141,8 @@ class Folder extends File {
 				case "":
 				case FileSystem::SELF_FOLDER:
 				case FileSystem::PARENT_FOLDER:
+				case FileSystem::HTACCESS:
+				case FileSystem::HTPASSWD:
 					continue;
 				default:
 					$filePath = $this->getPath() . DIRECTORY_SEPARATOR . $file;
