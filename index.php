@@ -55,9 +55,10 @@ function closeLastRow() {
 	<title><?php echo Application::build()->getName() ?></title>
 	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 	<meta name="Author" content="Matschieu" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<meta name="robots" content="noindex" />
+	<link rel="icon" type="image/png" href="img/favicon.png" />
 	<link rel="icon" type="image/png" href="<?php echo Application::build()->getFavicon() ?>" />
-	<link rel="stylesheet" type="text/css" href="./styles/default.css" media="screen" />
-	<link rel="stylesheet" type="text/css" href="./styles/custom.css" media="screen" />
 	<!--Bootstrap -->
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous" />
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
@@ -82,7 +83,10 @@ function closeLastRow() {
 				<span class="oi oi-home"></span>
 				<?php echo Translation::get('menu.root') ?>
 			</a>
-			<div class="collapse navbar-collapse">
+			<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse" id="navbarNav">>
 				<ul class="navbar-nav me-auto">
 					<li class="nav-item">
 						<a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#folderTreeModal">
@@ -255,12 +259,12 @@ function closeLastRow() {
 			<?php openRow(); ?>
 			<div class="folder col-md-2">
 				<div class="row">
-					<div class="type col-md-3 text-center text-primary">
+					<div class="type col-md-2 text-primary">
 						<div class="icon">
 							<span class="oi <?php echo $folder->getGlyphicon() ?>"></span>
 						</div>
 					</div>
-					<div class="info col-md-9 text-break">
+					<div class="info col-md-10 text-break">
 						<a href="<?php echo Application::build()->getChangeFolderUrl($folder) ?>">
 							<?php echo $folder->getDisplayName() ?>
 						</a><br />
@@ -279,7 +283,7 @@ function closeLastRow() {
 			<?php openRow(); ?>
 			<div class="file col-md-2">
 				<div class="row">
-					<div class="type col-md-3 text-center text-primary">
+					<div class="type col-md-2 text-primary">
 						<div class="icon">
 							<span class="oi <?php echo $file->getGlyphicon() ?>"></span>
 						</div>
@@ -287,7 +291,7 @@ function closeLastRow() {
 							<?php echo $file->getExtension() ?>
 						</span>
 					</div>
-					<div class="info col-md-9 text-break">
+					<div class="info col-md-10 text-break">
 						<a href="<?php echo $file->getUrl() ?>" download="<?php echo $file->getName() ?>">
 							<?php echo $file->getName() ?>
 						</a><br />

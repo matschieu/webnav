@@ -102,7 +102,7 @@ class Application {
 	 *
 	 * @return string
 	 */
-	private function getHttpParam($param): string {
+	private function getHttpParam($param): ?string {
 		if (isset($_GET[$param]) && !empty($_GET[$param])) {
 			return $_GET[$param];
 		}
@@ -113,7 +113,7 @@ class Application {
 	 *
 	 * @return string
 	 */
-	public function getFolderContext(): string {
+	public function getFolderContext(): ?string {
 		return $this->getHttpParam(self::HTTP_PARAM_PATH);
 	}
 
@@ -121,7 +121,7 @@ class Application {
 	 *
 	 * @return string
 	 */
-	public function getViewContext(): string {
+	public function getViewContext(): ?string {
 		return $this->getHttpParam(self::HTTP_PARAM_VIEW);
 	}
 
@@ -129,7 +129,7 @@ class Application {
 	 *
 	 * @return string
 	 */
-	public function getLanguageContext(): string {
+	public function getLanguageContext(): ?string {
 		return $this->getHttpParam(self::HTTP_PARAM_LANG);
 	}
 
@@ -137,7 +137,7 @@ class Application {
 	 *
 	 * @return string
 	 */
-	public function getInstallationFolder(): string {
+	public function getInstallationFolder(): ?string {
 		return dirname($_SERVER['SCRIPT_FILENAME']);
 	}
 
