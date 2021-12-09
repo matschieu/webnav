@@ -6,7 +6,7 @@ const PHP_EXT = ".php";
  * @param String $dirpath
  * @param String $className
  */
-function autoloadScan($dirpath, $className) {
+function autoloadScan($dirpath, $className): void {
 	$dir = dir($dirpath);
 
 	while (false !== ($entry = $dir->read())) {
@@ -31,7 +31,7 @@ function autoloadScan($dirpath, $className) {
  * functions
  * @param String $className
  */
-function __autoload($className) {
+function __autoload($className): void {
 	global $path;
 	$tmp = explode(PATH_SEPARATOR, $path);
 	for ($i = 0; $i < count($tmp); $i++) {

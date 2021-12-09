@@ -7,10 +7,10 @@ class Folder extends File {
 
 	/**
 	 *
-	 * @param type $path
-	 * @param type $name
+	 * @param string $path
+	 * @param string $name
 	 */
-	public function __construct($path, $name) {
+	public function __construct(string $path, string $name) {
 		parent::__construct($path, $name);
 	}
 
@@ -18,7 +18,7 @@ class Folder extends File {
 	 *
 	 * @return number
 	 */
-	public function getFolderChildrenSize() {
+	public function getFolderChildrenSize(): int {
 		$files = $this->getFolderChildren();
 		$totalSize = 0;
 
@@ -33,7 +33,7 @@ class Folder extends File {
 	 *
 	 * @return number
 	 */
-	public function getFileChildrenSize() {
+	public function getFileChildrenSize(): int {
 		$files = $this->getFileChildren();
 		$totalSize = 0;
 
@@ -48,7 +48,7 @@ class Folder extends File {
 	 *
 	 * @return number
 	 */
-	public function getChildrenSize() {
+	public function getChildrenSize(): int {
 		return $this->getFileChildrenSize() + $this->getFolderChildrenSize();
 	}
 
@@ -56,7 +56,7 @@ class Folder extends File {
 	 *
 	 * @return number
 	 */
-	public function getFileChildrenCount() {
+	public function getFileChildrenCount(): int {
 		return count($this->getFileChildren());
 	}
 
@@ -64,7 +64,7 @@ class Folder extends File {
 	 *
 	 * @return number
 	 */
-	public function getFolderChildrenCount() {
+	public function getFolderChildrenCount(): int {
 		return count($this->getFolderChildren());
 	}
 
@@ -72,28 +72,23 @@ class Folder extends File {
 	 *
 	 * @return number
 	 */
-	public function getChildrenCount() {
+	public function getChildrenCount(): int {
 		return $this->getFolderChildrenCount() + $this->getFileChildrenCount();
 	}
 
 	/**
 	 *
-	 * @param boolean $addParent
-	 * @return Folder[]
+	 * @return array of Folder
 	 */
-	public function getFolderChildren() {
+	public function getFolderChildren(): array {
 		if (!$this->isValid()) {
 			return array();
 		}
 
-		$content = opendir($this->getPath());
 		$filesList = array();
 		$idx = 0;
 
-		while ($files[] = readdir($content));
-		sort($files, SORT_STRING);
-
-		foreach($files as $file) {
+		foreach(scandir($this->getPath()) as $file) {
 			$filePath = $this->getPath() . DIRECTORY_SEPARATOR . $file;
 			$appFolder = Application::build()->getInstallationFolder();
 
@@ -122,9 +117,9 @@ class Folder extends File {
 
 	/**
 	 *
-	 * @return File[]
+	 * @return array of File
 	 */
-	public function getFileChildren() {
+	public function getFileChildren(): array {
 		if (!$this->isValid()) {
 			return array();
 		}
@@ -158,9 +153,9 @@ class Folder extends File {
 
 	/**
 	 *
-	 * @return File[]
+	 * @return array of File
 	 */
-	public function getChildren() {
+	public function getChildren(): array {
 		return array_merge($this->getFolderChildren(), $this->getFileChildren());
 	}
 
@@ -168,7 +163,7 @@ class Folder extends File {
 	 *
 	 * @return string
 	 */
-	public function getDisplayName() {
+	public function getDisplayName(): string {
 		switch($this->name) {
 			case FileSystem::SELF_FOLDER:
 				return $this->name . Translation::get("content.currentFolder");
@@ -183,7 +178,7 @@ class Folder extends File {
 	 *
 	 * @return string
 	 */
-	public function __toString() {
+	public function __toString(): string {
 		return $this->getDisplayName();
 	}
 

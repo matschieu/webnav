@@ -9,15 +9,15 @@ abstract class Config {
 	const DEBUG = false;
 
 	// Application information
-	const APPLICATION_NAME = "MNAV";
+	const APPLICATION_NAME = "MD-WEBNAV";
 	// Relative path to the custom CSS file (should be in ./styles)
 	const APPLICATION_CUSTOM_CSS = "";
 	// Relative path to the custom favicon (should be in ./img)
 	const APPLICATION_FAVICON = "./img/favicon.png";
 	// Header of the file explorer, can contains some HTML
-	const APPLICATION_HEADER = "";
+	const APPLICATION_HEADER = "MD-WEBNAV";
 	// Footer of the file explorer, can contains some HTML
-	const APPLICATION_FOOTER = "";
+	const APPLICATION_FOOTER = "By Matschieu";
 
 	// The root dir of the file system to explore
 	// It can be a relative (to the index.php) path or an absolute path

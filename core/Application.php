@@ -17,7 +17,7 @@ class Application {
 	const VIEW_BLOCK = "bk";
 	const VIEW_LIST = "ls";
 
-	private static $application = null;
+	private static ?Application $application = null;
 
 	private $startExecTime;
 
@@ -25,7 +25,7 @@ class Application {
 	 *
 	 * @return Application
 	 */
-	public static function build() {
+	public static function build(): Application {
 		if (self::$application == null){
 			self::$application = new Application();
 		}
@@ -44,7 +44,7 @@ class Application {
 	 * Adds a directory in the include path of PHP to autoload classes
 	 * @param String $dirpath
 	 */
-	final private function addToPath($dirpath) {
+	final private function addToPath($dirpath): void {
 		$dir = dir($dirpath);
 
 		//set_include_path(get_include_path() . PATH_SEPARATOR . $dir->path);
@@ -62,7 +62,7 @@ class Application {
 	/**
 	 * Initializes the application and some options of PHP
 	 */
-	final public function init() {
+	final public function init(): void {
 		date_default_timezone_set('Europe/Paris');
 
 		self::addToPath(self::CORE_DIR);
@@ -80,7 +80,10 @@ class Application {
 		require_once("./core/autoload.php");
 	}
 
-	final public function postLoad() {
+	/**
+	 *
+	 */
+	final public function postLoad(): void {
 		if(Config::DEBUG) {
 			echo "Page generation time = " . $this->getExecTime() . " s<br />";
 			echo "Memory used = " . memory_get_usage() . " o (max = " . memory_get_peak_usage() . " o)<br />";
@@ -91,7 +94,7 @@ class Application {
 	 *
 	 * @return number
 	 */
-	final public function getExecTime() {
+	final public function getExecTime(): int {
 		return (microtime(true) - $this->startExecTime);
 	}
 
@@ -99,7 +102,7 @@ class Application {
 	 *
 	 * @return string
 	 */
-	private function getHttpParam($param) {
+	private function getHttpParam($param): string {
 		if (isset($_GET[$param]) && !empty($_GET[$param])) {
 			return $_GET[$param];
 		}
@@ -110,7 +113,7 @@ class Application {
 	 *
 	 * @return string
 	 */
-	public function getFolderContext() {
+	public function getFolderContext(): string {
 		return $this->getHttpParam(self::HTTP_PARAM_PATH);
 	}
 
@@ -118,7 +121,7 @@ class Application {
 	 *
 	 * @return string
 	 */
-	public function getViewContext() {
+	public function getViewContext(): string {
 		return $this->getHttpParam(self::HTTP_PARAM_VIEW);
 	}
 
@@ -126,7 +129,7 @@ class Application {
 	 *
 	 * @return string
 	 */
-	public function getLanguageContext() {
+	public function getLanguageContext(): string {
 		return $this->getHttpParam(self::HTTP_PARAM_LANG);
 	}
 
@@ -134,7 +137,7 @@ class Application {
 	 *
 	 * @return string
 	 */
-	public function getInstallationFolder() {
+	public function getInstallationFolder(): string {
 		return dirname($_SERVER['SCRIPT_FILENAME']);
 	}
 
@@ -142,7 +145,7 @@ class Application {
 	 *
 	 * @return string
 	 */
-	public function getUrl() {
+	public function getUrl(): string {
 		return "http://" . $_SERVER['HTTP_HOST'] . $_SERVER['PHP_SELF'];
 	}
 
@@ -150,7 +153,7 @@ class Application {
 	 *
 	 * @return string
 	 */
-	public function getRootUrl() {
+	public function getRootUrl(): string {
 		$url = $this->getUrl();
 		$language = $this->getLanguageContext();
 
@@ -165,7 +168,7 @@ class Application {
 	 *
 	 * @return string
 	 */
-	public function getChangeLanguageUrl($language) {
+	public function getChangeLanguageUrl($language): string {
 		$url = $this->getUrl() . "?";
 
 		$folder = $this->getFolderContext();
@@ -188,7 +191,7 @@ class Application {
 	 *
 	 * @return string
 	 */
-	public function getChangeViewUrl($view) {
+	public function getChangeViewUrl($view): string {
 		$url = $this->getUrl() . "?";
 
 		$folder = $this->getFolderContext();
@@ -211,7 +214,7 @@ class Application {
 	 *
 	 * @return string
 	 */
-	public function getChangeFolderUrl(Folder $folder) {
+	public function getChangeFolderUrl(Folder $folder): string {
 		$url = $this->getUrl() . "?";
 
 		$view = $this->getViewContext();
@@ -234,7 +237,7 @@ class Application {
 	 *
 	 * @return string
 	 */
-	public function getName() {
+	public function getName(): string {
 		return Config::APPLICATION_NAME;
 	}
 
@@ -242,7 +245,7 @@ class Application {
 	 *
 	 * @return string
 	 */
-	public function getCustomCss() {
+	public function getCustomCss(): string {
 		return Config::APPLICATION_CUSTOM_CSS;
 	}
 
@@ -250,7 +253,7 @@ class Application {
 	 *
 	 * @return string
 	 */
-	public function getFavicon() {
+	public function getFavicon(): string {
 		return Config::APPLICATION_FAVICON;
 	}
 
@@ -258,7 +261,7 @@ class Application {
 	 *
 	 * @return string
 	 */
-	public function getHeader() {
+	public function getHeader(): string {
 		return Config::APPLICATION_HEADER;
 	}
 
@@ -266,7 +269,7 @@ class Application {
 	 *
 	 * @return string
 	 */
-	public function getFooter() {
+	public function getFooter(): string {
 		return Config::APPLICATION_FOOTER;
 	}
 

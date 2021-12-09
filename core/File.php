@@ -5,95 +5,59 @@
  */
 class File {
 
-	const GLYPHICON_FOLDER = "glyphicon-folder-open";
-	const GLYPHICON_DEFAULT_FILE = "glyphicon-file";
-	const GLYPHICON_IMAGE = "glyphicon-picture";
-	const GLYPHICON_VIDEO = "glyphicon-film";
-	const GLYPHICON_MUSIC = "glyphicon-music";
-	const GLYPHICON_EXECUTABLE = "glyphicon-cog";
-	const GLYPHICON_COMPRESSED = "glyphicon-compressed";
-	const GLYPHICON_ARCHIVE = "glyphicon-briefcase";
-
-	protected $path;
-	protected $logicalPath;
-	protected $name;
-	protected $size;
-	protected $date;
-	protected $extension;
-	protected $glyphicon;
-	protected $url;
+	protected string $path;
+	protected string $logicalPath;
+	protected string $name;
+	protected ?int $size;
+	protected ?string $date;
+	protected ?string $extension;
+	protected string $glyphicon;
+	protected string $url;
 
 	/**
 	 *
-	 * @param type $path
-	 * @param type $name
+	 * @param string $path
+	 * @param string $name
 	 */
-	public function __construct($path, $name) {
+	public function __construct(string $path, string $name) {
 		$this->path = realpath($path);
 		$this->name = $name;
 
 		if (!is_dir($this->path)) {
 			$pathinfo = pathinfo($this->path);
-			$this->extension =  isset($pathinfo['extension']) ? strtolower($pathinfo['extension']) : null;
+			$this->extension =  isset($pathinfo['extension']) && ".".$pathinfo['extension'] !== $name ? strtolower($pathinfo['extension']) : null;
 		} else {
 			$this->extension = null;
 		}
 
-		$this->glyphicon = $this->generateGlyphicon();
 		$this->logicalPath = $this->generateLogicalPath();
 		$this->url = "http://" . $_SERVER['HTTP_HOST'] . FileSystem::getLogicalRoot() . $this->logicalPath;
 
 		if ($this->isValid() && $name !== FileSystem::SELF_FOLDER && $name !== FileSystem::PARENT_FOLDER) {
 			$this->size = filesize($this->path);
 			$this->date = date(Config::DATE_FORMAT, filectime($this->path));
+		} else {
+			$this->size = null;
+			$this->date = null;
 		}
+
+		$this->glyphicon = FileSystem::generateGlyphicon($this);
 	}
 
 	/**
 	 *
 	 * @return string
 	 */
-	private function generateLogicalPath() {
+	private function generateLogicalPath(): string {
 		$rootPathes = array(FileSystem::getRoot() . DIRECTORY_SEPARATOR, FileSystem::getRoot());
 		return str_replace($rootPathes, FileSystem::ROOT, $this->path);
 	}
 
 	/**
 	 *
-	 * @return string
-	 */
-	private function generateGlyphicon() {
-		if (is_dir($this->path)) {
-			return self::GLYPHICON_FOLDER;
-		}
-
-		if (in_array($this->extension, FileSystem::FILE_IMAGE_EXTENSIONS)) {
-			return self::GLYPHICON_IMAGE;
-		}
-		if (in_array($this->extension, FileSystem::FILE_VIDEO_EXTENSIONS)) {
-			return self::GLYPHICON_VIDEO;
-		}
-		if (in_array($this->extension, FileSystem::FILE_MUSIC_EXTENSIONS)) {
-			return self::GLYPHICON_MUSIC;
-		}
-		if (in_array($this->extension, FileSystem::FILE_EXECUTABLE_EXTENSIONS)) {
-			return self::GLYPHICON_EXECUTABLE;
-		}
-		if (in_array($this->extension, FileSystem::FILE_COMPRESSED_EXTENSIONS)) {
-			return self::GLYPHICON_COMPRESSED;
-		}
-		if (in_array($this->extension, FileSystem::FILE_ARCHIVE_EXTENSIONS)) {
-			return self::GLYPHICON_ARCHIVE;
-		}
-
-		return self::GLYPHICON_DEFAULT_FILE;
-	}
-
-	/**
-	 *
 	 * @return boolean
 	 */
-	public function isValid() {
+	public function isValid(): bool {
 		return file_exists($this->path);
 	}
 
@@ -101,7 +65,7 @@ class File {
 	 *
 	 * @return string
 	 */
-	public function getPath() {
+	public function getPath(): string {
 		return $this->path;
 	}
 
@@ -109,7 +73,7 @@ class File {
 	 *
 	 * @return string
 	 */
-	public function getLogicalPath() {
+	public function getLogicalPath(): string {
 		return $this->logicalPath;
 	}
 
@@ -117,15 +81,15 @@ class File {
 	 *
 	 * @return string
 	 */
-	public function getName() {
+	public function getName(): string {
 		return $this->name;
 	}
 
 	/**
 	 *
-	 * @return string
+	 * @return number
 	 */
-	public function getSize() {
+	public function getSize(): ?int {
 		return $this->size;
 	}
 
@@ -133,7 +97,7 @@ class File {
 	 *
 	 * @return string
 	 */
-	public function getdate() {
+	public function getdate(): ?string {
 		return $this->date;
 	}
 
@@ -141,7 +105,7 @@ class File {
 	 *
 	 * @return string
 	 */
-	public function getExtension() {
+	public function getExtension(): ?string {
 		return $this->extension;
 	}
 
@@ -149,7 +113,7 @@ class File {
 	 *
 	 * @return string
 	 */
-	public function getGlyphicon() {
+	public function getGlyphicon(): string {
 		return $this->glyphicon;
 	}
 
@@ -157,7 +121,7 @@ class File {
 	 *
 	 * @return string
 	 */
-	public function getUrl() {
+	public function getUrl(): string {
 		return $this->url;
 	}
 
@@ -165,7 +129,7 @@ class File {
 	 *
 	 * @return string
 	 */
-	public function __toString() {
+	public function __toString(): string {
 		return $this->path;
 	}
 

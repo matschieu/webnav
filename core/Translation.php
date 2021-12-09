@@ -8,14 +8,14 @@ class Translation {
 
 	const DEFAULT_LANGUAGE = "en";
 
-	private static $language;
-	private static $messages;
-	private static $init = false;
+	private static string $language;
+	private static array $messages;
+	private static bool $init = false;
 
 	/**
 	 *
 	 */
-	private static function init() {
+	private static function init(): void {
 		if (!self::$init) {
 			self::$language = strtolower(Application::build()->getLanguageContext());
 
@@ -41,7 +41,7 @@ class Translation {
 	 *
 	 * @return string
 	 */
-	public static function getLanguage() {
+	public static function getLanguage(): string {
 		self::init();
 		return self::$language;
 	}
@@ -50,7 +50,7 @@ class Translation {
 	 *
 	 * @return array
 	 */
-	public static function getAllMessages() {
+	public static function getAllMessages(): array {
 		self::init();
 		return self::$messages;
 	}
@@ -59,7 +59,7 @@ class Translation {
 	 *
 	 * @return string
 	 */
-	public static function get($key) {
+	public static function get($key): string {
 		self::init();
 		if (isset($key) && isset(self::$messages[$key])) {
 			return htmlspecialchars(self::$messages[$key]);
