@@ -35,7 +35,7 @@ class FileSystem {
 	 *
 	 * @return string
 	 */
-	public static function generateGlyphicon(File $file): string {
+	public static function getGlyphicon(File $file): string {
 		if (is_dir($file->getPath())) {
 			return self::GLYPHICON_FOLDER;
 		}
@@ -116,15 +116,15 @@ class FileSystem {
 
 	/**
 	 *
+	 * @param string $logicalPath
 	 * @return Folder
 	 */
-	final public static function getCurrentFolder(): Folder {
+	final public static function getCurrentFolder(?string $logicalPath): Folder {
 		$rootPath = FileSystem::getRoot();
-		$logical = Application::build()->getFolderContext();
 
 		// If a logical path is specified in the URL and is valid then it's added to the path.
-		if (realpath($rootPath . $logical)) {
-			$path = realpath($rootPath . $logical);
+		if (realpath($rootPath . $logicalPath)) {
+			$path = realpath($rootPath . $logicalPath);
 		} else {
 			$path = $rootPath;
 		}
@@ -142,7 +142,7 @@ class FileSystem {
 	 * @param number $fileSize
 	 * @return string
 	 */
-	final public static function convertSize($fileSize): string {
+	final public static function convertSize(?int $fileSize): string {
 		$sizeUnit = "octet";
 
 		if ($fileSize > 1) {

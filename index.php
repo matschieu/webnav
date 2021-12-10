@@ -1,64 +1,24 @@
 <?php
-require_once("./core/Application.php");
+require_once("./core/FileViewerApplication.php");
 
-Application::build()->init();
+FileViewerApplication::build()->init();
 
-$currentFolder = FileSystem::getCurrentFolder();
-
+$currentFolder = FileSystem::getCurrentFolder(FileViewerApplication::build()->getFolderContext());
 $folders = $currentFolder->getFolderChildren();
 $files = $currentFolder->getFileChildren();
-
-$element = 0;
-
-/**
- *
- * @global int $element
- */
-function openRow() {
-	global $element;
-
-	if ($element % 6 === 0) {
-		echo '<div class="row mt-3 mb-3">' . PHP_EOL;
-	}
-}
-
-/**
- *
- * @global int $element
- */
-function closeRow() {
-	global $element;
-
-	if (++$element % 6 === 0) {
-		echo '</div>' . PHP_EOL;
-	}
-}
-
-/**
- *
- * @global int $element
- */
-function closeLastRow() {
-	global $element;
-
-	if (($element - 1) % 6 !== 0) {
-		echo '</div>' . PHP_EOL;
-	}
-}
-
 ?>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="fr" lang="fr">
 
 <head>
-	<title><?php echo Application::build()->getName() ?></title>
+	<title><?php echo FileViewerApplication::build()->getName() ?></title>
 	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 	<meta name="Author" content="Matschieu" />
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
 	<meta name="robots" content="noindex" />
 	<link rel="icon" type="image/png" href="img/favicon.png" />
-	<link rel="icon" type="image/png" href="<?php echo Application::build()->getFavicon() ?>" />
+	<link rel="icon" type="image/png" href="<?php echo FileViewerApplication::build()->getFavicon() ?>" />
 	<!--Bootstrap -->
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous" />
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
@@ -67,19 +27,19 @@ function closeLastRow() {
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/open-iconic/1.1.1/font/css/open-iconic-bootstrap.min.css" integrity="sha512-UyNhw5RNpQaCai2EdC+Js0QL4RlVmiq41DkmCJsRV3ZxipG2L0HhTqIf/H9Hp8ez2EnFlkBnjRGJU2stW3Lj+w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 	<!-- Application styles -->
 	<link rel="stylesheet" type="text/css" href="./styles/default.css" media="screen" />
-	<link rel="stylesheet" type="text/css" href="<?php echo Application::build()->getCustomCss() ?>" media="screen" />
+	<link rel="stylesheet" type="text/css" href="<?php echo FileViewerApplication::build()->getCustomCss() ?>" media="screen" />
 </head>
 
 <body>
 	<!-- HEADER -->
 	<div id="header" class="p-1">
-		<?php echo Application::build()->getHeader() ?>
+		<?php echo FileViewerApplication::build()->getHeader() ?>
 	</div>
 
 	<!-- MENU -->
 	<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
 		<div class="container-fluid">
-			<a class="navbar-brand" href="<?php echo Application::build()->getRootUrl() ?>" >
+			<a class="navbar-brand" href="<?php echo FileViewerApplication::build()->getRootUrl() ?>" >
 				<span class="oi oi-home"></span>
 				<?php echo Translation::get('menu.root') ?>
 			</a>
@@ -112,16 +72,16 @@ function closeLastRow() {
 							<?php echo Translation::get('menu.next') ?>
 						</a>
 					</li>
-					<?php if (Application::build()->getViewContext() == Application::VIEW_LIST) { ?>
+					<?php if (FileViewerApplication::build()->getViewContext() == FileViewerApplication::VIEW_LIST) { ?>
 					<li class="nav-item">
-						<a class="nav-link" href="<?php echo Application::build()->getChangeViewUrl(Application::VIEW_BLOCK) ?>">
+						<a class="nav-link" href="<?php echo FileViewerApplication::build()->getChangeViewUrl(FileViewerApplication::VIEW_BLOCK) ?>">
 							<span class="oi oi-grid-three-up"></span>
 							<?php echo Translation::get('menu.blockView') ?>
 						</a>
 					</li>
 					<?php } else {?>
 					<li class="nav-item">
-						<a class="nav-link" href="<?php echo Application::build()->getChangeViewUrl(Application::VIEW_LIST) ?>">
+						<a class="nav-link" href="<?php echo FileViewerApplication::build()->getChangeViewUrl(FileViewerApplication::VIEW_LIST) ?>">
 							<span class="oi oi-list"></span>
 							<?php echo Translation::get('menu.listView') ?>
 						</a>
@@ -137,17 +97,17 @@ function closeLastRow() {
 						</a>
 						<ul class="dropdown-menu" aria-labelledby="navbarDropdown">
 							<li>
-								<a class="dropdown-item" href="<?php echo Application::build()->getChangeLanguageUrl("en") ?>">
+								<a class="dropdown-item" href="<?php echo FileViewerApplication::build()->getChangeLanguageUrl("en") ?>">
 									<?php echo Translation::get('menu.english') ?>
-									<?php if (Application::build()->getLanguageContext() === "en") { ?>
+									<?php if (FileViewerApplication::build()->getLanguageContext() === "en") { ?>
 									<span class="oi oi-check"></span>
 									<?php } ?>
 								</a>
 							</li>
 							<li>
-								<a class="dropdown-item" href="<?php echo Application::build()->getChangeLanguageUrl("fr") ?>">
+								<a class="dropdown-item" href="<?php echo FileViewerApplication::build()->getChangeLanguageUrl("fr") ?>">
 									<?php echo Translation::get('menu.french') ?>
-									<?php if (Application::build()->getLanguageContext() === "fr") { ?>
+									<?php if (FileViewerApplication::build()->getLanguageContext() === "fr") { ?>
 									<span class="oi oi-check"></span>
 									<?php } ?>
 								</a>
@@ -176,7 +136,7 @@ function closeLastRow() {
 			</div>
 		</div>
 
-		<?php if (Application::build()->getViewContext() == Application::VIEW_LIST) { ?>
+		<?php if (FileViewerApplication::build()->getViewContext() == FileViewerApplication::VIEW_LIST) { ?>
 
 		<!-- LIST VIEW -->
 		<div id="list">
@@ -200,7 +160,7 @@ function closeLastRow() {
 					</td>
 					<td></td>
 					<td>
-						<a href="<?php echo Application::build()->getChangeFolderUrl($folder) ?>">
+						<a href="<?php echo FileViewerApplication::build()->getChangeFolderUrl($folder) ?>">
 							<?php echo $folder->getDisplayName() ?>
 						</a>
 					</td>
@@ -211,7 +171,7 @@ function closeLastRow() {
 						<?php echo $folder->getDate() ?>
 					</td>
 					<td>
-						<a href="<?php echo Application::build()->getChangeFolderUrl($folder) ?>" title="<?php echo Translation::get('content.openFolder') ?>">
+						<a href="<?php echo FileViewerApplication::build()->getChangeFolderUrl($folder) ?>" title="<?php echo Translation::get('content.openFolder') ?>">
 								<span class="oi oi-account-login p-2"></span></a>
 					</td>
 				</tr>
@@ -219,7 +179,7 @@ function closeLastRow() {
 
 				<!--FILES -->
 				<?php foreach ($files as $file) { ?>
-				<tr class="file ext-break">
+				<tr class="file text-break">
 					<td class="icon text-primary">
 						<span class="oi <?php echo $file->getGlyphicon() ?>"></span>
 					</td>
@@ -256,7 +216,7 @@ function closeLastRow() {
 		<div id="list">
 			<!-- FOLDERS -->
 			<?php foreach ($folders as $folder) { ?>
-			<?php openRow(); ?>
+			<?php echo DisplayHelper::getRowOpening(); ?>
 			<div class="folder col-md-2">
 				<div class="row">
 					<div class="type col-md-2 text-primary">
@@ -265,22 +225,22 @@ function closeLastRow() {
 						</div>
 					</div>
 					<div class="info col-md-10 text-break">
-						<a href="<?php echo Application::build()->getChangeFolderUrl($folder) ?>">
+						<a href="<?php echo FileViewerApplication::build()->getChangeFolderUrl($folder) ?>">
 							<?php echo $folder->getDisplayName() ?>
 						</a><br />
 						<div><?php echo FileSystem::convertSize($folder->getSize()) ?></div>
 						<div><?php echo $folder->getDate() ?></div>
-						<a href="<?php echo Application::build()->getChangeFolderUrl($folder) ?>" title="<?php echo Translation::get('content.openFolder') ?>">
+						<a href="<?php echo FileViewerApplication::build()->getChangeFolderUrl($folder) ?>" title="<?php echo Translation::get('content.openFolder') ?>">
 							<span class="oi oi-account-login p-2"></span></a>
 					</div>
 				</div>
 			</div>
-			<?php closeRow(); ?>
+			<?php echo DisplayHelper::getRowClosing(); ?>
 			<?php } ?>
 
 			<!--FILES -->
 			<?php foreach ($files as $file) { ?>
-			<?php openRow(); ?>
+			<?php echo DisplayHelper::getRowOpening(); ?>
 			<div class="file col-md-2">
 				<div class="row">
 					<div class="type col-md-2 text-primary">
@@ -306,23 +266,23 @@ function closeLastRow() {
 					</div>
 				</div>
 			</div>
-			<?php closeRow(); ?>
+			<?php echo DisplayHelper::getRowClosing(); ?>
 			<?php } ?>
-			<?php closeLastRow(); ?>
+			<?php echo DisplayHelper::getLastRowClosing(); ?>
 		</div>
 
 		<?php } ?>
 
 		<?php if (count($folders) === 0 && count($files) === 0) { ?>
 		<!-- EMPTY CONTENT MESSAGE -->
-		<div id="noContent" class="row mt-3">
+		<div id="noContent" class="row mt-3 ps-2 pe-2">
 			<div class="col-md-12">
 				<div class="alert alert-primary" role="alert">
 					<?php echo Translation::get('content.noContent') ?>
 				</div>
 			</div>
 			<div class="col-md-offset-11">
-				<a class="btn btn-default" href="#" onclick="javascript:window.history.back();">
+				<a class="btn btn-primary" href="#" onclick="javascript:window.history.back();">
 					<span class="oi oi-arrow-thick-left"></span>
 					<?php echo Translation::get('menu.back') ?>
 				</a>
@@ -345,7 +305,7 @@ function closeLastRow() {
 
 	<!-- FOOTER -->
 	<div id="footer" class="text-end p-1">
-		<?php echo Application::build()->getFooter() ?>
+		<?php echo FileViewerApplication::build()->getFooter() ?>
 	</div>
 
 	<!-- Folder tree modal -->
@@ -357,26 +317,7 @@ function closeLastRow() {
 					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 				</div>
 				<div class="modal-body" style="max-height: 400px; overflow-y: scroll">
-					<?php
-					/**
-					 *
-					 * @param Folder $folder
-					 * @param number $level
-					 */
-					function displayFolders(Folder $folder, $level = 0) {
-						if (isset($folder) && $folder->getName() !== FileSystem::PARENT_FOLDER) {
-							echo "<a href=\"" . Application::build()->getChangeFolderUrl($folder) . "\" class=\"list-group-item\" style=\"padding-left: " . (20 + $level * 20) . "px\">";
-							echo "<span class=\"oi " . $folder->getGlyphicon() . "\"></span> " . $folder->getName() . "</a>";
-							if ($folder->getChildrenCount() > 0) {
-								foreach ($folder->getFolderChildren() as $child) {
-									displayFolders($child, $level + 1);
-								}
-							}
-						}
-					}
-
-					displayFolders(FileSystem::getRootFolder());
-					?>
+					<?php echo DisplayHelper::getFolderList(FileViewerApplication::build(), FileSystem::getRootFolder()) ?>
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-primary" data-bs-dismiss="modal"><?php echo Translation::get('modal.close') ?></button>
@@ -388,4 +329,4 @@ function closeLastRow() {
 
 </html>
 
-<?php Application::build()->postLoad() ?>
+<?php FileViewerApplication::build()->postLoad() ?>

@@ -90,7 +90,7 @@ class Folder extends File {
 
 		foreach(scandir($this->getPath()) as $file) {
 			$filePath = $this->getPath() . DIRECTORY_SEPARATOR . $file;
-			$appFolder = Application::build()->getInstallationFolder();
+			$appFolder = FileViewerApplication::build()->getInstallationFolder();
 
 			// If the folder is the one where the application is installed, it's not added to the list
 			if ($appFolder === $filePath) {

@@ -41,7 +41,7 @@ class File {
 			$this->date = null;
 		}
 
-		$this->glyphicon = FileSystem::generateGlyphicon($this);
+		$this->glyphicon = FileSystem::getGlyphicon($this);
 	}
 
 	/**

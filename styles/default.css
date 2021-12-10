@@ -1,5 +1,6 @@
 :root {
   --bs-primary-rgb: 51, 122, 183;
+  --bs-primary: #337AB7;
 }
 
 #header {

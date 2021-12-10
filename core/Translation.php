@@ -17,7 +17,7 @@ class Translation {
 	 */
 	private static function init(): void {
 		if (!self::$init) {
-			self::$language = strtolower(Application::build()->getLanguageContext());
+			self::$language = strtolower(FileViewerApplication::build()->getLanguageContext());
 
 			// If the language is not provided, set the default language
 			if (self::$language == null) {

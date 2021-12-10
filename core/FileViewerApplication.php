@@ -7,7 +7,7 @@ $path = "";
 /**
  * @author Matschieu
  */
-class Application {
+class FileViewerApplication {
 
 	const CORE_DIR = "./core";
 	const HTTP_PARAM_PATH = "!";
@@ -17,17 +17,17 @@ class Application {
 	const VIEW_BLOCK = "bk";
 	const VIEW_LIST = "ls";
 
-	private static ?Application $application = null;
+	private static ?FileViewerApplication $application = null;
 
 	private $startExecTime;
 
 	/**
 	 *
-	 * @return Application
+	 * @return FileViewerApplication
 	 */
-	public static function build(): Application {
+	public static function build(): FileViewerApplication {
 		if (self::$application == null){
-			self::$application = new Application();
+			self::$application = new FileViewerApplication();
 		}
 
 		return self::$application;
@@ -271,6 +271,14 @@ class Application {
 	 */
 	public function getFooter(): string {
 		return Config::APPLICATION_FOOTER;
+	}
+
+	/**
+	 *
+	 * @return Folder
+	 */
+	public function getCurrentFolder(): Folder {
+		return FileSystem::getCurrentFolder($this->getFolderContext());
 	}
 
 }
