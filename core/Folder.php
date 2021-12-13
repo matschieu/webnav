@@ -5,6 +5,13 @@
  */
 class Folder extends File {
 
+	const GLYPHICON_FOLDER = "oi-folder";
+
+	const SELF_FOLDER = ".";
+	const PARENT_FOLDER = "..";
+
+	private ?array $flatTree = null;
+
 	/**
 	 *
 	 * @param string $path
@@ -12,6 +19,21 @@ class Folder extends File {
 	 */
 	public function __construct(string $path, string $name) {
 		parent::__construct($path, $name);
+
+		if ($name == self::SELF_FOLDER || $name == self::PARENT_FOLDER) {
+			$this->size = null;
+			$this->date = null;
+		}
+
+		$this->glyphicon = self::GLYPHICON_FOLDER;
+	}
+
+	/**
+	 *
+	 * @return boolean
+	 */
+	public function isValid(): bool {
+		return file_exists($this->path) && is_dir($this->path);
 	}
 
 	/**
@@ -99,10 +121,10 @@ class Folder extends File {
 
 			switch($file) {
 				case "":
-				case FileSystem::SELF_FOLDER:
+				case self::SELF_FOLDER:
 					break;
-				case FileSystem::PARENT_FOLDER:
-					if (FileSystem::isRoot($this)) {
+				case self::PARENT_FOLDER:
+					if ($this->isRoot()) {
 						break;
 					}
 				default:
@@ -124,20 +146,16 @@ class Folder extends File {
 			return array();
 		}
 
-		$content = opendir($this->getPath());
 		$filesList = array();
 		$idx = 0;
 
-		while ($files[] = readdir($content));
-		sort($files, SORT_STRING);
-
-		foreach($files as $file) {
+		foreach(scandir($this->getPath()) as $file) {
 			switch($file) {
 				case "":
-				case FileSystem::SELF_FOLDER:
-				case FileSystem::PARENT_FOLDER:
-				case FileSystem::HTACCESS:
-				case FileSystem::HTPASSWD:
+				case self::SELF_FOLDER:
+				case self::PARENT_FOLDER:
+				case self::HTACCESS:
+				case self::HTPASSWD:
 					continue;
 				default:
 					$filePath = $this->getPath() . DIRECTORY_SEPARATOR . $file;
@@ -165,13 +183,46 @@ class Folder extends File {
 	 */
 	public function getDisplayName(): string {
 		switch($this->name) {
-			case FileSystem::SELF_FOLDER:
+			case self::SELF_FOLDER:
 				return $this->name . Translation::get("content.currentFolder");
-			case FileSystem::PARENT_FOLDER:
+			case self::PARENT_FOLDER:
 				return $this->name . Translation::get("content.parentFolder");
 			default:
 				return $this->name;
 		}
+	}
+
+	/**
+	 *
+	 * @param Folder $folder
+	 * @param int $level
+	 * @return array
+	 */
+	public function getFlatTree(int $level = 0): array {
+		if (!isset($this->flatTree)) {
+			$folderArray = array();
+
+			if ($this->getName() !== self::PARENT_FOLDER) {
+				$folderArray = array(new TreeElement($level, $this));
+				if ($this->getChildrenCount() > 0) {
+					foreach ($this->getFolderChildren() as $child) {
+						$folderArray = array_merge($folderArray, $child->getFlatTree($level + 1));
+					}
+				}
+			}
+
+			$this->flatTree = $folderArray;
+		}
+
+		return $this->flatTree;
+	}
+
+	/**
+	 *
+	 * @return boolean
+	 */
+	public function isRoot(): bool {
+		return $this == FileSystem::getRoot() || $this->getPath() === FileSystem::getRoot();
 	}
 
 	/**

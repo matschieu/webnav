@@ -3,7 +3,9 @@
 /**
  * @author Matschieu
  */
-abstract class Config {
+final class Config {
+
+	private function __construct() { }
 
 	// To display some debug information on the page
 	const DEBUG = false;
@@ -17,7 +19,7 @@ abstract class Config {
 	// Header of the file explorer, can contains some HTML
 	const APPLICATION_HEADER = "MD-WEBNAV";
 	// Footer of the file explorer, can contains some HTML
-	const APPLICATION_FOOTER = "By Matschieu";
+	const APPLICATION_FOOTER = "<a href=\"https://github.com/matschieu\" target=\"new\">By Matschieu</a>";
 
 	// The root dir of the file system to explore
 	// It can be a relative (to the index.php) path or an absolute path

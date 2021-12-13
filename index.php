@@ -3,7 +3,7 @@ require_once("./core/FileViewerApplication.php");
 
 FileViewerApplication::build()->init();
 
-$currentFolder = FileSystem::getCurrentFolder(FileViewerApplication::build()->getFolderContext());
+$currentFolder = FileViewerApplication::build()->getCurrentFolder();
 $folders = $currentFolder->getFolderChildren();
 $files = $currentFolder->getFileChildren();
 ?>
@@ -55,7 +55,7 @@ $files = $currentFolder->getFileChildren();
 						</a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link" href="#" onclick="javascript:window.location.reload();">
+						<a class="nav-link" href="<?php echo FileViewerApplication::build()->getRefreshUrl() ?>">
 							<span class="oi oi-reload"></span>
 							<?php echo Translation::get('menu.refresh') ?>
 						</a>
@@ -317,7 +317,10 @@ $files = $currentFolder->getFileChildren();
 					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 				</div>
 				<div class="modal-body" style="max-height: 400px; overflow-y: scroll">
-					<?php echo DisplayHelper::getFolderList(FileViewerApplication::build(), FileSystem::getRootFolder()) ?>
+					<?php foreach(FileViewerApplication::build()->getRootFolder()->getFlatTree() as $treeElement) { ?>
+					<a href="<?php echo FileViewerApplication::build()->getChangeFolderUrl($treeElement->getFolder()) ?>" class="list-group-item" style="padding-left: <?php echo (20 + $treeElement->getLevel() * 20) ?>px">
+					<span class="oi <?php echo $treeElement->getFolder()->getGlyphicon() ?>"></span> <?php echo $treeElement->getFolder()->getName() ?></a>
+					<?php } ?>
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-primary" data-bs-dismiss="modal"><?php echo Translation::get('modal.close') ?></button>

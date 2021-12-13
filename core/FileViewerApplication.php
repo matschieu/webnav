@@ -13,6 +13,7 @@ class FileViewerApplication {
 	const HTTP_PARAM_PATH = "!";
 	const HTTP_PARAM_VIEW = "v";
 	const HTTP_PARAM_LANG = "l";
+	const HTTP_PARAM_REFRESH = "r";
 
 	const VIEW_BLOCK = "bk";
 	const VIEW_LIST = "ls";
@@ -41,6 +42,7 @@ class FileViewerApplication {
 	}
 
 	/**
+	 *
 	 * Adds a directory in the include path of PHP to autoload classes
 	 * @param String $dirpath
 	 */
@@ -60,6 +62,7 @@ class FileViewerApplication {
 	}
 
 	/**
+	 *
 	 * Initializes the application and some options of PHP
 	 */
 	final public function init(): void {
@@ -160,6 +163,30 @@ class FileViewerApplication {
 		if ($language != null) {
 			$url .= "?". self::HTTP_PARAM_LANG . "=" . $language;
 		}
+
+		return $url;
+	}
+
+
+	/**
+	 *
+	 * @return string
+	 */
+	public function getRefreshUrl(): string {
+		$url = $this->getUrl() . "?";
+
+		$folder = $this->getFolderContext();
+		$language = $this->getLanguageContext();
+
+		if ($folder != null) {
+			$url .= self::HTTP_PARAM_PATH . "=" . $folder . "&";
+		}
+
+		if ($language != null) {
+			$url .= self::HTTP_PARAM_LANG . "=" . $language . "&";
+		}
+
+		$url .= self::HTTP_PARAM_REFRESH . "=1";
 
 		return $url;
 	}
@@ -277,8 +304,22 @@ class FileViewerApplication {
 	 *
 	 * @return Folder
 	 */
+	public function getRootFolder(): Folder {
+		session_start();
+
+		if (!isset($_SESSION["root_folder"]) || $this->getHttpParam(self::HTTP_PARAM_REFRESH) != null) {
+			$_SESSION["root_folder"] = FileSystem::getRootFolder();
+		}
+
+		return $_SESSION["root_folder"];
+	}
+
+	/**
+	 *
+	 * @return Folder
+	 */
 	public function getCurrentFolder(): Folder {
-		return FileSystem::getCurrentFolder($this->getFolderContext());
+		return FileSystem::getFolderFromLogicalPath($this->getFolderContext());
 	}
 
 }

@@ -4,7 +4,7 @@
  *
  * @author Matschieu
  */
-class DisplayHelper {
+final class DisplayHelper {
 
 	public static $element = 0;
 
@@ -12,58 +12,24 @@ class DisplayHelper {
 	 *
 	 * @return string
 	 */
-	public static function getRowOpening(): string {
-		if (self::$element % 6 === 0) {
-			return '<div class="row mt-3 mb-3">'.PHP_EOL;
-		}
-		return "";
+	final public static function getRowOpening(): string {
+		return self::$element % 6 === 0 ? '<div class="row mt-3 mb-3">'.PHP_EOL : "";
 	}
 
 	/**
 	 *
 	 * @return string
 	 */
-	public static function getRowClosing(): string {
-		if (++self::$element % 6 === 0) {
-			return '</div>'.PHP_EOL;
-		}
-		return "";
+	final public static function getRowClosing(): string {
+		return ++self::$element % 6 === 0 ? '</div>'.PHP_EOL : "";
 	}
 
 	/**
 	 *
 	 * @return string
 	 */
-	public static function getLastRowClosing(): string {
-		if ((self::$element - 1) % 6 !== 0) {
-			return '</div>'.PHP_EOL;
-		}
-		return "";
+	final public static function getLastRowClosing(): string {
+		return (self::$element - 1) % 6 !== 0 ? '</div>'.PHP_EOL : "";
 	}
-
-	/**
-	 *
-	 * @param FileViewerApplication $app
-	 * @param Folder $folder
-	 * @param number $level
-	 * @return string
-	 */
-	public static function getFolderList(FileViewerApplication $app, Folder $folder, int $level = 0): string {
-		$html = "";
-
-		if (isset($folder) && $folder->getName() !== FileSystem::PARENT_FOLDER) {
-			$html .= "<a href=\"" . $app->getChangeFolderUrl($folder) . "\" class=\"list-group-item\" style=\"padding-left: " . (20 + $level * 20) . "px\">".PHP_EOL;
-			$html .= "<span class=\"oi " . $folder->getGlyphicon() . "\"></span> " . $folder->getName() . "</a>".PHP_EOL;
-
-			if ($folder->getChildrenCount() > 0) {
-				foreach ($folder->getFolderChildren() as $child) {
-					$html .= self::getFolderList($app, $child, $level + 1);
-				}
-			}
-		}
-
-		return $html;
-	}
-
 
 }
