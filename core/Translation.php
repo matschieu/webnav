@@ -8,8 +8,8 @@ class Translation {
 
 	const DEFAULT_LANGUAGE = "en";
 
-	private static string $language;
-	private static array $messages;
+	public static ?string $language = null;
+	private static array $messages = array();
 	private static bool $init = false;
 
 	/**
@@ -17,14 +17,12 @@ class Translation {
 	 */
 	private static function init(): void {
 		if (!self::$init) {
-			self::$language = strtolower(FileViewerApplication::build()->getLanguageContext());
-
 			// If the language is not provided, set the default language
 			if (self::$language == null) {
 				self::$language = self::DEFAULT_LANGUAGE;
 			}
 
-			$file = './languages/'.self::$language.'.php';
+			$file = './languages/'.strtolower(self::$language).'.php';
 
 			// If the file doesn't exist, set the default language
 			if (is_file($file)) {
@@ -64,7 +62,7 @@ class Translation {
 		if (isset($key) && isset(self::$messages[$key])) {
 			return htmlspecialchars(self::$messages[$key]);
 		}
-		return null;
+		return "";
 	}
 
 }

@@ -12,12 +12,15 @@ class Folder extends File {
 
 	private ?array $flatTree = null;
 
+	private bool $includeHidden;
+
 	/**
 	 *
 	 * @param string $path
 	 * @param string $name
+	 * @param boolean $includeHidden
 	 */
-	public function __construct(string $path, string $name) {
+	public function __construct(string $path, string $name, bool $includeHidden = false) {
 		parent::__construct($path, $name);
 
 		if ($name == self::SELF_FOLDER || $name == self::PARENT_FOLDER) {
@@ -26,6 +29,7 @@ class Folder extends File {
 		}
 
 		$this->glyphicon = self::GLYPHICON_FOLDER;
+		$this->includeHidden = $includeHidden;
 	}
 
 	/**
@@ -108,11 +112,10 @@ class Folder extends File {
 		}
 
 		$filesList = array();
-		$idx = 0;
 
 		foreach(scandir($this->getPath()) as $file) {
 			$filePath = $this->getPath() . DIRECTORY_SEPARATOR . $file;
-			$appFolder = FileViewerApplication::build()->getInstallationFolder();
+			$appFolder = FileSystem::getInstallationFolder();
 
 			// If the folder is the one where the application is installed, it's not added to the list
 			if ($appFolder === $filePath) {
@@ -128,8 +131,11 @@ class Folder extends File {
 						break;
 					}
 				default:
+					if (!$this->includeHidden && substr($file, 0, 1) === "." && $file !== self::PARENT_FOLDER) {
+						continue;
+					}
 					if (file_exists($filePath) && is_dir($filePath)) {
-						$filesList[$idx++] = new Folder($filePath, $file);
+						array_push($filesList, new Folder($filePath, $file, $this->includeHidden));
 					}
 			}
 		}
@@ -147,7 +153,6 @@ class Folder extends File {
 		}
 
 		$filesList = array();
-		$idx = 0;
 
 		foreach(scandir($this->getPath()) as $file) {
 			switch($file) {
@@ -158,10 +163,14 @@ class Folder extends File {
 				case self::HTPASSWD:
 					continue;
 				default:
+					if (!$this->includeHidden && substr($file, 0, 1) === ".") {
+						continue;
+					}
+
 					$filePath = $this->getPath() . DIRECTORY_SEPARATOR . $file;
 
 					if (file_exists($filePath) && !is_dir($filePath)) {
-						$filesList[$idx++] = new File($filePath, $file);
+						array_push($filesList, new File($filePath, $file));
 					}
 			}
 		}

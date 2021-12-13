@@ -12,10 +12,18 @@ final class FileSystem {
 
 	/**
 	 *
+	 * @return string
+	 */
+	final public static function getInstallationFolder(): ?string {
+		return dirname($_SERVER['SCRIPT_FILENAME']);
+	}
+
+	/**
+	 *
 	 * @param string $path
 	 * @return string
 	 */
-	final public function getLogicalPath(string $path): string {
+	final public static function getLogicalPath(string $path): string {
 		$rootPathes = array(self::getRoot() . DIRECTORY_SEPARATOR, self::getRoot());
 		return str_replace($rootPathes, self::ROOT, $path);
 	}
@@ -47,9 +55,10 @@ final class FileSystem {
 
 	/**
 	 *
+	 * @param boolean $includeHidden
 	 * @return Folder
 	 */
-	final public static function getRootFolder(): Folder {
+	final public static function getRootFolder(bool $includeHidden = false): Folder {
 		if (!isset(self::$rootFolder)) {
 			$path = Config::FILE_SYSTEM_ROOT;
 
@@ -58,7 +67,7 @@ final class FileSystem {
 				$path = realpath(dirname($_SERVER['SCRIPT_FILENAME']) . DIRECTORY_SEPARATOR . Config::FILE_SYSTEM_ROOT);
 			}
 
-			self::$rootFolder = new Folder($path, self::ROOT);
+			self::$rootFolder = new Folder($path, self::ROOT, $includeHidden);
 		}
 
 		return self::$rootFolder;
@@ -67,9 +76,10 @@ final class FileSystem {
 	/**
 	 *
 	 * @param string $logicalPath
+	 * @param boolean $includeHidden
 	 * @return Folder
 	 */
-	final public static function getFolderFromLogicalPath(?string $logicalPath): Folder {
+	final public static function getFolderFromLogicalPath(?string $logicalPath, bool $includeHidden = false): Folder {
 		$rootPath = self::getRoot();
 
 		// If a logical path is specified in the URL and is valid then it's added to the path.
@@ -84,7 +94,7 @@ final class FileSystem {
 			$path = $rootPath;
 		}
 
-		return new Folder($path, "/");
+		return new Folder($path, "/", $includeHidden);
 	}
 
 	/**

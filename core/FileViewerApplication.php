@@ -13,6 +13,7 @@ class FileViewerApplication {
 	const HTTP_PARAM_PATH = "!";
 	const HTTP_PARAM_VIEW = "v";
 	const HTTP_PARAM_LANG = "l";
+	const HTTP_PARAM_HIDDEN = "h";
 	const HTTP_PARAM_REFRESH = "r";
 
 	const VIEW_BLOCK = "bk";
@@ -21,6 +22,8 @@ class FileViewerApplication {
 	private static ?FileViewerApplication $application = null;
 
 	private $startExecTime;
+
+	private AppContext $appContext;
 
 	/**
 	 *
@@ -36,9 +39,23 @@ class FileViewerApplication {
 
 	/**
 	 *
+	 * @return string
+	 */
+	private function getHttpParam($param): ?string {
+		if (isset($_GET[$param]) && !empty($_GET[$param])) {
+			return $_GET[$param];
+		}
+		return null;
+	}
+
+	/**
+	 *
 	 */
 	private function __construct() {
+		$this->init();
 		$this->startExecTime = microtime(true);
+		$this->appContext = new AppContext($this->getHttpParam(self::HTTP_PARAM_PATH), $this->getHttpParam(self::HTTP_PARAM_LANG), $this->getHttpParam(self::HTTP_PARAM_VIEW), $this->getHttpParam(self::HTTP_PARAM_HIDDEN));
+		Translation::$language = $this->appContext->getLanguage();
 	}
 
 	/**
@@ -50,7 +67,7 @@ class FileViewerApplication {
 		$dir = dir($dirpath);
 
 		//set_include_path(get_include_path() . PATH_SEPARATOR . $dir->path);
-		global$path;
+		global $path;
 		$path = ($path !== "" ? $path . PATH_SEPARATOR : "") . $dir->path;
 
 		while (false !== ($entry = $dir->read())) {
@@ -65,7 +82,7 @@ class FileViewerApplication {
 	 *
 	 * Initializes the application and some options of PHP
 	 */
-	final public function init(): void {
+	final private function init(): void {
 		date_default_timezone_set('Europe/Paris');
 
 		self::addToPath(self::CORE_DIR);
@@ -81,6 +98,40 @@ class FileViewerApplication {
 		}
 
 		require_once("./core/autoload.php");
+	}
+
+	/**
+	 *
+	 * @return string
+	 */
+	private function getUrl(): string {
+		return "http://" . $_SERVER['HTTP_HOST'] . $_SERVER['PHP_SELF'];
+	}
+
+	/**
+	 *
+	 * @param array $params
+	 * @return string
+	 */
+	private function formatUrlWithParams(array $params): string {
+		$url = $this->getUrl();
+
+		if (count($params) > 0) {
+			$url .= "?";
+			$i = 0;
+
+			foreach($params as $key => $value) {
+				if ($value == null) {
+					continue;
+				}
+				if ($i++ > 0) {
+					$url .= "&";
+				}
+				$url .= $key."=".$value;
+			}
+		}
+
+		return $url;
 	}
 
 	/**
@@ -103,53 +154,10 @@ class FileViewerApplication {
 
 	/**
 	 *
-	 * @return string
+	 * @return AppContext
 	 */
-	private function getHttpParam($param): ?string {
-		if (isset($_GET[$param]) && !empty($_GET[$param])) {
-			return $_GET[$param];
-		}
-		return null;
-	}
-
-	/**
-	 *
-	 * @return string
-	 */
-	public function getFolderContext(): ?string {
-		return $this->getHttpParam(self::HTTP_PARAM_PATH);
-	}
-
-	/**
-	 *
-	 * @return string
-	 */
-	public function getViewContext(): ?string {
-		return $this->getHttpParam(self::HTTP_PARAM_VIEW);
-	}
-
-	/**
-	 *
-	 * @return string
-	 */
-	public function getLanguageContext(): ?string {
-		return $this->getHttpParam(self::HTTP_PARAM_LANG);
-	}
-
-	/**
-	 *
-	 * @return string
-	 */
-	public function getInstallationFolder(): ?string {
-		return dirname($_SERVER['SCRIPT_FILENAME']);
-	}
-
-	/**
-	 *
-	 * @return string
-	 */
-	public function getUrl(): string {
-		return "http://" . $_SERVER['HTTP_HOST'] . $_SERVER['PHP_SELF'];
+	public function getAppContext(): AppContext {
+		return $this->appContext;
 	}
 
 	/**
@@ -157,107 +165,81 @@ class FileViewerApplication {
 	 * @return string
 	 */
 	public function getRootUrl(): string {
-		$url = $this->getUrl();
-		$language = $this->getLanguageContext();
-
-		if ($language != null) {
-			$url .= "?". self::HTTP_PARAM_LANG . "=" . $language;
-		}
-
-		return $url;
+		return $this->formatUrlWithParams(array(
+				self::HTTP_PARAM_LANG => $this->appContext->getLanguage(),
+				self::HTTP_PARAM_VIEW => $this->appContext->getViewType(),
+				self::HTTP_PARAM_HIDDEN => $this->appContext->getShowHidden(),
+		));
 	}
-
 
 	/**
 	 *
 	 * @return string
 	 */
 	public function getRefreshUrl(): string {
-		$url = $this->getUrl() . "?";
-
-		$folder = $this->getFolderContext();
-		$language = $this->getLanguageContext();
-
-		if ($folder != null) {
-			$url .= self::HTTP_PARAM_PATH . "=" . $folder . "&";
-		}
-
-		if ($language != null) {
-			$url .= self::HTTP_PARAM_LANG . "=" . $language . "&";
-		}
-
-		$url .= self::HTTP_PARAM_REFRESH . "=1";
-
-		return $url;
+		return $this->formatUrlWithParams(array(
+			self::HTTP_PARAM_PATH => $this->appContext->getLocation(),
+			self::HTTP_PARAM_LANG => $this->appContext->getLanguage(),
+			self::HTTP_PARAM_VIEW => $this->appContext->getViewType(),
+			self::HTTP_PARAM_HIDDEN => $this->appContext->getShowHidden(),
+			self::HTTP_PARAM_REFRESH => true,
+		));
 	}
 
 	/**
 	 *
+	 * @param string $language
 	 * @return string
 	 */
-	public function getChangeLanguageUrl($language): string {
-		$url = $this->getUrl() . "?";
-
-		$folder = $this->getFolderContext();
-		$view = $this->getViewContext();
-
-		if ($folder != null) {
-			$url .= self::HTTP_PARAM_PATH . "=" . $folder . "&";
-		}
-
-		if ($view != null) {
-			$url .= self::HTTP_PARAM_VIEW . "=" . $view . "&";
-		}
-
-		$url .= self::HTTP_PARAM_LANG . "=" . $language;
-
-		return $url;
+	public function getChangeLanguageUrl(string $language): string {
+		return $this->formatUrlWithParams(array(
+			self::HTTP_PARAM_PATH => $this->appContext->getLocation(),
+			self::HTTP_PARAM_LANG => $language,
+			self::HTTP_PARAM_VIEW => $this->appContext->getViewType(),
+			self::HTTP_PARAM_HIDDEN => $this->appContext->getShowHidden(),
+		));
 	}
 
 	/**
 	 *
+	 * @param string $viewType
 	 * @return string
 	 */
-	public function getChangeViewUrl($view): string {
-		$url = $this->getUrl() . "?";
-
-		$folder = $this->getFolderContext();
-		$language = $this->getLanguageContext();
-
-		if ($folder != null) {
-			$url .= self::HTTP_PARAM_PATH . "=" . $folder . "&";
-		}
-
-		if ($language != null) {
-			$url .= self::HTTP_PARAM_LANG . "=" . $language . "&";
-		}
-
-		$url .= self::HTTP_PARAM_VIEW . "=" . $view;
-
-		return $url;
+	public function getChangeViewUrl(string $viewType): string {
+		return $this->formatUrlWithParams(array(
+			self::HTTP_PARAM_PATH => $this->appContext->getLocation(),
+			self::HTTP_PARAM_LANG => $this->appContext->getLanguage(),
+			self::HTTP_PARAM_VIEW => $viewType,
+			self::HTTP_PARAM_HIDDEN => $this->appContext->getShowHidden(),
+		));
 	}
 
 	/**
 	 *
+	 * @param Folder $folder
 	 * @return string
 	 */
 	public function getChangeFolderUrl(Folder $folder): string {
-		$url = $this->getUrl() . "?";
+		return $this->formatUrlWithParams(array(
+			self::HTTP_PARAM_PATH => $folder->getLogicalPath(),
+			self::HTTP_PARAM_LANG => $this->appContext->getLanguage(),
+			self::HTTP_PARAM_VIEW => $this->appContext->getViewType(),
+			self::HTTP_PARAM_HIDDEN => $this->appContext->getShowHidden(),
+		));
+	}
 
-		$view = $this->getViewContext();
-		$language = $this->getLanguageContext();
-
-		if ($view != null) {
-			$url .= self::HTTP_PARAM_VIEW . "=" . $view . "&";
-		}
-
-		if ($language != null) {
-			$url .= self::HTTP_PARAM_LANG . "=" . $language . "&";
-		}
-
-		$url .= self::HTTP_PARAM_PATH . "=" . $folder->getLogicalPath();
-
-		return $url;
+	/**
+	 *
+	 * @param boolean $showHidden
+	 * @return string
+	 */
+	public function getShowHiddenUrl(bool $showHidden): string {
+		return $this->formatUrlWithParams(array(
+			self::HTTP_PARAM_PATH => $this->appContext->getLocation(),
+			self::HTTP_PARAM_LANG => $this->appContext->getLanguage(),
+			self::HTTP_PARAM_VIEW => $this->appContext->getViewType(),
+			self::HTTP_PARAM_HIDDEN => $showHidden,
+		));
 	}
 
 	/**
@@ -305,13 +287,7 @@ class FileViewerApplication {
 	 * @return Folder
 	 */
 	public function getRootFolder(): Folder {
-		session_start();
-
-		if (!isset($_SESSION["root_folder"]) || $this->getHttpParam(self::HTTP_PARAM_REFRESH) != null) {
-			$_SESSION["root_folder"] = FileSystem::getRootFolder();
-		}
-
-		return $_SESSION["root_folder"];
+		return FileSystem::getRootFolder($this->appContext->getShowHidden());
 	}
 
 	/**
@@ -319,7 +295,7 @@ class FileViewerApplication {
 	 * @return Folder
 	 */
 	public function getCurrentFolder(): Folder {
-		return FileSystem::getFolderFromLogicalPath($this->getFolderContext());
+		return FileSystem::getFolderFromLogicalPath($this->appContext->getLocation(), $this->appContext->getShowHidden());
 	}
 
 }

@@ -1,7 +1,7 @@
 <?php
 require_once("./core/FileViewerApplication.php");
 
-FileViewerApplication::build()->init();
+FileViewerApplication::build();
 
 $currentFolder = FileViewerApplication::build()->getCurrentFolder();
 $folders = $currentFolder->getFolderChildren();
@@ -60,6 +60,7 @@ $files = $currentFolder->getFileChildren();
 							<?php echo Translation::get('menu.refresh') ?>
 						</a>
 					</li>
+					<!--
 					<li class="nav-item">
 						<a class="nav-link" href="#" onclick="javascript:window.history.back();">
 							<span class="oi oi-arrow-thick-left"></span>
@@ -72,21 +73,33 @@ $files = $currentFolder->getFileChildren();
 							<?php echo Translation::get('menu.next') ?>
 						</a>
 					</li>
-					<?php if (FileViewerApplication::build()->getViewContext() == FileViewerApplication::VIEW_LIST) { ?>
+					-->
 					<li class="nav-item">
+						<?php if (FileViewerApplication::build()->getAppContext()->getShowHidden()) { ?>
+						<a class="nav-link" href="<?php echo FileViewerApplication::build()->getShowHiddenUrl(false) ?>">
+							<span class="oi oi-lock-locked"></span>
+							<?php echo Translation::get('menu.hideHiddenFiles') ?>
+						</a>
+						<?php } else {?>
+						<a class="nav-link" href="<?php echo FileViewerApplication::build()->getShowHiddenUrl(true) ?>">
+							<span class="oi oi-lock-unlocked"></span>
+							<?php echo Translation::get('menu.showHiddenFiles') ?>
+						</a>
+						<?php } ?>
+					</li>
+					<li class="nav-item">
+						<?php if (FileViewerApplication::build()->getAppContext()->getViewType() == FileViewerApplication::VIEW_LIST) { ?>
 						<a class="nav-link" href="<?php echo FileViewerApplication::build()->getChangeViewUrl(FileViewerApplication::VIEW_BLOCK) ?>">
 							<span class="oi oi-grid-three-up"></span>
 							<?php echo Translation::get('menu.blockView') ?>
 						</a>
-					</li>
-					<?php } else {?>
-					<li class="nav-item">
+						<?php } else {?>
 						<a class="nav-link" href="<?php echo FileViewerApplication::build()->getChangeViewUrl(FileViewerApplication::VIEW_LIST) ?>">
 							<span class="oi oi-list"></span>
 							<?php echo Translation::get('menu.listView') ?>
 						</a>
+						<?php } ?>
 					</li>
-					<?php } ?>
 				</ul>
 				<ul class="navbar-nav ms-auto">
 					<li class="nav-item dropdown">
@@ -99,7 +112,7 @@ $files = $currentFolder->getFileChildren();
 							<li>
 								<a class="dropdown-item" href="<?php echo FileViewerApplication::build()->getChangeLanguageUrl("en") ?>">
 									<?php echo Translation::get('menu.english') ?>
-									<?php if (FileViewerApplication::build()->getLanguageContext() === "en") { ?>
+									<?php if (FileViewerApplication::build()->getAppContext()->getLanguage() === "en") { ?>
 									<span class="oi oi-check"></span>
 									<?php } ?>
 								</a>
@@ -107,7 +120,7 @@ $files = $currentFolder->getFileChildren();
 							<li>
 								<a class="dropdown-item" href="<?php echo FileViewerApplication::build()->getChangeLanguageUrl("fr") ?>">
 									<?php echo Translation::get('menu.french') ?>
-									<?php if (FileViewerApplication::build()->getLanguageContext() === "fr") { ?>
+									<?php if (FileViewerApplication::build()->getAppContext()->getLanguage() === "fr") { ?>
 									<span class="oi oi-check"></span>
 									<?php } ?>
 								</a>
@@ -115,7 +128,7 @@ $files = $currentFolder->getFileChildren();
 						</ul>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link" ref="#" onclick="javascript:open(location, '_self').close(); return true;">
+						<a class="nav-link" href="#" onclick="javascript:open(location, '_self').close(); return true;">
 							<span class="oi oi-x"></span>
 							<?php echo Translation::get('menu.close') ?>
 						</a>
@@ -136,7 +149,7 @@ $files = $currentFolder->getFileChildren();
 			</div>
 		</div>
 
-		<?php if (FileViewerApplication::build()->getViewContext() == FileViewerApplication::VIEW_LIST) { ?>
+		<?php if (FileViewerApplication::build()->getAppContext()->getViewType() == FileViewerApplication::VIEW_LIST) { ?>
 
 		<!-- LIST VIEW -->
 		<div id="list">

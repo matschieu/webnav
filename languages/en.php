@@ -7,6 +7,8 @@ return array(
 	"menu.refresh" => "Refresh",
 	"menu.back" => "Back",
 	"menu.next" => "Next",
+	"menu.showHiddenFiles" => "Show hidden files",
+	"menu.hideHiddenFiles" => "Hide hidden files",
 	"menu.blockView" => "Block view",
 	"menu.listView" => "List view",
 	"menu.language" => "Language",
