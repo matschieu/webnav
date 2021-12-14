@@ -10,14 +10,11 @@ $path = "";
 class FileViewerApplication {
 
 	const CORE_DIR = "./core";
-	const HTTP_PARAM_PATH = "!";
-	const HTTP_PARAM_VIEW = "v";
-	const HTTP_PARAM_LANG = "l";
-	const HTTP_PARAM_HIDDEN = "h";
-	const HTTP_PARAM_REFRESH = "r";
-
-	const VIEW_BLOCK = "bk";
-	const VIEW_LIST = "ls";
+	const HTTP_PARAM_PATH = "dir";
+	const HTTP_PARAM_LIST = "list";
+	const HTTP_PARAM_LANG = "lang";
+	const HTTP_PARAM_HIDDEN = "hid";
+	const HTTP_PARAM_REFRESH = "rfr";
 
 	private static ?FileViewerApplication $application = null;
 
@@ -54,7 +51,12 @@ class FileViewerApplication {
 	private function __construct() {
 		$this->init();
 		$this->startExecTime = microtime(true);
-		$this->appContext = new AppContext($this->getHttpParam(self::HTTP_PARAM_PATH), $this->getHttpParam(self::HTTP_PARAM_LANG), $this->getHttpParam(self::HTTP_PARAM_VIEW), $this->getHttpParam(self::HTTP_PARAM_HIDDEN));
+		$this->appContext = new AppContext(
+			$this->getHttpParam(self::HTTP_PARAM_PATH),
+			$this->getHttpParam(self::HTTP_PARAM_LANG),
+			$this->getHttpParam(self::HTTP_PARAM_LIST) != null,
+			$this->getHttpParam(self::HTTP_PARAM_HIDDEN) != null
+		);
 		Translation::$language = $this->appContext->getLanguage();
 	}
 
@@ -167,7 +169,7 @@ class FileViewerApplication {
 	public function getRootUrl(): string {
 		return $this->formatUrlWithParams(array(
 				self::HTTP_PARAM_LANG => $this->appContext->getLanguage(),
-				self::HTTP_PARAM_VIEW => $this->appContext->getViewType(),
+				self::HTTP_PARAM_LIST => $this->appContext->getDisplayList(),
 				self::HTTP_PARAM_HIDDEN => $this->appContext->getShowHidden(),
 		));
 	}
@@ -180,7 +182,7 @@ class FileViewerApplication {
 		return $this->formatUrlWithParams(array(
 			self::HTTP_PARAM_PATH => $this->appContext->getLocation(),
 			self::HTTP_PARAM_LANG => $this->appContext->getLanguage(),
-			self::HTTP_PARAM_VIEW => $this->appContext->getViewType(),
+			self::HTTP_PARAM_LIST => $this->appContext->getDisplayList(),
 			self::HTTP_PARAM_HIDDEN => $this->appContext->getShowHidden(),
 			self::HTTP_PARAM_REFRESH => true,
 		));
@@ -195,21 +197,33 @@ class FileViewerApplication {
 		return $this->formatUrlWithParams(array(
 			self::HTTP_PARAM_PATH => $this->appContext->getLocation(),
 			self::HTTP_PARAM_LANG => $language,
-			self::HTTP_PARAM_VIEW => $this->appContext->getViewType(),
+			self::HTTP_PARAM_LIST => $this->appContext->getDisplayList(),
 			self::HTTP_PARAM_HIDDEN => $this->appContext->getShowHidden(),
 		));
 	}
 
 	/**
 	 *
-	 * @param string $viewType
 	 * @return string
 	 */
-	public function getChangeViewUrl(string $viewType): string {
+	public function getDisplayBlockUrl(): string {
 		return $this->formatUrlWithParams(array(
 			self::HTTP_PARAM_PATH => $this->appContext->getLocation(),
 			self::HTTP_PARAM_LANG => $this->appContext->getLanguage(),
-			self::HTTP_PARAM_VIEW => $viewType,
+			self::HTTP_PARAM_LIST => false,
+			self::HTTP_PARAM_HIDDEN => $this->appContext->getShowHidden(),
+		));
+	}
+
+	/**
+	 *
+	 * @return string
+	 */
+	public function getDisplayListUrl(): string {
+		return $this->formatUrlWithParams(array(
+			self::HTTP_PARAM_PATH => $this->appContext->getLocation(),
+			self::HTTP_PARAM_LANG => $this->appContext->getLanguage(),
+			self::HTTP_PARAM_LIST => true,
 			self::HTTP_PARAM_HIDDEN => $this->appContext->getShowHidden(),
 		));
 	}
@@ -223,7 +237,7 @@ class FileViewerApplication {
 		return $this->formatUrlWithParams(array(
 			self::HTTP_PARAM_PATH => $folder->getLogicalPath(),
 			self::HTTP_PARAM_LANG => $this->appContext->getLanguage(),
-			self::HTTP_PARAM_VIEW => $this->appContext->getViewType(),
+			self::HTTP_PARAM_LIST => $this->appContext->getDisplayList(),
 			self::HTTP_PARAM_HIDDEN => $this->appContext->getShowHidden(),
 		));
 	}
@@ -237,7 +251,7 @@ class FileViewerApplication {
 		return $this->formatUrlWithParams(array(
 			self::HTTP_PARAM_PATH => $this->appContext->getLocation(),
 			self::HTTP_PARAM_LANG => $this->appContext->getLanguage(),
-			self::HTTP_PARAM_VIEW => $this->appContext->getViewType(),
+			self::HTTP_PARAM_LIST => $this->appContext->getDisplayList(),
 			self::HTTP_PARAM_HIDDEN => $showHidden,
 		));
 	}
@@ -296,6 +310,15 @@ class FileViewerApplication {
 	 */
 	public function getCurrentFolder(): Folder {
 		return FileSystem::getFolderFromLogicalPath($this->appContext->getLocation(), $this->appContext->getShowHidden());
+	}
+
+	/**
+	 *
+	 * @param string $language
+	 * @return boolean
+	 */
+	public function isSelectedLanguage(string $language): bool {
+		return $this->appContext->getLanguage() === $language || $this->appContext->getLanguage() == null && Translation::DEFAULT_LANGUAGE === $language;
 	}
 
 }

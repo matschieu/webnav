@@ -9,21 +9,21 @@ class AppContext {
 
 	private ?string $location;
 	private ?string $language;
-	private ?string $viewType;
+	private bool $displayList;
 	private bool $showHidden;
 
 	/**
 	 *
 	 * @param string $location
 	 * @param string $language
-	 * @param string $viewType
+	 * @param bool $displayList
 	 * @param bool $showHidden
 	 */
-	public function __construct(?string $location = null, ?string $language = null, ?string $viewType = null, ?bool $showHidden = false) {
+	public function __construct(?string $location = null, ?string $language = null, bool $displayList = false, bool $showHidden = false) {
 		$this->location = $location;
 		$this->language = $language;
-		$this->viewType = $viewType;
-		$this->showHidden = $showHidden == null ? false : $showHidden;
+		$this->displayList = $displayList;
+		$this->showHidden = $showHidden;
 	}
 
 	/**
@@ -41,10 +41,10 @@ class AppContext {
 	}
 
 	/**
-	 * @return string
+	 * @return boolean
 	 */
-	public function getViewType(): ?string {
-		return $this->viewType;
+	public function getDisplayList(): bool {
+		return $this->displayList;
 	}
 
 	/**

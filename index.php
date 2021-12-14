@@ -1,9 +1,9 @@
 <?php
 require_once("./core/FileViewerApplication.php");
 
-FileViewerApplication::build();
+$app = FileViewerApplication::build();
 
-$currentFolder = FileViewerApplication::build()->getCurrentFolder();
+$currentFolder = $app->getCurrentFolder();
 $folders = $currentFolder->getFolderChildren();
 $files = $currentFolder->getFileChildren();
 ?>
@@ -12,13 +12,13 @@ $files = $currentFolder->getFileChildren();
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="fr" lang="fr">
 
 <head>
-	<title><?php echo FileViewerApplication::build()->getName() ?></title>
+	<title><?php echo $app->getName() ?></title>
 	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 	<meta name="Author" content="Matschieu" />
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
 	<meta name="robots" content="noindex" />
 	<link rel="icon" type="image/png" href="img/favicon.png" />
-	<link rel="icon" type="image/png" href="<?php echo FileViewerApplication::build()->getFavicon() ?>" />
+	<link rel="icon" type="image/png" href="<?php echo $app->getFavicon() ?>" />
 	<!--Bootstrap -->
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous" />
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
@@ -27,19 +27,19 @@ $files = $currentFolder->getFileChildren();
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/open-iconic/1.1.1/font/css/open-iconic-bootstrap.min.css" integrity="sha512-UyNhw5RNpQaCai2EdC+Js0QL4RlVmiq41DkmCJsRV3ZxipG2L0HhTqIf/H9Hp8ez2EnFlkBnjRGJU2stW3Lj+w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 	<!-- Application styles -->
 	<link rel="stylesheet" type="text/css" href="./styles/default.css" media="screen" />
-	<link rel="stylesheet" type="text/css" href="<?php echo FileViewerApplication::build()->getCustomCss() ?>" media="screen" />
+	<link rel="stylesheet" type="text/css" href="<?php echo $app->getCustomCss() ?>" media="screen" />
 </head>
 
 <body>
 	<!-- HEADER -->
 	<div id="header" class="p-1">
-		<?php echo FileViewerApplication::build()->getHeader() ?>
+		<?php echo $app->getHeader() ?>
 	</div>
 
 	<!-- MENU -->
 	<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
 		<div class="container-fluid">
-			<a class="navbar-brand" href="<?php echo FileViewerApplication::build()->getRootUrl() ?>" >
+			<a class="navbar-brand" href="<?php echo $app->getRootUrl() ?>" >
 				<span class="oi oi-home"></span>
 				<?php echo Translation::get('menu.root') ?>
 			</a>
@@ -50,12 +50,12 @@ $files = $currentFolder->getFileChildren();
 				<ul class="navbar-nav me-auto">
 					<li class="nav-item">
 						<a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#folderTreeModal">
-							<span class="oi oi-star"></span>
+							<span class="oi oi-project"></span>
 							<?php echo Translation::get('menu.folderTree') ?>
 						</a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link" href="<?php echo FileViewerApplication::build()->getRefreshUrl() ?>">
+						<a class="nav-link" href="<?php echo $app->getRefreshUrl() ?>">
 							<span class="oi oi-reload"></span>
 							<?php echo Translation::get('menu.refresh') ?>
 						</a>
@@ -75,26 +75,26 @@ $files = $currentFolder->getFileChildren();
 					</li>
 					-->
 					<li class="nav-item">
-						<?php if (FileViewerApplication::build()->getAppContext()->getShowHidden()) { ?>
-						<a class="nav-link" href="<?php echo FileViewerApplication::build()->getShowHiddenUrl(false) ?>">
+						<?php if ($app->getAppContext()->getShowHidden()) { ?>
+						<a class="nav-link" href="<?php echo $app->getShowHiddenUrl(false) ?>">
 							<span class="oi oi-lock-locked"></span>
 							<?php echo Translation::get('menu.hideHiddenFiles') ?>
 						</a>
 						<?php } else {?>
-						<a class="nav-link" href="<?php echo FileViewerApplication::build()->getShowHiddenUrl(true) ?>">
+						<a class="nav-link" href="<?php echo $app->getShowHiddenUrl(true) ?>">
 							<span class="oi oi-lock-unlocked"></span>
 							<?php echo Translation::get('menu.showHiddenFiles') ?>
 						</a>
 						<?php } ?>
 					</li>
 					<li class="nav-item">
-						<?php if (FileViewerApplication::build()->getAppContext()->getViewType() == FileViewerApplication::VIEW_LIST) { ?>
-						<a class="nav-link" href="<?php echo FileViewerApplication::build()->getChangeViewUrl(FileViewerApplication::VIEW_BLOCK) ?>">
+						<?php if ($app->getAppContext()->getDisplayList()) { ?>
+						<a class="nav-link" href="<?php echo $app->getDisplayBlockUrl() ?>">
 							<span class="oi oi-grid-three-up"></span>
 							<?php echo Translation::get('menu.blockView') ?>
 						</a>
 						<?php } else {?>
-						<a class="nav-link" href="<?php echo FileViewerApplication::build()->getChangeViewUrl(FileViewerApplication::VIEW_LIST) ?>">
+						<a class="nav-link" href="<?php echo $app->getDisplayListUrl() ?>">
 							<span class="oi oi-list"></span>
 							<?php echo Translation::get('menu.listView') ?>
 						</a>
@@ -110,17 +110,17 @@ $files = $currentFolder->getFileChildren();
 						</a>
 						<ul class="dropdown-menu" aria-labelledby="navbarDropdown">
 							<li>
-								<a class="dropdown-item" href="<?php echo FileViewerApplication::build()->getChangeLanguageUrl("en") ?>">
+								<a class="dropdown-item" href="<?php echo $app->getChangeLanguageUrl("en") ?>">
 									<?php echo Translation::get('menu.english') ?>
-									<?php if (FileViewerApplication::build()->getAppContext()->getLanguage() === "en") { ?>
+									<?php if ($app->isSelectedLanguage("en")) { ?>
 									<span class="oi oi-check"></span>
 									<?php } ?>
 								</a>
 							</li>
 							<li>
-								<a class="dropdown-item" href="<?php echo FileViewerApplication::build()->getChangeLanguageUrl("fr") ?>">
+								<a class="dropdown-item" href="<?php echo $app->getChangeLanguageUrl("fr") ?>">
 									<?php echo Translation::get('menu.french') ?>
-									<?php if (FileViewerApplication::build()->getAppContext()->getLanguage() === "fr") { ?>
+									<?php if ($app->isSelectedLanguage("fr")) { ?>
 									<span class="oi oi-check"></span>
 									<?php } ?>
 								</a>
@@ -149,7 +149,7 @@ $files = $currentFolder->getFileChildren();
 			</div>
 		</div>
 
-		<?php if (FileViewerApplication::build()->getAppContext()->getViewType() == FileViewerApplication::VIEW_LIST) { ?>
+		<?php if ($app->getAppContext()->getDisplayList()) { ?>
 
 		<!-- LIST VIEW -->
 		<div id="list">
@@ -173,7 +173,7 @@ $files = $currentFolder->getFileChildren();
 					</td>
 					<td></td>
 					<td>
-						<a href="<?php echo FileViewerApplication::build()->getChangeFolderUrl($folder) ?>">
+						<a href="<?php echo $app->getChangeFolderUrl($folder) ?>">
 							<?php echo $folder->getDisplayName() ?>
 						</a>
 					</td>
@@ -184,7 +184,7 @@ $files = $currentFolder->getFileChildren();
 						<?php echo $folder->getDate() ?>
 					</td>
 					<td>
-						<a href="<?php echo FileViewerApplication::build()->getChangeFolderUrl($folder) ?>" title="<?php echo Translation::get('content.openFolder') ?>">
+						<a href="<?php echo $app->getChangeFolderUrl($folder) ?>" title="<?php echo Translation::get('content.openFolder') ?>">
 								<span class="oi oi-account-login p-2"></span></a>
 					</td>
 				</tr>
@@ -238,12 +238,12 @@ $files = $currentFolder->getFileChildren();
 						</div>
 					</div>
 					<div class="info col-md-10 text-break">
-						<a href="<?php echo FileViewerApplication::build()->getChangeFolderUrl($folder) ?>">
+						<a href="<?php echo $app->getChangeFolderUrl($folder) ?>">
 							<?php echo $folder->getDisplayName() ?>
 						</a><br />
 						<div><?php echo FileSystem::convertSize($folder->getSize()) ?></div>
 						<div><?php echo $folder->getDate() ?></div>
-						<a href="<?php echo FileViewerApplication::build()->getChangeFolderUrl($folder) ?>" title="<?php echo Translation::get('content.openFolder') ?>">
+						<a href="<?php echo $app->getChangeFolderUrl($folder) ?>" title="<?php echo Translation::get('content.openFolder') ?>">
 							<span class="oi oi-account-login p-2"></span></a>
 					</div>
 				</div>
@@ -318,7 +318,7 @@ $files = $currentFolder->getFileChildren();
 
 	<!-- FOOTER -->
 	<div id="footer" class="text-end p-1">
-		<?php echo FileViewerApplication::build()->getFooter() ?>
+		<?php echo $app->getFooter() ?>
 	</div>
 
 	<!-- Folder tree modal -->
@@ -330,8 +330,8 @@ $files = $currentFolder->getFileChildren();
 					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 				</div>
 				<div class="modal-body" style="max-height: 400px; overflow-y: scroll">
-					<?php foreach(FileViewerApplication::build()->getRootFolder()->getFlatTree() as $treeElement) { ?>
-					<a href="<?php echo FileViewerApplication::build()->getChangeFolderUrl($treeElement->getFolder()) ?>" class="list-group-item" style="padding-left: <?php echo (20 + $treeElement->getLevel() * 20) ?>px">
+					<?php foreach($app->getRootFolder()->getFlatTree() as $treeElement) { ?>
+					<a href="<?php echo $app->getChangeFolderUrl($treeElement->getFolder()) ?>" class="list-group-item" style="padding-left: <?php echo (20 + $treeElement->getLevel() * 20) ?>px">
 					<span class="oi <?php echo $treeElement->getFolder()->getGlyphicon() ?>"></span> <?php echo $treeElement->getFolder()->getName() ?></a>
 					<?php } ?>
 				</div>
@@ -345,4 +345,4 @@ $files = $currentFolder->getFileChildren();
 
 </html>
 
-<?php FileViewerApplication::build()->postLoad() ?>
+<?php $app->postLoad() ?>
