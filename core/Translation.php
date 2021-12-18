@@ -22,7 +22,7 @@ class Translation {
 				self::$language = self::DEFAULT_LANGUAGE;
 			}
 
-			$file = './languages/'.strtolower(self::$language).'.php';
+			$file = './i18n/'.strtolower(self::$language).'.php';
 
 			// If the file doesn't exist, set the default language
 			if (is_file($file)) {
