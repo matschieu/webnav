@@ -15,6 +15,8 @@ return array(
 	"menu.french" => "French",
 	"menu.english" => "English",
 	"menu.close" => "Close",
+	"menu.filter" => "Filter",
+	"menu.reset" => "Reset",
 	// Statebar
 	"statebar.navigation" => "Navigation in ",
 	"statebar.file" => " file",

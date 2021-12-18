@@ -28,6 +28,27 @@ $files = $currentFolder->getFileChildren();
 	<!-- Application styles -->
 	<link rel="stylesheet" type="text/css" href="./styles/default.css" media="screen" />
 	<link rel="stylesheet" type="text/css" href="<?php echo $app->getCustomCss() ?>" media="screen" />
+	<script type="text/javascript">
+		function filter(value = "") {
+			var elements = document.getElementsByClassName("filename");
+			console.log(elements);
+			for (let element of elements) {
+				var folder = element.closest(".folder");
+				var file = element.closest(".file");
+				var parent = null;
+
+				if (folder != null) {
+					parent = folder;
+				} else if (file != null) {
+					parent = file;
+				} else {
+					return;
+				}
+
+				parent.style.display = !element.innerText.includes(value) ? "none" : "";
+			};
+		}
+	</script>
 </head>
 
 <body>
@@ -102,6 +123,11 @@ $files = $currentFolder->getFileChildren();
 					</li>
 				</ul>
 				<ul class="navbar-nav ms-auto">
+					<form class="d-flex">
+						<input class="form-control me-2" type="search" placeholder="<?php echo Translation::get('menu.filter') ?>" aria-label="Search" onkeyup="javascript:filter(this.value)" />
+						<button class="btn btn-secondary" onclick="javascript:filter(); return false;"><?php echo Translation::get('menu.reset') ?></button>
+					</form>
+
 					<li class="nav-item dropdown">
 						<a class="nav-link dropdown-toggle" href="#" class="dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
 							<span class="oi oi-flag"></span>
@@ -174,7 +200,7 @@ $files = $currentFolder->getFileChildren();
 					<td></td>
 					<td>
 						<a href="<?php echo $app->getChangeFolderUrl($folder) ?>">
-							<?php echo $folder->getDisplayName() ?>
+							<span class="filename"><?php echo $folder->getDisplayName() ?></span>
 						</a>
 					</td>
 					<td>
@@ -203,7 +229,7 @@ $files = $currentFolder->getFileChildren();
 					</td>
 					<td>
 						<a href="<?php echo $file->getUrl() ?>" download="<?php echo $file->getName() ?>">
-							<?php echo $file->getName() ?>
+							<span class="filename"><?php echo $file->getName() ?></span>
 						</a>
 					</td>
 					<td>
@@ -228,60 +254,57 @@ $files = $currentFolder->getFileChildren();
 		<!-- BLOCK VIEW -->
 		<div id="list">
 			<!-- FOLDERS -->
-			<?php foreach ($folders as $folder) { ?>
-			<?php echo DisplayHelper::getRowOpening(); ?>
-			<div class="folder col-md-2">
-				<div class="row">
-					<div class="type col-md-2 text-primary">
-						<div class="icon">
-							<span class="oi <?php echo $folder->getGlyphicon() ?>"></span>
+			<div class="row">
+				<?php foreach ($folders as $folder) { ?>
+				<div class="folder col-md-2">
+					<div class="row">
+						<div class="type col-md-2 text-primary">
+							<div class="icon">
+								<span class="oi <?php echo $folder->getGlyphicon() ?>"></span>
+							</div>
+						</div>
+						<div class="info col-md-10 text-break">
+							<a href="<?php echo $app->getChangeFolderUrl($folder) ?>">
+								<span class="filename"><?php echo $folder->getDisplayName() ?></span>
+							</a><br />
+							<div><?php echo FileSystem::convertSize($folder->getSize()) ?></div>
+							<div><?php echo $folder->getDate() ?></div>
+							<a href="<?php echo $app->getChangeFolderUrl($folder) ?>" title="<?php echo Translation::get('content.openFolder') ?>">
+								<span class="oi oi-account-login p-2"></span></a>
 						</div>
 					</div>
-					<div class="info col-md-10 text-break">
-						<a href="<?php echo $app->getChangeFolderUrl($folder) ?>">
-							<?php echo $folder->getDisplayName() ?>
-						</a><br />
-						<div><?php echo FileSystem::convertSize($folder->getSize()) ?></div>
-						<div><?php echo $folder->getDate() ?></div>
-						<a href="<?php echo $app->getChangeFolderUrl($folder) ?>" title="<?php echo Translation::get('content.openFolder') ?>">
-							<span class="oi oi-account-login p-2"></span></a>
-					</div>
 				</div>
-			</div>
-			<?php echo DisplayHelper::getRowClosing(); ?>
-			<?php } ?>
+				<?php } ?>
 
-			<!--FILES -->
-			<?php foreach ($files as $file) { ?>
-			<?php echo DisplayHelper::getRowOpening(); ?>
-			<div class="file col-md-2">
-				<div class="row">
-					<div class="type col-md-2 text-primary">
-						<div class="icon">
-							<span class="oi <?php echo $file->getGlyphicon() ?>"></span>
+				<!--FILES -->
+				<?php foreach ($files as $file) { ?>
+				<div class="file col-md-2">
+					<div class="row">
+						<div class="type col-md-2 text-primary">
+							<div class="icon">
+								<span class="oi <?php echo $file->getGlyphicon() ?>"></span>
+							</div>
+							<span class="badge bg-primary mt-2 <?php echo $file->getExtension() != null ? $file->getExtension() : "noext" ?>">
+								<?php echo $file->getExtension() ?>
+							</span>
 						</div>
-						<span class="badge bg-primary mt-2 <?php echo $file->getExtension() != null ? $file->getExtension() : "noext" ?>">
-							<?php echo $file->getExtension() ?>
-						</span>
-					</div>
-					<div class="info col-md-10 text-break">
-						<a href="<?php echo $file->getUrl() ?>" download="<?php echo $file->getName() ?>">
-							<?php echo $file->getName() ?>
-						</a><br />
-						<div><?php echo FileSystem::convertSize($file->getSize()) ?></div>
-						<div><?php echo $file->getDate() ?></div>
-						<div>
-							<a href="<?php echo $file->getUrl() ?>" target="_<?php echo $file->getName() ?>" title="<?php echo Translation::get('content.openFile') ?>">
-								<span class="oi oi-external-link p-2"></span></a>
-							<a href="<?php echo $file->getUrl() ?>" download="<?php echo $file->getName() ?>" title="<?php echo Translation::get('content.saveFile') ?>">
-								<span class="oi oi-data-transfer-download p-2"></span></a>
+						<div class="info col-md-10 text-break">
+							<a href="<?php echo $file->getUrl() ?>" download="<?php echo $file->getName() ?>">
+								<span class="filename"><?php echo $file->getName() ?></span>
+							</a><br />
+							<div><?php echo FileSystem::convertSize($file->getSize()) ?></div>
+							<div><?php echo $file->getDate() ?></div>
+							<div>
+								<a href="<?php echo $file->getUrl() ?>" target="_<?php echo $file->getName() ?>" title="<?php echo Translation::get('content.openFile') ?>">
+									<span class="oi oi-external-link p-2"></span></a>
+								<a href="<?php echo $file->getUrl() ?>" download="<?php echo $file->getName() ?>" title="<?php echo Translation::get('content.saveFile') ?>">
+									<span class="oi oi-data-transfer-download p-2"></span></a>
+							</div>
 						</div>
 					</div>
 				</div>
+				<?php } ?>
 			</div>
-			<?php echo DisplayHelper::getRowClosing(); ?>
-			<?php } ?>
-			<?php echo DisplayHelper::getLastRowClosing(); ?>
 		</div>
 
 		<?php } ?>
