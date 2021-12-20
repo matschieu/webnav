@@ -131,7 +131,7 @@ $files = $currentFolder->getFileChildren();
 					<li class="nav-item dropdown">
 						<a class="nav-link dropdown-toggle" href="#" class="dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
 							<span class="oi oi-flag"></span>
-							Language
+							<?php echo Translation::get('menu.language') ?>
 							<span class="caret"></span>
 						</a>
 						<ul class="dropdown-menu" aria-labelledby="navbarDropdown">
