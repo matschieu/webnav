@@ -65,7 +65,7 @@ class FileViewerApplication {
 	 * Adds a directory in the include path of PHP to autoload classes
 	 * @param String $dirpath
 	 */
-	final private function addToPath($dirpath): void {
+	private function addToPath($dirpath): void {
 		$dir = dir($dirpath);
 
 		//set_include_path(get_include_path() . PATH_SEPARATOR . $dir->path);
@@ -84,12 +84,13 @@ class FileViewerApplication {
 	 *
 	 * Initializes the application and some options of PHP
 	 */
-	final private function init(): void {
+	private function init(): void {
 		date_default_timezone_set('Europe/Paris');
 
 		self::addToPath(self::CORE_DIR);
 
 		if(Config::DEBUG) {
+			echo "toto";
 			ini_set('display_errors', 'On');
 			error_reporting(E_ALL | E_WARNING);
 

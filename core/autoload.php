@@ -2,6 +2,8 @@
 
 const PHP_EXT = ".php";
 
+spl_autoload_register('autoloader');
+
 /**
  * @param String $dirpath
  * @param String $className
@@ -31,7 +33,7 @@ function autoloadScan($dirpath, $className): void {
  * functions
  * @param String $className
  */
-function __autoload($className): void {
+function autoloader($className): void {
 	global $path;
 	$tmp = explode(PATH_SEPARATOR, $path);
 	for ($i = 0; $i < count($tmp); $i++) {
