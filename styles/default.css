@@ -18,6 +18,10 @@
 	font-size: 2.5em;
 }
 
+.folder, .file {
+	margin-bottom: 20px;
+}
+
 .folder .icon {
 	color: orange !important;
 }

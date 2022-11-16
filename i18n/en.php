@@ -9,7 +9,7 @@ return array(
 	"menu.next" => "Next",
 	"menu.showHiddenFiles" => "Show hidden files",
 	"menu.hideHiddenFiles" => "Hide hidden files",
-	"menu.blockView" => "Block view",
+	"menu.gridView" => "Grid view",
 	"menu.listView" => "List view",
 	"menu.language" => "Language",
 	"menu.french" => "French",

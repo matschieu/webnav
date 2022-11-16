@@ -1,29 +1,10 @@
 <?php
+namespace core;
 
 /**
  * @author Matschieu
  */
 class File {
-
-	const FILE_DOCUMENT_EXTENSIONS = array("txt", "pdf", "doc", "docx", "xls", "xlsx", "ppt", "pptx");
-	const FILE_IMAGE_EXTENSIONS = array("tif", "tiff", "gif", "jpeg", "jpg", "jif", "jfif", "jp2", "jpx", "j2k", "j2c", "fpx", "pcd", "png", "bmp");
-	const FILE_VIDEO_EXTENSIONS = array("webm", "mkv", "flv", "flv", "vob", "ogv", "ogg", "drc", "gif", "gifv", "mng", "avi", "mov", "qt", "wmv", "yuv", "rm", "rmvb", "asf", "amv", "mp4", "m4p", "m4v", "mpg", "mp2", "mpeg", "mpe", "mpv", "mpg", "mpeg", "m2v", "m4v", "svi", "3gp", "3g2", "mxf", "roq", "nsv", "flv", "f4v", "f4p", "f4a", "f4b");
-	const FILE_MUSIC_EXTENSIONS = array("3gp", "aa", "aac", "aax", "act", "aiff", "amr", "ape", "au", "awb", "dct", "dss", "dvf", "flac", "gsm", "iklax", "ivs", "m4a", "m4b", "m4p", "mmf", "mp3", "mpc", "msv", "ogg", "oga", "opus", "ra", "rm", "raw", "sln", "tta", "vox", "wav", "wma", "wv", "webm");
-	const FILE_EXECUTABLE_EXTENSIONS = array("action", "apk", "app", "bat", "bin", "cmd", "com", "command", "cpl", "csh", "exe", "gadget", "inf1", "ins", "inx", "ipa", "isu", "job", "jse", "ksh", "lnk", "msc", "msi", "msp", "mst", "osx", "out", "paf", "pif", "prg", "ps1", "reg", "rgs", "run", "scr", "sct", "shb", "shs", "u3p", "vb", "vbe", "vbs", "vbscript", "workflow", "ws", "wsf", "wsh");
-	const FILE_COMPRESSED_EXTENSIONS = array("bz2", "f", "gz", "lz", "lzma", "lzo", "rz", "sfark", "sz", "xz", "z", "Z", "infl", "7z", "s7z", "ace", "afa", "alz", "apk", "arc", "arj", "b1", "ba", "bh", "cab", "car", "cfs", "cpt", "dar", "dd", "dgc", "dmg", "ear", "gca", "ha", "hki", "ice", "jar", "kgb", "lzh", "lha", "lzx", "pak", "partimg", "paq6", "paq7", "paq8", "pea", "pim", "pit", "qda", "rar", "rk", "sda", "sea", "sen", "sfx", "shk", "sit", "sitx", "sqx", "tar.gz", "tgz", "tar.Z", "tar.bz2", "tbz2", "tar.lzma", "tlz", "uc", "uc0", "uc2", "ucn", "ur2", "ue2", "uca", "uha", "war", "wim", "xar", "xp3", "yz1", "zip", "zipx", "zoo", "zpaq", "zz");
-	const FILE_ARCHIVE_EXTENSIONS = array("a", "ar", "cpio", "shar", "lbr", "iso", "lbr", "mar", "tar");
-
-	const GLYPHICON_DEFAULT_FILE = "oi-file";
-	const GLYPHICON_DOCUMENT = "oi-document";
-	const GLYPHICON_IMAGE = "oi-image";
-	const GLYPHICON_VIDEO = "oi-video";
-	const GLYPHICON_MUSIC = "oi-musical-note";
-	const GLYPHICON_EXECUTABLE = "oi-cog";
-	const GLYPHICON_COMPRESSED = "oi-briefcase";
-	const GLYPHICON_ARCHIVE = "oi-box";
-
-	const HTACCESS = ".htaccess";
-	const HTPASSWD = ".htpasswd";
 
 	protected string $path;
 	protected string $logicalPath;
@@ -39,29 +20,291 @@ class File {
 	 * @return string
 	 */
 	private function determineGlyphicon(): string {
-		if (in_array($this->getExtension(), self::FILE_DOCUMENT_EXTENSIONS)) {
-			return self::GLYPHICON_DOCUMENT;
+		switch ($this->getExtension()) {
+			case "cfg":
+			case "json":
+			case "properties":
+			case "txt":
+			case "yml":
+				return "fa-solid fa-file-lines";
+			case "pdf":
+				return "fa-solid fa-file-pdf";
+			case "csv":
+				return "fa-solid fa-file-csv";
+			case "doc":
+			case "docx":
+				return "fa-solid fa-file-word";
+			case "xls":
+			case "xlsx":
+				return "fa-solid fa-file-excel";
+			case "ppt":
+			case "pptx":
+				return "fa-solid fa-file-powerpoint";
+			case "tif":
+			case "tiff":
+			case "gif":
+			case "jpeg":
+			case "jpg":
+			case "jif":
+			case "jfif":
+			case "jp2":
+			case "jpx":
+			case "j2k":
+			case "j2c":
+			case "fpx":
+			case "pcd":
+			case "png":
+			case "bmp":
+				return "fa-solid fa-file-image";
+			case "webm":
+			case "mkv":
+			case "flv":
+			case "flv":
+			case "vob":
+			case "ogv":
+			case "ogg":
+			case "drc":
+			case "gif":
+			case "gifv":
+			case "mng":
+			case "avi":
+			case "mov":
+			case "qt":
+			case "wmv":
+			case "yuv":
+			case "rm":
+			case "rmvb":
+			case "asf":
+			case "amv":
+			case "mp4":
+			case "m4p":
+			case "m4v":
+			case "mpg":
+			case "mp2":
+			case "mpeg":
+			case "mpe":
+			case "mpv":
+			case "mpg":
+			case "mpeg":
+			case "m2v":
+			case "m4v":
+			case "svi":
+			case "3gp":
+			case "3g2":
+			case "mxf":
+			case "roq":
+			case "nsv":
+			case "flv":
+			case "f4v":
+			case "f4p":
+			case "f4a":
+			case "f4b":
+				return "fa-solid fa-file-video";
+			case "3gp":
+			case "aa":
+			case "aac":
+			case "aax":
+			case "act":
+			case "aiff":
+			case "amr":
+			case "ape":
+			case "au":
+			case "awb":
+			case "dct":
+			case "dss":
+			case "dvf":
+			case "flac":
+			case "gsm":
+			case "iklax":
+			case "ivs":
+			case "m4a":
+			case "m4b":
+			case "m4p":
+			case "mmf":
+			case "mp3":
+			case "mpc":
+			case "msv":
+			case "ogg":
+			case "oga":
+			case "opus":
+			case "ra":
+			case "rm":
+			case "raw":
+			case "sln":
+			case "tta":
+			case "vox":
+			case "wav":
+			case "wma":
+			case "wv":
+			case "webm":
+				return "fa-solid fa-file-audio";
+			case "c":
+			case "cpp":
+			case "c++":
+			case "cs":
+			case "css":
+			case "html":
+			case "java":
+			case "js":
+			case "jsp":
+			case "ksh":
+			case "php":
+			case "py":
+			case "sh":
+			case "sql":
+			case "ts":
+			case "xml":
+				return "fa-solid fa-file-code";
+			case "action":
+			case "apk":
+			case "app":
+			case "bat":
+			case "bin":
+			case "cmd":
+			case "com":
+			case "command":
+			case "cpl":
+			case "csh":
+			case "exe":
+			case "gadget":
+			case "inf1":
+			case "ins":
+			case "inx":
+			case "ipa":
+			case "isu":
+			case "job":
+			case "jse":
+			case "ksh":
+			case "lnk":
+			case "msc":
+			case "msi":
+			case "msp":
+			case "mst":
+			case "osx":
+			case "out":
+			case "paf":
+			case "pif":
+			case "prg":
+			case "ps1":
+			case "reg":
+			case "rgs":
+			case "run":
+			case "scr":
+			case "sct":
+			case "shb":
+			case "shs":
+			case "u3p":
+			case "vb":
+			case "vbe":
+			case "vbs":
+			case "vbscript":
+			case "workflow":
+			case "ws":
+			case "wsf":
+			case "wsh":
+				return "fa-solid fa-terminal";
+			case "bz2":
+			case "f":
+			case "gz":
+			case "lz":
+			case "lzma":
+			case "lzo":
+			case "rz":
+			case "sfark":
+			case "sz":
+			case "xz":
+			case "z":
+			case "Z":
+			case "infl":
+			case "7z":
+			case "s7z":
+			case "ace":
+			case "afa":
+			case "alz":
+			case "apk":
+			case "arc":
+			case "arj":
+			case "b1":
+			case "ba":
+			case "bh":
+			case "cab":
+			case "car":
+			case "cfs":
+			case "cpt":
+			case "dar":
+			case "dd":
+			case "dgc":
+			case "dmg":
+			case "ear":
+			case "gca":
+			case "ha":
+			case "hki":
+			case "ice":
+			case "jar":
+			case "kgb":
+			case "lzh":
+			case "lha":
+			case "lzx":
+			case "pak":
+			case "partimg":
+			case "paq6":
+			case "paq7":
+			case "paq8":
+			case "pea":
+			case "pim":
+			case "pit":
+			case "qda":
+			case "rar":
+			case "rk":
+			case "sda":
+			case "sea":
+			case "sen":
+			case "sfx":
+			case "shk":
+			case "sit":
+			case "sitx":
+			case "sqx":
+			case "tar.gz":
+			case "tgz":
+			case "tar.Z":
+			case "tar.bz2":
+			case "tbz2":
+			case "tar.lzma":
+			case "tlz":
+			case "uc":
+			case "uc0":
+			case "uc2":
+			case "ucn":
+			case "ur2":
+			case "ue2":
+			case "uca":
+			case "uha":
+			case "war":
+			case "wim":
+			case "xar":
+			case "xp3":
+			case "yz1":
+			case "zip":
+			case "zipx":
+			case "zoo":
+			case "zpaq":
+			case "zz":
+				return "fa-solid fa-file-zipper";
+			case "a":
+			case "ar":
+			case "cpio":
+			case "shar":
+			case "lbr":
+			case "iso":
+			case "lbr":
+			case "mar":
+			case "tar":
+				return "fa-solid fa-box-archive";
+			case "tar":
+				return "fa-solid fa-file";
+			default:
+				return "fa-solid fa-file";
 		}
-		if (in_array($this->getExtension(), self::FILE_IMAGE_EXTENSIONS)) {
-			return self::GLYPHICON_IMAGE;
-		}
-		if (in_array($this->getExtension(), self::FILE_VIDEO_EXTENSIONS)) {
-			return self::GLYPHICON_VIDEO;
-		}
-		if (in_array($this->getExtension(), self::FILE_MUSIC_EXTENSIONS)) {
-			return self::GLYPHICON_MUSIC;
-		}
-		if (in_array($this->getExtension(), self::FILE_EXECUTABLE_EXTENSIONS)) {
-			return self::GLYPHICON_EXECUTABLE;
-		}
-		if (in_array($this->getExtension(), self::FILE_COMPRESSED_EXTENSIONS)) {
-			return self::GLYPHICON_COMPRESSED;
-		}
-		if (in_array($this->getExtension(), self::FILE_ARCHIVE_EXTENSIONS)) {
-			return self::GLYPHICON_ARCHIVE;
-		}
-
-		return self::GLYPHICON_DEFAULT_FILE;
 	}
 
 	/**

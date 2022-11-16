@@ -1,44 +1,65 @@
 <?php
 
 const PHP_EXT = ".php";
+const CURRENT_FOLDER = ".";
+const DEBUG = false;
 
 spl_autoload_register('autoloader');
 
 /**
- * @param String $dirpath
- * @param String $className
+ *
+ * @param string $filepath
+ * @param string $classname
+ * @return bool
  */
-function autoloadScan($dirpath, $className): void {
-	$dir = dir($dirpath);
+function scan(string $filepath, ?string $classname): bool {
+	if (is_dir($filepath)) {
+		// replacing \ by / is used to manage the namespaces
+		$filename = $filepath . DIRECTORY_SEPARATOR . str_replace('\\', '/', $classname) . PHP_EXT;
 
-	while (false !== ($entry = $dir->read())) {
-		if ($entry !== "." && $entry !== ".." && is_dir($dir->path . DIRECTORY_SEPARATOR . $entry)) {
-			autoloadScan($dir->path . DIRECTORY_SEPARATOR . $entry, $className);
-		} else if ($entry === $className . PHP_EXT) {
-			if (Config::DEBUG) {
-				include_once($dir->path . DIRECTORY_SEPARATOR . $className . PHP_EXT);
-			} else {
-				@include_once($dir->path . DIRECTORY_SEPARATOR . $className . PHP_EXT);
+		if (DEBUG) {
+			echo "&nbsp;".$filename."<br>";
+		}
+
+		if (is_file($filename)) {
+			@include_once($filename);
+			return true;
+		}
+
+		foreach (scandir($filepath) as $file) {
+			if ($file === "." || $file === "..") {
+				continue;
 			}
 
-			break;
+			if (scan($filepath . DIRECTORY_SEPARATOR . $file, $classname)) {
+				return true;
+			}
 		}
 	}
 
-	$dir->close();
+	return false;
 }
 
 /**
- * Magic function of PHP to load a class without use "include" or "require"
- * functions
- * @param String $className
+ *
+ * @param string $classname
+ * @return bool
  */
-function autoloader($className): void {
-	global $path;
-	$tmp = explode(PATH_SEPARATOR, $path);
-	for ($i = 0; $i < count($tmp); $i++) {
-		autoloadScan($tmp[$i], $className);
+function autoloader(?string $classname): bool {
+	if (!isset($classname) || $classname == null) {
+		return false;
 	}
-}
 
-?>
+	if (DEBUG) {
+		echo "*".$classname."<br>";
+	}
+
+	// Found using namespace
+	$r = scan(CURRENT_FOLDER, $classname);
+	if (!$r) {
+		// found by searching explicitly in the core/ folder
+		$r = scan(CURRENT_FOLDER . DIRECTORY_SEPARATOR . "core", $classname);
+	}
+
+	return $r;
+}

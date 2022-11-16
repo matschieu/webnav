@@ -1,11 +1,12 @@
 <?php
+namespace core;
 
 /**
  * @author Matschieu
  */
 class Folder extends File {
 
-	const GLYPHICON_FOLDER = "oi-folder";
+	const GLYPHICON_FOLDER = "fa-solid fa-folder";
 
 	const SELF_FOLDER = ".";
 	const PARENT_FOLDER = "..";
@@ -159,8 +160,6 @@ class Folder extends File {
 				case "":
 				case self::SELF_FOLDER:
 				case self::PARENT_FOLDER:
-				case self::HTACCESS:
-				case self::HTPASSWD:
 					continue;
 				default:
 					if (!$this->includeHidden && substr($file, 0, 1) === ".") {

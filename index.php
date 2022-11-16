@@ -1,5 +1,10 @@
 <?php
-require_once("./core/FileViewerApplication.php");
+
+use core\FileViewerApplication;
+use core\FileSystem;
+use core\Translation;
+
+require_once("./core/autoload.php");
 
 $app = FileViewerApplication::build();
 
@@ -20,11 +25,12 @@ $files = $currentFolder->getFileChildren();
 	<link rel="icon" type="image/png" href="img/favicon.png" />
 	<link rel="icon" type="image/png" href="<?php echo $app->getFavicon() ?>" />
 	<!--Bootstrap -->
-	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous" />
-	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+	<link rel="stylesheet" type="text/css" href="./lib/bootstrap-5.2.2-dist/css/bootstrap.min.css" />
+	<script src="./lib/bootstrap-5.2.2-dist/js/bootstrap.bundle.min.js"></script>
 	<!-- Glyphicons -->
-	<!-- Icons list: https://useiconic.com/open -->
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/open-iconic/1.1.1/font/css/open-iconic-bootstrap.min.css" integrity="sha512-UyNhw5RNpQaCai2EdC+Js0QL4RlVmiq41DkmCJsRV3ZxipG2L0HhTqIf/H9Hp8ez2EnFlkBnjRGJU2stW3Lj+w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+	<!-- Icons list: https://fontawesome.com -->
+	<link rel="stylesheet" type="text/css" href="./lib/fontawesome-6.2.0/css/fontawesome.min.css" />
+	<link rel="stylesheet" type="text/css" href="./lib/fontawesome-6.2.0/css/solid.min.css" />
 	<!-- Application styles -->
 	<link rel="stylesheet" type="text/css" href="./styles/default.css" media="screen" />
 	<link rel="stylesheet" type="text/css" href="<?php echo $app->getCustomCss() ?>" media="screen" />
@@ -61,7 +67,7 @@ $files = $currentFolder->getFileChildren();
 	<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
 		<div class="container-fluid">
 			<a class="navbar-brand" href="<?php echo $app->getRootUrl() ?>" >
-				<span class="oi oi-home"></span>
+				<span class="fa-solid fa-house"></span>
 				<?php echo Translation::get('menu.root') ?>
 			</a>
 			<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -71,26 +77,26 @@ $files = $currentFolder->getFileChildren();
 				<ul class="navbar-nav me-auto">
 					<li class="nav-item">
 						<a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#folderTreeModal">
-							<span class="oi oi-project"></span>
+							<span class="fa-solid fa-folder-tree"></span>
 							<?php echo Translation::get('menu.folderTree') ?>
 						</a>
 					</li>
 					<li class="nav-item">
 						<a class="nav-link" href="<?php echo $app->getRefreshUrl() ?>">
-							<span class="oi oi-reload"></span>
+							<span class="fa-solid fa-rotate-right"></span>
 							<?php echo Translation::get('menu.refresh') ?>
 						</a>
 					</li>
 					<!--
 					<li class="nav-item">
 						<a class="nav-link" href="#" onclick="javascript:window.history.back();">
-							<span class="oi oi-arrow-thick-left"></span>
+							<span class="fa-solid fa-left-long"></span>
 							<?php echo Translation::get('menu.back') ?>
 						</a>
 					</li>
 					<li class="nav-item">
 						<a class="nav-link" href="#" onclick="javascript:window.history.forward();">
-							<span class="oi oi-arrow-thick-right"></span>
+							<span class="fa-solid fa-right-long"></span>
 							<?php echo Translation::get('menu.next') ?>
 						</a>
 					</li>
@@ -98,12 +104,12 @@ $files = $currentFolder->getFileChildren();
 					<li class="nav-item">
 						<?php if ($app->getAppContext()->getShowHidden()) { ?>
 						<a class="nav-link" href="<?php echo $app->getShowHiddenUrl(false) ?>">
-							<span class="oi oi-lock-locked"></span>
+							<span class="fa-solid fa-lock"></span>
 							<?php echo Translation::get('menu.hideHiddenFiles') ?>
 						</a>
 						<?php } else {?>
 						<a class="nav-link" href="<?php echo $app->getShowHiddenUrl(true) ?>">
-							<span class="oi oi-lock-unlocked"></span>
+							<span class="fa-solid fa-lock-open"></span>
 							<?php echo Translation::get('menu.showHiddenFiles') ?>
 						</a>
 						<?php } ?>
@@ -111,12 +117,12 @@ $files = $currentFolder->getFileChildren();
 					<li class="nav-item">
 						<?php if ($app->getAppContext()->getDisplayList()) { ?>
 						<a class="nav-link" href="<?php echo $app->getDisplayBlockUrl() ?>">
-							<span class="oi oi-grid-three-up"></span>
-							<?php echo Translation::get('menu.blockView') ?>
+							<span class="fa-solid fa-table-cells"></span>
+							<?php echo Translation::get('menu.gridView') ?>
 						</a>
 						<?php } else {?>
 						<a class="nav-link" href="<?php echo $app->getDisplayListUrl() ?>">
-							<span class="oi oi-list"></span>
+							<span class="fa-solid fa-list"></span>
 							<?php echo Translation::get('menu.listView') ?>
 						</a>
 						<?php } ?>
@@ -130,7 +136,7 @@ $files = $currentFolder->getFileChildren();
 
 					<li class="nav-item dropdown">
 						<a class="nav-link dropdown-toggle" href="#" class="dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-							<span class="oi oi-flag"></span>
+							<span class="fa-solid fa-flag"></span>
 							<?php echo Translation::get('menu.language') ?>
 							<span class="caret"></span>
 						</a>
@@ -139,7 +145,7 @@ $files = $currentFolder->getFileChildren();
 								<a class="dropdown-item" href="<?php echo $app->getChangeLanguageUrl("en") ?>">
 									<?php echo Translation::get('menu.english') ?>
 									<?php if ($app->isSelectedLanguage("en")) { ?>
-									<span class="oi oi-check"></span>
+									<span class="fa-solid fa-check"></span>
 									<?php } ?>
 								</a>
 							</li>
@@ -147,7 +153,7 @@ $files = $currentFolder->getFileChildren();
 								<a class="dropdown-item" href="<?php echo $app->getChangeLanguageUrl("fr") ?>">
 									<?php echo Translation::get('menu.french') ?>
 									<?php if ($app->isSelectedLanguage("fr")) { ?>
-									<span class="oi oi-check"></span>
+									<span class="fa-solid fa-check"></span>
 									<?php } ?>
 								</a>
 							</li>
@@ -155,7 +161,7 @@ $files = $currentFolder->getFileChildren();
 					</li>
 					<li class="nav-item">
 						<a class="nav-link" href="#" onclick="javascript:open(location, '_self').close(); return true;">
-							<span class="oi oi-x"></span>
+							<span class="fa-solid fa-xmark"></span>
 							<?php echo Translation::get('menu.close') ?>
 						</a>
 					</li>
@@ -170,7 +176,7 @@ $files = $currentFolder->getFileChildren();
 		<!-- TOP STATE BAR -->
 		<div id="statebarTop" class="row bg-primary mb-4 p-1 text-white">
 			<div class="col-md-12">
-				<span class="oi oi-folder"></span>
+				<span class="fa-solid fa-folder"></span>
 				<?php echo Translation::get('statebar.navigation') . $currentFolder->getLogicalPath() ?>
 			</div>
 		</div>
@@ -195,7 +201,7 @@ $files = $currentFolder->getFileChildren();
 				<?php foreach ($folders as $folder) { ?>
 				<tr class="folder text-break">
 					<td class="icon text-primary">
-						<span class="oi <?php echo $folder->getGlyphicon() ?>"></span>
+						<span class="<?php echo $folder->getGlyphicon() ?>"></span>
 					</td>
 					<td></td>
 					<td>
@@ -211,7 +217,7 @@ $files = $currentFolder->getFileChildren();
 					</td>
 					<td>
 						<a href="<?php echo $app->getChangeFolderUrl($folder) ?>" title="<?php echo Translation::get('content.openFolder') ?>">
-								<span class="oi oi-account-login p-2"></span></a>
+							<span class="fa-solid fa-right-to-bracket p-2"></span></a>
 					</td>
 				</tr>
 				<?php } ?>
@@ -220,7 +226,7 @@ $files = $currentFolder->getFileChildren();
 				<?php foreach ($files as $file) { ?>
 				<tr class="file text-break">
 					<td class="icon text-primary">
-						<span class="oi <?php echo $file->getGlyphicon() ?>"></span>
+						<span class="<?php echo $file->getGlyphicon() ?>"></span>
 					</td>
 					<td>
 						<span class="badge bg-primary <?php echo $file->getExtension() != null ? $file->getExtension() : "noext" ?>">
@@ -240,9 +246,9 @@ $files = $currentFolder->getFileChildren();
 					</td>
 					<td>
 						<a href="<?php echo $file->getUrl() ?>" target="_<?php echo $file->getName() ?>" title="<?php echo Translation::get('content.openFile') ?>">
-							<span class="oi oi-external-link p-2"></span></a>
+							<span class="fa-solid fa-up-right-from-square p-2"></span></a>
 						<a href="<?php echo $file->getUrl() ?>" download="<?php echo $file->getName() ?>" title="<?php echo Translation::get('content.saveFile') ?>">
-							<span class="oi oi-data-transfer-download p-2"></span></a>
+							<span class="fa-solid fa-circle-down p-2"></span></a>
 					</td>
 				</tr>
 				<?php } ?>
@@ -260,7 +266,7 @@ $files = $currentFolder->getFileChildren();
 					<div class="row">
 						<div class="type col-md-2 text-primary">
 							<div class="icon">
-								<span class="oi <?php echo $folder->getGlyphicon() ?>"></span>
+								<span class="<?php echo $folder->getGlyphicon() ?>"></span>
 							</div>
 						</div>
 						<div class="info col-md-10 text-break">
@@ -270,7 +276,7 @@ $files = $currentFolder->getFileChildren();
 							<div><?php echo FileSystem::convertSize($folder->getSize()) ?></div>
 							<div><?php echo $folder->getDate() ?></div>
 							<a href="<?php echo $app->getChangeFolderUrl($folder) ?>" title="<?php echo Translation::get('content.openFolder') ?>">
-								<span class="oi oi-account-login p-2"></span></a>
+								<span class="fa-solid fa-right-to-bracket p-2"></span></a>
 						</div>
 					</div>
 				</div>
@@ -282,7 +288,7 @@ $files = $currentFolder->getFileChildren();
 					<div class="row">
 						<div class="type col-md-2 text-primary">
 							<div class="icon">
-								<span class="oi <?php echo $file->getGlyphicon() ?>"></span>
+								<span class="<?php echo $file->getGlyphicon() ?>"></span>
 							</div>
 							<span class="badge bg-primary mt-2 <?php echo $file->getExtension() != null ? $file->getExtension() : "noext" ?>">
 								<?php echo $file->getExtension() ?>
@@ -296,9 +302,9 @@ $files = $currentFolder->getFileChildren();
 							<div><?php echo $file->getDate() ?></div>
 							<div>
 								<a href="<?php echo $file->getUrl() ?>" target="_<?php echo $file->getName() ?>" title="<?php echo Translation::get('content.openFile') ?>">
-									<span class="oi oi-external-link p-2"></span></a>
+									<span class="fa-solid fa-up-right-from-square p-2"></span></a>
 								<a href="<?php echo $file->getUrl() ?>" download="<?php echo $file->getName() ?>" title="<?php echo Translation::get('content.saveFile') ?>">
-									<span class="oi oi-data-transfer-download p-2"></span></a>
+									<span class="fa-solid fa-down-long p-2"></span></a>
 							</div>
 						</div>
 					</div>
@@ -319,7 +325,7 @@ $files = $currentFolder->getFileChildren();
 			</div>
 			<div class="col-md-offset-11">
 				<a class="btn btn-primary" href="#" onclick="javascript:window.history.back();">
-					<span class="oi oi-arrow-thick-left"></span>
+					<span class="fa-solid fa-left-long"></span>
 					<?php echo Translation::get('menu.back') ?>
 				</a>
 			</div>
@@ -329,7 +335,7 @@ $files = $currentFolder->getFileChildren();
 		<!-- BOTTOM STATE BAR -->
 		<div id="statebarBottom" class="row bg-primary mt-4 p-1 text-white">
 			<div class="col-md-12">
-				<span class="oi oi-graph"></span>
+				<span class="fa-solid fa-chart-simple"></span>
 				<?php echo $currentFolder->getFolderChildrenCount() . Translation::get('statebar.folders') ?>
 				-
 				<?php echo $currentFolder->getFileChildrenCount() . Translation::get('statebar.files') ?>
@@ -355,7 +361,7 @@ $files = $currentFolder->getFileChildren();
 				<div class="modal-body" style="max-height: 400px; overflow-y: scroll">
 					<?php foreach($app->getRootFolder()->getFlatTree() as $treeElement) { ?>
 					<a href="<?php echo $app->getChangeFolderUrl($treeElement->getFolder()) ?>" class="list-group-item" style="padding-left: <?php echo (20 + $treeElement->getLevel() * 20) ?>px">
-					<span class="oi <?php echo $treeElement->getFolder()->getGlyphicon() ?>"></span> <?php echo $treeElement->getFolder()->getName() ?></a>
+					<span class="<?php echo $treeElement->getFolder()->getGlyphicon() ?>"></span> <?php echo $treeElement->getFolder()->getName() ?></a>
 					<?php } ?>
 				</div>
 				<div class="modal-footer">

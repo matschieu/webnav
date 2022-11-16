@@ -9,7 +9,7 @@ return array(
 	"menu.next" => "Suivant",
 	"menu.showHiddenFiles" => "Afficher les fichiers cachés",
 	"menu.hideHiddenFiles" => "Masquer les fichiers cachés",
-	"menu.blockView" => "Vue en block",
+	"menu.gridView" => "Vue grille",
 	"menu.listView" => "Vue en list",
 	"menu.language" => "Langage",
 	"menu.french" => "Français",

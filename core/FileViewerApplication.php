@@ -1,8 +1,5 @@
 <?php
-
-require_once './config/Config.php';
-
-$path = "";
+namespace core;
 
 /**
  * @author Matschieu
@@ -36,9 +33,10 @@ class FileViewerApplication {
 
 	/**
 	 *
-	 * @return string
+	 * @param string $param
+	 * @return string|NULL
 	 */
-	private function getHttpParam($param): ?string {
+	private function getHttpParam(string $param): ?string {
 		if (isset($_GET[$param]) && !empty($_GET[$param])) {
 			return $_GET[$param];
 		}
@@ -62,35 +60,12 @@ class FileViewerApplication {
 
 	/**
 	 *
-	 * Adds a directory in the include path of PHP to autoload classes
-	 * @param String $dirpath
-	 */
-	private function addToPath($dirpath): void {
-		$dir = dir($dirpath);
-
-		//set_include_path(get_include_path() . PATH_SEPARATOR . $dir->path);
-		global $path;
-		$path = ($path !== "" ? $path . PATH_SEPARATOR : "") . $dir->path;
-
-		while (false !== ($entry = $dir->read())) {
-			if ($entry !== "." && $entry !== ".." && is_dir($dir->path . DIRECTORY_SEPARATOR. $entry)) {
-				self::addToPath($dir->path . DIRECTORY_SEPARATOR . $entry);
-			}
-		}
-		$dir->close();
-	}
-
-	/**
-	 *
 	 * Initializes the application and some options of PHP
 	 */
 	private function init(): void {
 		date_default_timezone_set('Europe/Paris');
 
-		self::addToPath(self::CORE_DIR);
-
 		if(Config::DEBUG) {
-			echo "toto";
 			ini_set('display_errors', 'On');
 			error_reporting(E_ALL | E_WARNING);
 
@@ -99,8 +74,6 @@ class FileViewerApplication {
 		} else {
 			error_reporting(E_ERROR | E_PARSE);
 		}
-
-		require_once("./core/autoload.php");
 	}
 
 	/**

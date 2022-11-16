@@ -1,4 +1,5 @@
 <?php
+namespace core;
 
 /**
  *
@@ -8,9 +9,11 @@ class Translation {
 
 	const DEFAULT_LANGUAGE = "en";
 
-	public static ?string $language = null;
 	private static array $messages = array();
+
 	private static bool $init = false;
+
+	public static ?string $language = null;
 
 	/**
 	 *
