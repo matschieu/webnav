@@ -25,8 +25,8 @@ $files = $currentFolder->getFileChildren();
 	<link rel="icon" type="image/png" href="img/favicon.png" />
 	<link rel="icon" type="image/png" href="<?php echo $app->getFavicon() ?>" />
 	<!--Bootstrap -->
-	<link rel="stylesheet" type="text/css" href="./lib/bootstrap-5.2.2-dist/css/bootstrap.min.css" />
-	<script src="./lib/bootstrap-5.2.2-dist/js/bootstrap.bundle.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="./lib/bootstrap-5.2.3-dist/css/bootstrap.min.css" />
+	<script src="./lib/bootstrap-5.2.3-dist/js/bootstrap.bundle.min.js"></script>
 	<!-- Glyphicons -->
 	<!-- Icons list: https://fontawesome.com -->
 	<link rel="stylesheet" type="text/css" href="./lib/fontawesome-6.2.0/css/fontawesome.min.css" />
