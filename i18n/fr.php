@@ -37,5 +37,6 @@ return array(
 	"content.noContent" => "Aucun contenu à afficher",
 	// Modal
 	"modal.tree.title" => "Arborescence",
+	"modal.loading" => "Chargement...",
 	"modal.close" => "Fermer",
 );

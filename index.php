@@ -54,6 +54,10 @@ $files = $currentFolder->getFileChildren();
 				parent.style.display = !element.innerText.includes(value) ? "none" : "";
 			};
 		}
+		fetch('<?php echo $app->getTreeUrl() ?>')
+			.then(response => response.text())
+			.then(html => document.getElementById('folderTreeModalContent').innerHTML = html)
+			.catch(error => console.error('Error:', error));
 	</script>
 </head>
 
@@ -189,8 +193,8 @@ $files = $currentFolder->getFileChildren();
 				<thead>
 					<tr>
 						<th></th>
-						<th><?php echo Translation::get('content.type') ?></th>
 						<th><?php echo Translation::get('content.name') ?></th>
+						<th><?php echo Translation::get('content.type') ?></th>
 						<th><?php echo Translation::get('content.size') ?></th>
 						<th><?php echo Translation::get('content.date') ?></th>
 						<th><?php echo Translation::get('content.actions') ?></th>
@@ -203,12 +207,12 @@ $files = $currentFolder->getFileChildren();
 					<td class="icon text-primary">
 						<span class="<?php echo $folder->getGlyphicon() ?>"></span>
 					</td>
-					<td></td>
 					<td>
 						<a href="<?php echo $app->getChangeFolderUrl($folder) ?>">
 							<span class="filename"><?php echo $folder->getDisplayName() ?></span>
 						</a>
 					</td>
+					<td></td>
 					<td>
 						<?php echo FileSystem::convertSize($folder->getSize()) ?>
 					</td>
@@ -229,14 +233,14 @@ $files = $currentFolder->getFileChildren();
 						<span class="<?php echo $file->getGlyphicon() ?>"></span>
 					</td>
 					<td>
-						<span class="badge bg-primary <?php echo $file->getExtension() != null ? $file->getExtension() : "noext" ?>">
-							<?php echo $file->getExtension() ?>
-						</span>
-					</td>
-					<td>
 						<a href="<?php echo $file->getUrl() ?>" download="<?php echo $file->getName() ?>">
 							<span class="filename"><?php echo $file->getName() ?></span>
 						</a>
+					</td>
+					<td>
+						<span class="badge bg-primary <?php echo $file->getExtension() != null ? $file->getExtension() : "noext" ?>">
+							<?php echo $file->getExtension() ?>
+						</span>
 					</td>
 					<td>
 						<?php echo FileSystem::convertSize($file->getSize()) ?>
@@ -358,11 +362,10 @@ $files = $currentFolder->getFileChildren();
 					<h4 class="modal-title" id="myModalLabel"><?php echo Translation::get('modal.tree.title') ?></h4>
 					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 				</div>
-				<div class="modal-body" style="max-height: 400px; overflow-y: scroll">
-					<?php foreach($app->getRootFolder()->getFlatTree() as $treeElement) { ?>
-					<a href="<?php echo $app->getChangeFolderUrl($treeElement->getFolder()) ?>" class="list-group-item" style="padding-left: <?php echo (20 + $treeElement->getLevel() * 20) ?>px">
-					<span class="<?php echo $treeElement->getFolder()->getGlyphicon() ?>"></span> <?php echo $treeElement->getFolder()->getName() ?></a>
-					<?php } ?>
+				<div id="folderTreeModalContent" class="modal-body" style="max-height: 400px; overflow-y: scroll">
+					<div class="spinner-border text-primary" role="status">
+						<span class="visually-hidden"><?php echo Translation::get('modal.tree.title') ?></span>
+					</div>
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-primary" data-bs-dismiss="modal"><?php echo Translation::get('modal.close') ?></button>

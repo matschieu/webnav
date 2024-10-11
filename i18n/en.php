@@ -37,5 +37,6 @@ return array(
 	"content.noContent" => "No content to display",
 	// Modal
 	"modal.tree.title" => "Folder tree",
+	"modal.loading" => "Loading...",
 	"modal.close" => "Close",
 );
