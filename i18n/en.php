@@ -14,6 +14,7 @@ return array(
 	"menu.language" => "Language",
 	"menu.french" => "French",
 	"menu.english" => "English",
+	"menu.german" => "German",
 	"menu.close" => "Close",
 	"menu.filter" => "Filter",
 	"menu.reset" => "Reset",

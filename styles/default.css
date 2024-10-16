@@ -3,15 +3,8 @@
   --bs-primary: #337AB7;
 }
 
-#header {
-	font-size: xx-large;
-	color: rgb(var(--bs-primary-rgb));
-	font-weight: bold;
-}
-
 #footer {
 	font-size: small;
-	color: rgb(var(--bs-primary-rgb));
 }
 
 .icon {

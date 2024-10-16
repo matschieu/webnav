@@ -31,6 +31,8 @@ $files = $currentFolder->getFileChildren();
 	<!-- Icons list: https://fontawesome.com -->
 	<link rel="stylesheet" type="text/css" href="./lib/fontawesome-6.2.0/css/fontawesome.min.css" />
 	<link rel="stylesheet" type="text/css" href="./lib/fontawesome-6.2.0/css/solid.min.css" />
+	<!-- Country flags -->
+	<link rel="stylesheet" type="text/css" href="./lib/flag-icons/flag-icons.min.css">	
 	<!-- Application styles -->
 	<link rel="stylesheet" type="text/css" href="./styles/default.css" media="screen" />
 	<link rel="stylesheet" type="text/css" href="<?php echo $app->getCustomCss() ?>" media="screen" />
@@ -62,121 +64,130 @@ $files = $currentFolder->getFileChildren();
 </head>
 
 <body>
-	<!-- HEADER -->
-	<div id="header" class="p-1">
-		<?php echo $app->getHeader() ?>
-	</div>
-
-	<!-- MENU -->
-	<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-		<div class="container-fluid">
-			<a class="navbar-brand" href="<?php echo $app->getRootUrl() ?>" >
-				<span class="fa-solid fa-house"></span>
-				<?php echo Translation::get('menu.root') ?>
-			</a>
-			<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-				<span class="navbar-toggler-icon"></span>
-			</button>
-			<div class="collapse navbar-collapse" id="navbarNav">>
-				<ul class="navbar-nav me-auto">
-					<li class="nav-item">
-						<a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#folderTreeModal">
-							<span class="fa-solid fa-folder-tree"></span>
-							<?php echo Translation::get('menu.folderTree') ?>
-						</a>
-					</li>
-					<li class="nav-item">
-						<a class="nav-link" href="<?php echo $app->getRefreshUrl() ?>">
-							<span class="fa-solid fa-rotate-right"></span>
-							<?php echo Translation::get('menu.refresh') ?>
-						</a>
-					</li>
-					<!--
-					<li class="nav-item">
-						<a class="nav-link" href="#" onclick="javascript:window.history.back();">
-							<span class="fa-solid fa-left-long"></span>
-							<?php echo Translation::get('menu.back') ?>
-						</a>
-					</li>
-					<li class="nav-item">
-						<a class="nav-link" href="#" onclick="javascript:window.history.forward();">
-							<span class="fa-solid fa-right-long"></span>
-							<?php echo Translation::get('menu.next') ?>
-						</a>
-					</li>
-					-->
-					<li class="nav-item">
-						<?php if ($app->getAppContext()->getShowHidden()) { ?>
-						<a class="nav-link" href="<?php echo $app->getShowHiddenUrl(false) ?>">
-							<span class="fa-solid fa-lock"></span>
-							<?php echo Translation::get('menu.hideHiddenFiles') ?>
-						</a>
-						<?php } else {?>
-						<a class="nav-link" href="<?php echo $app->getShowHiddenUrl(true) ?>">
-							<span class="fa-solid fa-lock-open"></span>
-							<?php echo Translation::get('menu.showHiddenFiles') ?>
-						</a>
-						<?php } ?>
-					</li>
-					<li class="nav-item">
-						<?php if ($app->getAppContext()->getDisplayList()) { ?>
-						<a class="nav-link" href="<?php echo $app->getDisplayBlockUrl() ?>">
-							<span class="fa-solid fa-table-cells"></span>
-							<?php echo Translation::get('menu.gridView') ?>
-						</a>
-						<?php } else {?>
-						<a class="nav-link" href="<?php echo $app->getDisplayListUrl() ?>">
-							<span class="fa-solid fa-list"></span>
-							<?php echo Translation::get('menu.listView') ?>
-						</a>
-						<?php } ?>
-					</li>
-				</ul>
-				<ul class="navbar-nav ms-auto">
-					<form class="d-flex">
-						<input class="form-control me-2" type="search" placeholder="<?php echo Translation::get('menu.filter') ?>" aria-label="Search" onkeyup="javascript:filter(this.value)" />
-						<button class="btn btn-secondary" onclick="javascript:filter(); return false;"><?php echo Translation::get('menu.reset') ?></button>
-					</form>
-
-					<li class="nav-item dropdown">
-						<a class="nav-link dropdown-toggle" href="#" class="dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-							<span class="fa-solid fa-flag"></span>
-							<?php echo Translation::get('menu.language') ?>
-							<span class="caret"></span>
-						</a>
-						<ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-							<li>
-								<a class="dropdown-item" href="<?php echo $app->getChangeLanguageUrl("en") ?>">
-									<?php echo Translation::get('menu.english') ?>
-									<?php if ($app->isSelectedLanguage("en")) { ?>
-									<span class="fa-solid fa-check"></span>
-									<?php } ?>
-								</a>
-							</li>
-							<li>
-								<a class="dropdown-item" href="<?php echo $app->getChangeLanguageUrl("fr") ?>">
-									<?php echo Translation::get('menu.french') ?>
-									<?php if ($app->isSelectedLanguage("fr")) { ?>
-									<span class="fa-solid fa-check"></span>
-									<?php } ?>
-								</a>
-							</li>
-						</ul>
-					</li>
-					<li class="nav-item">
-						<a class="nav-link" href="#" onclick="javascript:open(location, '_self').close(); return true;">
-							<span class="fa-solid fa-xmark"></span>
-							<?php echo Translation::get('menu.close') ?>
-						</a>
-					</li>
-				</ul>
-			</div>
+	<div id="top" class="sticky-top bg-white">
+		<!-- HEADER -->
+		<div id="header" class="text-primary fw-bold fs-1 p-1">
+			<?php echo $app->getHeader() ?>
 		</div>
-	</nav>
 
-	<!-- FILE EXPLORER CONTENT -->
-	<div id="content" class="container-fluid">
+		<!-- MENU -->
+		<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+			<div class="container-fluid">
+				<a class="navbar-brand" href="<?php echo $app->getRootUrl() ?>" >
+					<span class="fa-solid fa-house"></span>
+					<?php echo Translation::get('menu.root') ?>
+				</a>
+				<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+					<span class="navbar-toggler-icon"></span>
+				</button>
+				<div class="collapse navbar-collapse" id="navbarNav">>
+					<ul class="navbar-nav me-auto">
+						<li class="nav-item">
+							<a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#folderTreeModal">
+								<span class="fa-solid fa-folder-tree"></span>
+								<?php echo Translation::get('menu.folderTree') ?>
+							</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="<?php echo $app->getRefreshUrl() ?>">
+								<span class="fa-solid fa-rotate-right"></span>
+								<?php echo Translation::get('menu.refresh') ?>
+							</a>
+						</li>
+						<!--
+						<li class="nav-item">
+							<a class="nav-link" href="#" onclick="javascript:window.history.back();">
+								<span class="fa-solid fa-left-long"></span>
+								<?php echo Translation::get('menu.back') ?>
+							</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="#" onclick="javascript:window.history.forward();">
+								<span class="fa-solid fa-right-long"></span>
+								<?php echo Translation::get('menu.next') ?>
+							</a>
+						</li>
+						-->
+						<li class="nav-item">
+							<?php if ($app->getAppContext()->getShowHidden()) { ?>
+							<a class="nav-link" href="<?php echo $app->getShowHiddenUrl(false) ?>">
+								<span class="fa-solid fa-lock"></span>
+								<?php echo Translation::get('menu.hideHiddenFiles') ?>
+							</a>
+							<?php } else {?>
+							<a class="nav-link" href="<?php echo $app->getShowHiddenUrl(true) ?>">
+								<span class="fa-solid fa-lock-open"></span>
+								<?php echo Translation::get('menu.showHiddenFiles') ?>
+							</a>
+							<?php } ?>
+						</li>
+						<li class="nav-item">
+							<?php if ($app->getAppContext()->getDisplayList()) { ?>
+							<a class="nav-link" href="<?php echo $app->getDisplayBlockUrl() ?>">
+								<span class="fa-solid fa-table-cells"></span>
+								<?php echo Translation::get('menu.gridView') ?>
+							</a>
+							<?php } else {?>
+							<a class="nav-link" href="<?php echo $app->getDisplayListUrl() ?>">
+								<span class="fa-solid fa-list"></span>
+								<?php echo Translation::get('menu.listView') ?>
+							</a>
+							<?php } ?>
+						</li>
+					</ul>
+					<ul class="navbar-nav ms-auto">
+						<form class="d-flex">
+							<input class="form-control me-2" type="search" placeholder="<?php echo Translation::get('menu.filter') ?>" aria-label="Search" onkeyup="javascript:filter(this.value)" />
+							<button class="btn btn-secondary" onclick="javascript:filter(); return false;"><?php echo Translation::get('menu.reset') ?></button>
+						</form>
 
+						<li class="nav-item dropdown">
+							<a class="nav-link dropdown-toggle" href="#" class="dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+								<span class="fa-solid fa-flag"></span>
+								<?php echo Translation::get('menu.language') ?>
+								<span class="caret"></span>
+							</a>
+							<ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+								<li>
+									<a class="dropdown-item" href="<?php echo $app->getChangeLanguageUrl("en") ?>">
+										<i class="fi fi-gb"></i>
+										<?php echo Translation::get('menu.english') ?>
+										<?php if ($app->isSelectedLanguage("en")) { ?>
+										<span class="fa-solid fa-check"></span>
+										<?php } ?>
+									</a>
+								</li>
+								<li>
+									<a class="dropdown-item" href="<?php echo $app->getChangeLanguageUrl("fr") ?>">
+										<i class="fi fi-fr"></i>
+										<?php echo Translation::get('menu.french') ?>
+										<?php if ($app->isSelectedLanguage("fr")) { ?>
+										<span class="fa-solid fa-check"></span>
+										<?php } ?>
+									</a>
+								</li>
+								<li>
+									<a class="dropdown-item" href="<?php echo $app->getChangeLanguageUrl("de") ?>">
+										<i class="fi fi-de"></i>
+										<?php echo Translation::get('menu.german') ?>
+										<?php if ($app->isSelectedLanguage("de")) { ?>
+										<span class="fa-solid fa-check"></span>
+										<?php } ?>
+									</a>
+								</li>
+							</ul>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="#" onclick="javascript:open(location, '_self').close(); return true;">
+								<span class="fa-solid fa-xmark"></span>
+								<?php echo Translation::get('menu.close') ?>
+							</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</nav>
+		
 		<!-- TOP STATE BAR -->
 		<div id="statebarTop" class="row bg-primary mb-4 p-1 text-white">
 			<div class="col-md-12">
@@ -184,7 +195,10 @@ $files = $currentFolder->getFileChildren();
 				<?php echo Translation::get('statebar.navigation') . $currentFolder->getLogicalPath() ?>
 			</div>
 		</div>
+	</div>
 
+	<!-- FILE EXPLORER CONTENT -->
+	<div id="content" class="container-fluid">
 		<?php if ($app->getAppContext()->getDisplayList()) { ?>
 
 		<!-- LIST VIEW -->
@@ -336,6 +350,9 @@ $files = $currentFolder->getFileChildren();
 		</div>
 		<?php } ?>
 
+	</div>
+
+	<div id="bottom" class="sticky-bottom bg-white text-primary">
 		<!-- BOTTOM STATE BAR -->
 		<div id="statebarBottom" class="row bg-primary mt-4 p-1 text-white">
 			<div class="col-md-12">
@@ -347,11 +364,10 @@ $files = $currentFolder->getFileChildren();
 				<?php echo FileSystem::convertSize($currentFolder->getChildrenSize()) ?>
 			</div>
 		</div>
-	</div>
-
-	<!-- FOOTER -->
-	<div id="footer" class="text-end p-1">
-		<?php echo $app->getFooter() ?>
+		<!-- FOOTER -->
+		<div id="footer" class="text-end p-1">
+			<?php echo $app->getFooter() ?>
+		</div>
 	</div>
 
 	<!-- Folder tree modal -->

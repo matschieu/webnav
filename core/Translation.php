@@ -65,7 +65,7 @@ class Translation {
 		if (isset($key) && isset(self::$messages[$key])) {
 			return htmlspecialchars(self::$messages[$key]);
 		}
-		return "";
+		return $key;
 	}
 
 }
