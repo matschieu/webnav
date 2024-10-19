@@ -317,7 +317,7 @@ class File {
 		$this->name = $name;
 
 		$this->logicalPath = FileSystem::getLogicalPath($this->path);
-		$this->url = "http://" . $_SERVER['HTTP_HOST'] . FileSystem::getLogicalRoot() . $this->logicalPath;
+		$this->url = (!empty($_SERVER['HTTPS']) ? "https" : "http") . "://" . $_SERVER['HTTP_HOST'] . FileSystem::getLogicalRoot() . $this->logicalPath;
 
 		if ($this->isValid()) {
 			$pathinfo = pathinfo($this->path);

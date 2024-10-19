@@ -82,7 +82,7 @@ class FileViewerApplication {
 	 * @return string
 	 */
 	private function getUrl($page = "index.php"): string {
-		return "http://" . $_SERVER['HTTP_HOST'] . dirname($_SERVER['PHP_SELF']) . "/" . $page;
+		return (!empty($_SERVER['HTTPS']) ? "https" : "http") . "://" . $_SERVER['HTTP_HOST'] . dirname($_SERVER['PHP_SELF']) . "/" . $page;
 	}
 
 	private function formatHttpParams(array $params) {
