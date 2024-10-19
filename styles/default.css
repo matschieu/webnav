@@ -15,7 +15,8 @@
 	margin-bottom: 20px;
 }
 
-.folder .icon {
+.folder .icon,
+.tree-folder-icon {
 	color: orange !important;
 }
 
