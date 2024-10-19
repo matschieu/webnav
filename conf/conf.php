@@ -16,9 +16,9 @@ const CONF_APPLICATION_FOOTER = "
 <div class=\"row\">
 	<div class=\"col-md-6 text-start\">
 		Powered by
-		<a href=\"https://php.net\" target=\"new\"><img src=\"img/logo-php.png\" style=\"height: 20px\"></a>
-		<a href=\"https://getbootstrap.com\" target=\"new\"><img src=\"img/logo-bootstrap.png\" style=\"height: 20px\"></a>
-		<a href=\"https://fontawesome.com\" target=\"new\"><img src=\"img/logo-fontawesome.png\" style=\"height: 20px\"></a>
+		<a href=\"https://php.net\" target=\"new\"><span class=\"fs-5 fa-brands fa-php\" style=\"color: #7A86B8\"></span></a>
+		<a href=\"https://getbootstrap.com\" target=\"new\"><span class=\"fs-5 fa-brands fa-bootstrap\" style=\"color: #712cf9\"></span></a>
+		<a href=\"https://fontawesome.com\" target=\"new\"><span class=\"fs-5 fa-brands fa-font-awesome\" style=\"color: rgb(83,141,215)\"></span></a>
 	</div>
 	<div class=\"col-md-6 text-end\">
 		<a href=\"https://github.com/matschieu\" target=\"new\">By Matschieu</a>
@@ -28,7 +28,7 @@ const CONF_APPLICATION_FOOTER = "
 
 // The root dir of the file system to explore
 // It can be a relative (to the index.php) path or an absolute path
-const CONF_FILE_SYSTEM_ROOT = "..";
+const CONF_FILE_SYSTEM_ROOT = ".";
 
 // Date format used to display file date/time
 const CONF_DATE_FORMAT = "Y-m-d G:i";

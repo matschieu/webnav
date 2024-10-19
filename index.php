@@ -29,10 +29,11 @@ $files = $currentFolder->getFileChildren();
 	<script src="./lib/bootstrap-5.2.3-dist/js/bootstrap.bundle.min.js"></script>
 	<!-- Glyphicons -->
 	<!-- Icons list: https://fontawesome.com -->
-	<link rel="stylesheet" type="text/css" href="./lib/fontawesome-6.2.0/css/fontawesome.min.css" />
-	<link rel="stylesheet" type="text/css" href="./lib/fontawesome-6.2.0/css/solid.min.css" />
+	<link rel="stylesheet" type="text/css" href="./lib/fontawesome-6.6.0/css/fontawesome.min.css" />
+	<link rel="stylesheet" type="text/css" href="./lib/fontawesome-6.6.0/css/solid.min.css" />
+	<link rel="stylesheet" type="text/css" href="./lib/fontawesome-6.6.0/css/brands.min.css" />
 	<!-- Country flags -->
-	<link rel="stylesheet" type="text/css" href="./lib/flag-icons/flag-icons.min.css">	
+	<link rel="stylesheet" type="text/css" href="./lib/flag-icons/flag-icons.min.css">
 	<!-- Application styles -->
 	<link rel="stylesheet" type="text/css" href="./styles/default.css" media="screen" />
 	<link rel="stylesheet" type="text/css" href="<?php echo $app->getCustomCss() ?>" media="screen" />
@@ -187,7 +188,7 @@ $files = $currentFolder->getFileChildren();
 				</div>
 			</div>
 		</nav>
-		
+
 		<!-- TOP STATE BAR -->
 		<div id="statebarTop" class="row bg-primary mb-4 p-1 text-white">
 			<div class="col-md-12">
@@ -322,7 +323,7 @@ $files = $currentFolder->getFileChildren();
 								<a href="<?php echo $file->getUrl() ?>" target="_<?php echo $file->getName() ?>" title="<?php echo Translation::get('content.openFile') ?>">
 									<span class="fa-solid fa-up-right-from-square p-2"></span></a>
 								<a href="<?php echo $file->getUrl() ?>" download="<?php echo $file->getName() ?>" title="<?php echo Translation::get('content.saveFile') ?>">
-									<span class="fa-solid fa-down-long p-2"></span></a>
+									<span class="fa-solid fa-circle-down"></span></a>
 							</div>
 						</div>
 					</div>
@@ -374,7 +375,7 @@ $files = $currentFolder->getFileChildren();
 	<div class="modal fade" id="folderTreeModal" tabindex="-1" role="dialog" aria-labelledby="folderTreeModalLabel">
 		<div class="modal-dialog modal-lg" role="document">
 			<div class="modal-content">
-				<div class="modal-header">
+				<div class="modal-header bg-primary text-white">
 					<h4 class="modal-title" id="myModalLabel"><?php echo Translation::get('modal.tree.title') ?></h4>
 					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 				</div>
