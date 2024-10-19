@@ -10,7 +10,7 @@ const CONF_APPLICATION_CUSTOM_CSS = "";
 // Relative path to the custom favicon (should be in ./img)
 const CONF_APPLICATION_FAVICON = "./img/favicon.png";
 // Header of the file explorer, can contains some HTML
-const CONF_APPLICATION_HEADER = "<i class=\"fa-solid fa-splotch\"></i> ".CONF_APPLICATION_NAME;
+const CONF_APPLICATION_HEADER = "<i class=\"fa-solid fa-splotch\" style=\"color: orange\"></i> ".CONF_APPLICATION_NAME;
 // Footer of the file explorer, can contains some HTML
 const CONF_APPLICATION_FOOTER = "
 <div class=\"row\">
