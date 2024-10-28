@@ -204,7 +204,7 @@ $files = $currentFolder->getFileChildren();
 
 		<!-- LIST VIEW -->
 		<div id="list">
-			<table class="table table-striped">
+			<table class="table table-striped align-middle">
 				<thead>
 					<tr>
 						<th></th>
@@ -283,12 +283,12 @@ $files = $currentFolder->getFileChildren();
 				<?php foreach ($folders as $folder) { ?>
 				<div class="folder col-md-2">
 					<div class="row">
-						<div class="type col-md-2 text-primary">
+						<div class="type col-md-3 text-primary">
 							<div class="icon">
 								<span class="<?php echo $folder->getGlyphicon() ?>"></span>
 							</div>
 						</div>
-						<div class="info col-md-10 text-break">
+						<div class="info col-md-9 text-break">
 							<a href="<?php echo $app->getChangeFolderUrl($folder) ?>">
 								<span class="filename"><?php echo $folder->getDisplayName() ?></span>
 							</a><br />
@@ -305,7 +305,7 @@ $files = $currentFolder->getFileChildren();
 				<?php foreach ($files as $file) { ?>
 				<div class="file col-md-2">
 					<div class="row">
-						<div class="type col-md-2 text-primary">
+						<div class="type col-md-3 text-primary">
 							<div class="icon">
 								<span class="<?php echo $file->getGlyphicon() ?>"></span>
 							</div>
@@ -313,7 +313,7 @@ $files = $currentFolder->getFileChildren();
 								<?php echo $file->getExtension() ?>
 							</span>
 						</div>
-						<div class="info col-md-10 text-break">
+						<div class="info col-md-9 text-break">
 							<a href="<?php echo $file->getUrl() ?>" download="<?php echo $file->getName() ?>">
 								<span class="filename"><?php echo $file->getName() ?></span>
 							</a><br />
