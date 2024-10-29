@@ -351,7 +351,7 @@ class File {
 			$pathinfo = pathinfo($this->path);
 			$this->extension =  isset($pathinfo['extension']) && ".".$pathinfo['extension'] !== $name ? strtolower($pathinfo['extension']) : null;
 			$this->size = filesize($this->path);
-			$this->date = date(Config::DATE_FORMAT, filectime($this->path));
+			$this->date = date(Config::dateFormat(), filectime($this->path));
 		} else {
 			$this->extension = null;
 			$this->size = null;

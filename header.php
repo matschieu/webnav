@@ -1,0 +1,1 @@
+<i class="fa-solid fa-splotch" style="color: orange"></i> <?php echo core\Config::applicationName() ?>

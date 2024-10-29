@@ -15,7 +15,7 @@ class FileViewerApplication {
 
 	private static ?FileViewerApplication $application = null;
 
-	private $startExecTime;
+	private float $startExecTime;
 
 	private AppContext $appContext;
 
@@ -65,7 +65,7 @@ class FileViewerApplication {
 	private function init(): void {
 		date_default_timezone_set('Europe/Paris');
 
-		if(Config::DEBUG) {
+		if(Config::debug()) {
 			ini_set('display_errors', 'On');
 			error_reporting(E_ALL | E_WARNING);
 
@@ -108,7 +108,7 @@ class FileViewerApplication {
 	 *
 	 */
 	final public function postLoad(): void {
-		if(Config::DEBUG) {
+		if(Config::debug()) {
 			echo "Page generation time = " . $this->getExecTime() . " s<br />";
 			echo "Memory used = " . memory_get_usage() . " o (max = " . memory_get_peak_usage() . " o)<br />";
 		}
@@ -116,9 +116,9 @@ class FileViewerApplication {
 
 	/**
 	 *
-	 * @return number
+	 * @return float
 	 */
-	final public function getExecTime(): int {
+	final public function getExecTime(): float {
 		return (microtime(true) - $this->startExecTime);
 	}
 
@@ -257,7 +257,7 @@ class FileViewerApplication {
 	 * @return string
 	 */
 	public function getName(): string {
-		return Config::APPLICATION_NAME;
+		return Config::applicationName();
 	}
 
 	/**
@@ -265,7 +265,7 @@ class FileViewerApplication {
 	 * @return string
 	 */
 	public function getCustomCss(): string {
-		return Config::APPLICATION_CUSTOM_CSS;
+		return Config::applicationCustomCss();
 	}
 
 	/**
@@ -273,7 +273,7 @@ class FileViewerApplication {
 	 * @return string
 	 */
 	public function getFavicon(): string {
-		return Config::APPLICATION_FAVICON;
+		return Config::applicationFavicon();
 	}
 
 	/**
@@ -281,7 +281,7 @@ class FileViewerApplication {
 	 * @return string
 	 */
 	public function getHeader(): string {
-		return Config::APPLICATION_HEADER;
+		return Config::applicationHeader();
 	}
 
 	/**
@@ -289,7 +289,7 @@ class FileViewerApplication {
 	 * @return string
 	 */
 	public function getFooter(): string {
-		return Config::APPLICATION_FOOTER;
+		return Config::applicationFooter();
 	}
 
 	/**

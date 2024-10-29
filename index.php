@@ -22,7 +22,6 @@ $files = $currentFolder->getFileChildren();
 	<meta name="Author" content="Matschieu" />
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
 	<meta name="robots" content="noindex" />
-	<link rel="icon" type="image/png" href="img/favicon.png" />
 	<link rel="icon" type="image/png" href="<?php echo $app->getFavicon() ?>" />
 	<!--Bootstrap -->
 	<link rel="stylesheet" type="text/css" href="./lib/bootstrap-5.2.3-dist/css/bootstrap.min.css" />
@@ -68,7 +67,7 @@ $files = $currentFolder->getFileChildren();
 	<div id="top" class="sticky-top bg-white">
 		<!-- HEADER -->
 		<div id="header" class="text-primary fw-bold fs-1 p-1">
-			<?php echo $app->getHeader() ?>
+			<?php include $app->getHeader() ?>
 		</div>
 
 		<!-- MENU -->
@@ -188,11 +187,9 @@ $files = $currentFolder->getFileChildren();
 		</nav>
 
 		<!-- TOP STATE BAR -->
-		<div id="statebarTop" class="row bg-primary mb-4 p-1 text-white">
-			<div class="col-md-12">
-				<span class="fa-solid fa-folder"></span>
-				<?php echo Translation::get('statebar.navigation') . $currentFolder->getLogicalPath() ?>
-			</div>
+		<div id="statebarTop" class="bg-primary mb-4 p-1 text-white">
+			<span class="fa-solid fa-folder"></span>
+			<?php echo Translation::get('statebar.navigation') . $currentFolder->getLogicalPath() ?>
 		</div>
 	</div>
 
@@ -350,21 +347,19 @@ $files = $currentFolder->getFileChildren();
 
 	<div id="bottom" class="sticky-bottom bg-white text-primary">
 		<!-- BOTTOM STATE BAR -->
-		<div id="statebarBottom" class="row bg-primary mt-4 p-1 text-white">
-			<div class="col-md-12">
-				<span class="fa-solid fa-chart-simple"></span>
-				<?php echo $currentFolder->getFolderChildrenCount() ?>
-				<?php echo Translation::get('statebar.folders') ?>
-				-
-				<?php echo $currentFolder->getFileChildrenCount() ?>
-				<?php echo Translation::get('statebar.files') ?>
-				-
-				<?php echo FileSystem::convertSize($currentFolder->getChildrenSize()) ?>
-			</div>
+		<div id="statebarBottom" class="bg-primary mt-4 p-1 text-white">
+			<span class="fa-solid fa-chart-simple"></span>
+			<?php echo $currentFolder->getFolderChildrenCount() ?>
+			<?php echo Translation::get('statebar.folders') ?>
+			-
+			<?php echo $currentFolder->getFileChildrenCount() ?>
+			<?php echo Translation::get('statebar.files') ?>
+			-
+			<?php echo FileSystem::convertSize($currentFolder->getChildrenSize()) ?>
 		</div>
 		<!-- FOOTER -->
 		<div id="footer" class="text-end p-1">
-			<?php echo $app->getFooter() ?>
+			<?php include $app->getFooter() ?>
 		</div>
 	</div>
 

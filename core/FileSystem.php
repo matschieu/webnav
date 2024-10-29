@@ -34,8 +34,8 @@ final class FileSystem {
 	 * @return string
 	 */
 	final public static function getLogicalRoot(): string {
-		if (substr(Config::FILE_SYSTEM_ROOT, 0, 1) !== self::ROOT) {
-			return dirname($_SERVER['SCRIPT_NAME']) . DIRECTORY_SEPARATOR . Config::FILE_SYSTEM_ROOT;
+		if (substr(Config::fileSystemRoot(), 0, 1) !== self::ROOT) {
+			return dirname($_SERVER['SCRIPT_NAME']) . DIRECTORY_SEPARATOR . Config::fileSystemRoot();
 		}
 
 		return SELF::ROOT;
@@ -47,11 +47,11 @@ final class FileSystem {
 	 */
 	final public static function getRoot(): string {
 		// If the root is a relative path, then the path is transformed to an absolute path
-		if (substr(Config::FILE_SYSTEM_ROOT, 0, 1) !== self::ROOT) {
-			return realpath(dirname($_SERVER['SCRIPT_FILENAME']) . DIRECTORY_SEPARATOR . Config::FILE_SYSTEM_ROOT);
+		if (substr(Config::fileSystemRoot(), 0, 1) !== self::ROOT) {
+			return realpath(dirname($_SERVER['SCRIPT_FILENAME']) . DIRECTORY_SEPARATOR . Config::fileSystemRoot());
 		}
 
-		return Config::FILE_SYSTEM_ROOT;
+		return Config::fileSystemRoot();
 	}
 
 	/**
@@ -61,11 +61,11 @@ final class FileSystem {
 	 */
 	final public static function getRootFolder(bool $includeHidden = false): Folder {
 		if (!isset(self::$rootFolder)) {
-			$path = Config::FILE_SYSTEM_ROOT;
+			$path = Config::fileSystemRoot();
 
 			// If the root is a relative path, then the path is transformed to an absolute path
-			if (substr(Config::FILE_SYSTEM_ROOT, 0, 1) !== self::ROOT) {
-				$path = realpath(dirname($_SERVER['SCRIPT_FILENAME']) . DIRECTORY_SEPARATOR . Config::FILE_SYSTEM_ROOT);
+			if (substr(Config::fileSystemRoot(), 0, 1) !== self::ROOT) {
+				$path = realpath(dirname($_SERVER['SCRIPT_FILENAME']) . DIRECTORY_SEPARATOR . Config::fileSystemRoot());
 			}
 
 			self::$rootFolder = new Folder($path, self::ROOT, $includeHidden);
