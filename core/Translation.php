@@ -15,6 +15,10 @@ class Translation {
 
 	public static ?string $language = null;
 
+	private static function parse_i18n($language): array|bool {
+		return parse_ini_file('./i18n/'.strtolower($language).'.ini', false, INI_SCANNER_RAW);
+	}
+
 	/**
 	 *
 	 */
@@ -25,14 +29,17 @@ class Translation {
 				self::$language = self::DEFAULT_LANGUAGE;
 			}
 
-			$file = './i18n/'.strtolower(self::$language).'.php';
+			$ini = self::parse_i18n(self::$language);
 
 			// If the file doesn't exist, set the default language
-			if (is_file($file)) {
+			if ($ini == false) {
 				self::$language = self::DEFAULT_LANGUAGE;
+				$ini = self::parse_i18n(self::$language);
 			}
 
-			self::$messages = (include $file);
+			if ($ini) {
+				self::$messages = $ini;
+			}
 
 			self::$init = true;
 		}

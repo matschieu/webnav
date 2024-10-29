@@ -51,6 +51,6 @@ table .preview img {
 .ppt, .pptx {
 	background-color: #EC971F !important;
 }
-.txt, .html, .php, .java, .css, .js, .c, .xml, .properties {
+.txt, .html, .php, .java, .css, .js, .c, .xml, .properties, .sh {
 	background-color: #A8A8A1 !important;
 }

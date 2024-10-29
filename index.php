@@ -353,9 +353,11 @@ $files = $currentFolder->getFileChildren();
 		<div id="statebarBottom" class="row bg-primary mt-4 p-1 text-white">
 			<div class="col-md-12">
 				<span class="fa-solid fa-chart-simple"></span>
-				<?php echo $currentFolder->getFolderChildrenCount() . Translation::get('statebar.folders') ?>
+				<?php echo $currentFolder->getFolderChildrenCount() ?>
+				<?php echo Translation::get('statebar.folders') ?>
 				-
-				<?php echo $currentFolder->getFileChildrenCount() . Translation::get('statebar.files') ?>
+				<?php echo $currentFolder->getFileChildrenCount() ?>
+				<?php echo Translation::get('statebar.files') ?>
 				-
 				<?php echo FileSystem::convertSize($currentFolder->getChildrenSize()) ?>
 			</div>
