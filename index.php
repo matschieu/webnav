@@ -95,7 +95,6 @@ $files = $currentFolder->getFileChildren();
 								<?php echo Translation::get('menu.refresh') ?>
 							</a>
 						</li>
-						<!--
 						<li class="nav-item">
 							<a class="nav-link" href="#" onclick="javascript:window.history.back();">
 								<span class="fa-solid fa-left-long"></span>
@@ -108,7 +107,6 @@ $files = $currentFolder->getFileChildren();
 								<?php echo Translation::get('menu.next') ?>
 							</a>
 						</li>
-						-->
 						<li class="nav-item">
 							<?php if ($app->getAppContext()->getShowHidden()) { ?>
 							<a class="nav-link" href="<?php echo $app->getShowHiddenUrl(false) ?>">
@@ -212,7 +210,6 @@ $files = $currentFolder->getFileChildren();
 						<th><?php echo Translation::get('content.type') ?></th>
 						<th><?php echo Translation::get('content.size') ?></th>
 						<th><?php echo Translation::get('content.date') ?></th>
-						<th><?php echo Translation::get('content.actions') ?></th>
 					</tr>
 				</thead>
 
@@ -223,8 +220,9 @@ $files = $currentFolder->getFileChildren();
 						<span class="<?php echo $folder->getGlyphicon() ?>"></span>
 					</td>
 					<td>
-						<a href="<?php echo $app->getChangeFolderUrl($folder) ?>">
+						<a href="<?php echo $app->getChangeFolderUrl($folder) ?>" title="<?php echo Translation::get('content.openFolder') ?>">
 							<span class="filename"><?php echo $folder->getDisplayName() ?></span>
+							<span class="fa-solid fa-right-to-bracket p-2"></span>
 						</a>
 					</td>
 					<td></td>
@@ -234,22 +232,25 @@ $files = $currentFolder->getFileChildren();
 					<td>
 						<?php echo $folder->getDate() ?>
 					</td>
-					<td>
-						<a href="<?php echo $app->getChangeFolderUrl($folder) ?>" title="<?php echo Translation::get('content.openFolder') ?>">
-							<span class="fa-solid fa-right-to-bracket p-2"></span></a>
-					</td>
 				</tr>
 				<?php } ?>
 
 				<!--FILES -->
 				<?php foreach ($files as $file) { ?>
 				<tr class="file text-break">
+					<?php if (!$file->isImage()) { ?>
 					<td class="icon text-primary">
 						<span class="<?php echo $file->getGlyphicon() ?>"></span>
 					</td>
+					<?php } else { ?>
+					<td class="preview text-primary">
+						<img src="<?php echo $file->getUrl() ?>" class="logo img-fluid" />
+					</td>
+					<?php } ?>
 					<td>
-						<a href="<?php echo $file->getUrl() ?>" download="<?php echo $file->getName() ?>">
+						<a href="<?php echo $file->getUrl() ?>" download="<?php echo $file->getName() ?>" title="<?php echo Translation::get('content.openFile') ?>">
 							<span class="filename"><?php echo $file->getName() ?></span>
+							<span class="fa-solid fa-up-right-from-square p-2"></span>
 						</a>
 					</td>
 					<td>
@@ -262,12 +263,6 @@ $files = $currentFolder->getFileChildren();
 					</td>
 					<td>
 						<?php echo $file->getDate() ?>
-					</td>
-					<td>
-						<a href="<?php echo $file->getUrl() ?>" target="_<?php echo $file->getName() ?>" title="<?php echo Translation::get('content.openFile') ?>">
-							<span class="fa-solid fa-up-right-from-square p-2"></span></a>
-						<a href="<?php echo $file->getUrl() ?>" download="<?php echo $file->getName() ?>" title="<?php echo Translation::get('content.saveFile') ?>">
-							<span class="fa-solid fa-circle-down p-2"></span></a>
 					</td>
 				</tr>
 				<?php } ?>
@@ -289,13 +284,12 @@ $files = $currentFolder->getFileChildren();
 							</div>
 						</div>
 						<div class="info col-md-9 text-break">
-							<a href="<?php echo $app->getChangeFolderUrl($folder) ?>">
+							<a href="<?php echo $app->getChangeFolderUrl($folder) ?>" title="<?php echo Translation::get('content.openFolder') ?>>
 								<span class="filename"><?php echo $folder->getDisplayName() ?></span>
+								<span class="fa-solid fa-right-to-bracket p-2"></span>
 							</a><br />
 							<div><?php echo FileSystem::convertSize($folder->getSize()) ?></div>
 							<div><?php echo $folder->getDate() ?></div>
-							<a href="<?php echo $app->getChangeFolderUrl($folder) ?>" title="<?php echo Translation::get('content.openFolder') ?>">
-								<span class="fa-solid fa-right-to-bracket p-2"></span></a>
 						</div>
 					</div>
 				</div>
@@ -306,25 +300,26 @@ $files = $currentFolder->getFileChildren();
 				<div class="file col-md-2">
 					<div class="row">
 						<div class="type col-md-3 text-primary">
+							<?php if (!$file->isImage()) { ?>
 							<div class="icon">
 								<span class="<?php echo $file->getGlyphicon() ?>"></span>
 							</div>
+							<?php } else { ?>
+							<div class="preview">
+								<img src="<?php echo $file->getUrl() ?>" class="logo img-fluid" />
+							</div>
+							<?php } ?>
 							<span class="badge bg-primary mt-2 <?php echo $file->getExtension() != null ? $file->getExtension() : "noext" ?>">
 								<?php echo $file->getExtension() ?>
 							</span>
 						</div>
 						<div class="info col-md-9 text-break">
-							<a href="<?php echo $file->getUrl() ?>" download="<?php echo $file->getName() ?>">
+							<a href="<?php echo $file->getUrl() ?>" download="<?php echo $file->getName() ?>" title="<?php echo Translation::get('content.openFile') ?>">
 								<span class="filename"><?php echo $file->getName() ?></span>
+								<span class="fa-solid fa-up-right-from-square p-2"></span>
 							</a><br />
 							<div><?php echo FileSystem::convertSize($file->getSize()) ?></div>
 							<div><?php echo $file->getDate() ?></div>
-							<div>
-								<a href="<?php echo $file->getUrl() ?>" target="_<?php echo $file->getName() ?>" title="<?php echo Translation::get('content.openFile') ?>">
-									<span class="fa-solid fa-up-right-from-square p-2"></span></a>
-								<a href="<?php echo $file->getUrl() ?>" download="<?php echo $file->getName() ?>" title="<?php echo Translation::get('content.saveFile') ?>">
-									<span class="fa-solid fa-circle-down"></span></a>
-							</div>
 						</div>
 					</div>
 				</div>
@@ -338,7 +333,7 @@ $files = $currentFolder->getFileChildren();
 		<!-- EMPTY CONTENT MESSAGE -->
 		<div id="noContent" class="row mt-3 ps-2 pe-2">
 			<div class="col-md-12">
-				<div class="alert alert-primary" role="alert">
+				<div class="alert alert-primar class="logo img-fluid"y" role="alert">
 					<?php echo Translation::get('content.noContent') ?>
 				</div>
 			</div>

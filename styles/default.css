@@ -14,6 +14,16 @@ table .icon {
 	font-size: 2.5em;
 }
 
+.preview img {
+	max-width: 56px;
+	max-height:56px;
+}
+
+table .preview img {
+	max-width: 40px;
+	max-height:40px;
+}
+
 .folder, .file {
 	margin-bottom: 20px;
 }

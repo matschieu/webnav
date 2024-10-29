@@ -14,6 +14,7 @@ class File {
 	protected ?string $extension;
 	protected string $glyphicon;
 	protected string $url;
+	protected bool $image;
 
 	/**
 	 *
@@ -309,6 +310,33 @@ class File {
 
 	/**
 	 *
+	 * @return bool
+	 */
+	private function determineImage(): bool {
+		switch ($this->getExtension()) {
+			case "tif":
+			case "tiff":
+			case "gif":
+			case "jpeg":
+			case "jpg":
+			case "jif":
+			case "jfif":
+			case "jp2":
+			case "jpx":
+			case "j2k":
+			case "j2c":
+			case "fpx":
+			case "pcd":
+			case "png":
+			case "bmp":
+				return true;
+			default:
+				return false;
+		}
+	}
+
+	/**
+	 *
 	 * @param string $path
 	 * @param string $name
 	 */
@@ -331,6 +359,7 @@ class File {
 		}
 
 		$this->glyphicon = $this->determineGlyphicon();
+		$this->image = $this->determineImage();
 	}
 
 	/**
@@ -403,6 +432,14 @@ class File {
 	 */
 	public function getUrl(): string {
 		return $this->url;
+	}
+
+	/**
+	 *
+	 * @return bool
+	 */
+	public function isImage(): bool {
+		return $this->image;
 	}
 
 	/**
