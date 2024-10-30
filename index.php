@@ -189,7 +189,8 @@ $files = $currentFolder->getFileChildren();
 		<!-- TOP STATE BAR -->
 		<div id="statebarTop" class="bg-primary mb-4 p-1 text-white">
 			<span class="fa-solid fa-folder"></span>
-			<?php echo Translation::get('statebar.navigation') . $currentFolder->getLogicalPath() ?>
+			<?php echo Translation::get('statebar.navigation') ?>
+			<?php echo $currentFolder->getLogicalPath() ?>
 		</div>
 	</div>
 
@@ -251,9 +252,9 @@ $files = $currentFolder->getFileChildren();
 						</a>
 					</td>
 					<td>
-						<span class="badge bg-primary <?php echo $file->getExtension() != null ? $file->getExtension() : "noext" ?>">
+						<div class="badge bg-primary <?php echo $file->getExtension() != null ? $file->getExtension() : "noext" ?>">
 							<?php echo $file->getExtension() ?>
-						</span>
+						</div>
 					</td>
 					<td>
 						<?php echo FileSystem::convertSize($file->getSize()) ?>
@@ -275,13 +276,13 @@ $files = $currentFolder->getFileChildren();
 				<?php foreach ($folders as $folder) { ?>
 				<div class="folder col-md-2">
 					<div class="row">
-						<div class="type col-md-3 text-primary">
+						<div class="type col-md-3 text-primary text-center">
 							<div class="icon">
 								<span class="<?php echo $folder->getGlyphicon() ?>"></span>
 							</div>
 						</div>
 						<div class="info col-md-9 text-break">
-							<a href="<?php echo $app->getChangeFolderUrl($folder) ?>" title="<?php echo Translation::get('content.openFolder') ?>>
+							<a href="<?php echo $app->getChangeFolderUrl($folder) ?>" title="<?php echo Translation::get('content.openFolder') ?>">
 								<span class="filename"><?php echo $folder->getDisplayName() ?></span>
 								<span class="fa-solid fa-right-to-bracket p-2"></span>
 							</a><br />
@@ -296,7 +297,7 @@ $files = $currentFolder->getFileChildren();
 				<?php foreach ($files as $file) { ?>
 				<div class="file col-md-2">
 					<div class="row">
-						<div class="type col-md-3 text-primary">
+						<div class="type col-md-3 text-primary text-center">
 							<?php if (!$file->isImage()) { ?>
 							<div class="icon">
 								<span class="<?php echo $file->getGlyphicon() ?>"></span>
@@ -306,9 +307,9 @@ $files = $currentFolder->getFileChildren();
 								<img src="<?php echo $file->getUrl() ?>" class="logo img-fluid" />
 							</div>
 							<?php } ?>
-							<span class="badge bg-primary mt-2 <?php echo $file->getExtension() != null ? $file->getExtension() : "noext" ?>">
+							<div class="badge bg-primary mt-2 <?php echo $file->getExtension() != null ? $file->getExtension() : "noext" ?>">
 								<?php echo $file->getExtension() ?>
-							</span>
+							</div>
 						</div>
 						<div class="info col-md-9 text-break">
 							<a href="<?php echo $file->getUrl() ?>" download="<?php echo $file->getName() ?>" title="<?php echo Translation::get('content.openFile') ?>">
