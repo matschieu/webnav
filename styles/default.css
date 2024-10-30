@@ -37,20 +37,47 @@ table .preview img {
 	background-color: transparent !important;
 }
 .pdf {
-	background-color: #C9302C !important;
+	background-color: #E01B24 !important;
 }
-.xls, .xlsx {
-	background-color: #5CB85C !important;
+.csv, .xls, .xlsx {
+	background-color: #107A40 !important;
 }
 .doc, .docx {
-	background-color: #31B0D5 !important;
-}
-.jpg, .jpeg, .png, .bmp, .gif {
-	background-color: #286090 !important;
+	background-color: #185ABD !important;
 }
 .ppt, .pptx {
-	background-color: #EC971F !important;
+	background-color: #C43F1D !important;
 }
-.txt, .html, .php, .java, .css, .js, .c, .xml, .properties, .sh {
+.tif, .tiff, .gif, .jpeg, .jpg, .jif, .jfif, .jp2, .jpx, .j2k, .j2c, .fpx, .pcd, .png, .bmp {
+	background-color: #286090 !important;
+}
+.c, .cpp, .cs, .css, .html, .java, .js, .jsp, .ksh, .php, .py, .sh, .sql, .ts, .xml {
+	background-color: #813D9C!important;
+}
+.cfg, .json, .properties, .txt, .yml {
 	background-color: #A8A8A1 !important;
+}
+.webm, .mkv, .flv, .flv, .vob, .ogv, .ogg, .drc, .gif, .gifv, .mng, .avi, .mov, .qt, .wmv, .yuv, .rm, .rmvb, .asf, .amv, 
+.mp4, .m4p, .m4v, .mpg, .mp2, .mpeg, .mpe, .mpv, .mpg, .mpeg, .m2v, .m4v, .svi, .mxf, .roq, .nsv, .flv, .f4v, 
+.f4p, .f4a, .f4b { 
+	background-color: #3584E4 !important;
+}
+.aa, .aac, .aax, .act, .aiff, .amr, .ape, .au, .awb, .dct, .dss, .dvf, .flac, .gsm, .iklax, .ivs, .m4a, .m4b, .m4p, .mmf, 
+.mp3, .mpc, .msv, .ogg, .oga, .opus, .ra, .rm, .raw, .sln, .tta, .vox, .wav, .wma, .wv, .webm {
+	background-color: #26A269 !important;
+}
+.action, .apk, .app, .bat, .bin, .cmd, .com, .command, .cpl, .csh, .exe, .gadget, .inf1, .ins, .inx, .ipa, .isu, .job, .jse, 
+.ksh, .lnk, .msc, .msi, .msp, .mst, .osx, .out, .paf, .pif, .prg, .ps1, .reg, .rgs, .run, .scr, .sct, .shb, .shs, .u3p, .vb, 
+.vbe, .vbs, .vbscript, .workflow, .ws, .wsf, .wsh {
+	background-color: #5e5c64 !important; 
+}
+.bz2, .f, .gz, .lz, .lzma, .lzo, .rz, .sfark, .sz, .xz, .z, .Z, .infl, .s7z, .ace, .afa, .alz, .apk, .arc, .arj, .b1, 
+.ba, .bh, .cab, .car, .cfs, .cpt, .dar, .dd, .dgc, .dmg, .ear, .gca, .ha, .hki, .ice, .jar, .kgb, .lzh, .lha, .lzx, .pak, 
+.partimg, .paq6, .paq7, .paq8, .pea, .pim, .pit, .qda, .rar, .rk, .sda, .sea, .sen, .sfx, .shk, .sit, .sitx, .sqx, .targz, 
+.tgz, .tarZ, .tarbz2, .tbz2, .tarlzma, .tlz, .uc, .uc0, .uc2, .ucn, .ur2, .ue2, .uca, .uha, .war, .wim, .xar, .xp3, .yz1, 
+.zip, .zipx, .zoo, .zpaq, .zz {
+	background-color: #E5A50A !important; 
+}
+.a, .ar, .cpio, .shar, .lbr, .iso, .lbr, .mar, .tar {
+	background-color: #ff7800 !important;
 }

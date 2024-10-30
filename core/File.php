@@ -301,8 +301,6 @@ class File {
 			case "mar":
 			case "tar":
 				return "fa-solid fa-box-archive";
-			case "tar":
-				return "fa-solid fa-file";
 			default:
 				return "fa-solid fa-file";
 		}
