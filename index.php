@@ -56,7 +56,7 @@ $files = $currentFolder->getFileChildren();
 				parent.style.display = !element.innerText.includes(value) ? "none" : "";
 			};
 		}
-		fetch('<?php echo $app->getTreeUrl() ?>')
+		fetch('<?php echo $app->getUrl("tree.php") ?>')
 			.then(response => response.text())
 			.then(html => document.getElementById('folderTreeModalContent').innerHTML = html)
 			.catch(error => console.error('Error:', error));
@@ -135,7 +135,7 @@ $files = $currentFolder->getFileChildren();
 					</ul>
 					<ul class="navbar-nav ms-auto">
 						<form class="d-flex">
-							<input class="form-control bg-dark text-white me-2" type="search" placeholder="<?php echo Translation::get('menu.filter') ?>" aria-label="Search" onkeyup="javascript:filter(this.value)" />
+							<input class="form-control bg-secondary text-white me-2" type="search" placeholder="<?php echo Translation::get('menu.filter') ?>" aria-label="Search" onkeyup="javascript:filter(this.value)" />
 							<button class="btn btn-secondary" onclick="javascript:filter(); return false;"><?php echo Translation::get('menu.reset') ?></button>
 						</form>
 
