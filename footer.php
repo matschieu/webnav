@@ -1,4 +1,4 @@
-<div class="row">
+<div class="row text-end p-1">
 	<div class="col-md-6 text-start">
 		Powered by
 		<a href="https://php.net" target="new"><span class="fs-5 fa-brands fa-php" style="color: #7A86B8"></span></a>

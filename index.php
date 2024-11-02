@@ -66,7 +66,7 @@ $files = $currentFolder->getFileChildren();
 <body>
 	<div id="top" class="sticky-top bg-white">
 		<!-- HEADER -->
-		<div id="header" class="text-primary fw-bold fs-1 p-1">
+		<div id="header">
 			<?php include $app->getHeader() ?>
 		</div>
 
@@ -135,7 +135,7 @@ $files = $currentFolder->getFileChildren();
 					</ul>
 					<ul class="navbar-nav ms-auto">
 						<form class="d-flex">
-							<input class="form-control me-2" type="search" placeholder="<?php echo Translation::get('menu.filter') ?>" aria-label="Search" onkeyup="javascript:filter(this.value)" />
+							<input class="form-control bg-dark text-white me-2" type="search" placeholder="<?php echo Translation::get('menu.filter') ?>" aria-label="Search" onkeyup="javascript:filter(this.value)" />
 							<button class="btn btn-secondary" onclick="javascript:filter(); return false;"><?php echo Translation::get('menu.reset') ?></button>
 						</form>
 
@@ -145,7 +145,7 @@ $files = $currentFolder->getFileChildren();
 								<?php echo Translation::get('menu.language') ?>
 								<span class="caret"></span>
 							</a>
-							<ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+							<ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDropdown">
 								<li>
 									<a class="dropdown-item" href="<?php echo $app->getChangeLanguageUrl("en") ?>">
 										<i class="fi fi-gb"></i>
@@ -187,7 +187,7 @@ $files = $currentFolder->getFileChildren();
 		</nav>
 
 		<!-- TOP STATE BAR -->
-		<div id="statebarTop" class="bg-primary mb-4 p-1 text-white">
+		<div id="statebarTop" class="bg-primary p-1 text-white">
 			<span class="fa-solid fa-folder"></span>
 			<?php echo Translation::get('statebar.navigation') ?>
 			<?php echo $currentFolder->getLogicalPath() ?>
@@ -195,7 +195,7 @@ $files = $currentFolder->getFileChildren();
 	</div>
 
 	<!-- FILE EXPLORER CONTENT -->
-	<div id="content" class="container-fluid">
+	<div id="content" class="container-fluid py-4">
 		<?php if ($app->getAppContext()->getDisplayList()) { ?>
 
 		<!-- LIST VIEW -->
@@ -348,7 +348,7 @@ $files = $currentFolder->getFileChildren();
 
 	<div id="bottom" class="sticky-bottom bg-white text-primary">
 		<!-- BOTTOM STATE BAR -->
-		<div id="statebarBottom" class="bg-primary mt-4 p-1 text-white">
+		<div id="statebarBottom" class="bg-primary p-1 text-white">
 			<span class="fa-solid fa-chart-simple"></span>
 			<?php echo $currentFolder->getFolderChildrenCount() ?>
 			<?php echo Translation::get('statebar.folders') ?>
@@ -359,7 +359,7 @@ $files = $currentFolder->getFileChildren();
 			<?php echo FileSystem::convertSize($currentFolder->getChildrenSize()) ?>
 		</div>
 		<!-- FOOTER -->
-		<div id="footer" class="text-end p-1">
+		<div id="footer">
 			<?php include $app->getFooter() ?>
 		</div>
 	</div>
