@@ -6,12 +6,7 @@ namespace core;
  */
 class FileViewerApplication {
 
-	const CORE_DIR = "./core";
-	const HTTP_PARAM_PATH = "dir";
-	const HTTP_PARAM_LIST = "list";
-	const HTTP_PARAM_LANG = "lang";
-	const HTTP_PARAM_HIDDEN = "hid";
-	const HTTP_PARAM_REFRESH = "rfr";
+	const HTTP_PARAM_CONTEXT = "ctx";
 
 	private static ?FileViewerApplication $application = null;
 
@@ -49,12 +44,7 @@ class FileViewerApplication {
 	private function __construct() {
 		$this->init();
 		$this->startExecTime = microtime(true);
-		$this->appContext = new AppContext(
-			$this->getHttpParam(self::HTTP_PARAM_PATH),
-			$this->getHttpParam(self::HTTP_PARAM_LANG),
-			$this->getHttpParam(self::HTTP_PARAM_LIST) != null,
-			$this->getHttpParam(self::HTTP_PARAM_HIDDEN) != null
-		);
+		$this->appContext = AppContext::decode($this->getHttpParam(self::HTTP_PARAM_CONTEXT));
 		Translation::$language = $this->appContext->getLanguage();
 	}
 
@@ -85,6 +75,11 @@ class FileViewerApplication {
 		return (!empty($_SERVER['HTTPS']) ? "https" : "http") . "://" . $_SERVER['HTTP_HOST'] . dirname($_SERVER['PHP_SELF']) . "/" . $page;
 	}
 
+	/**
+	 *
+	 * @param array $params
+	 * @return string
+	 */
 	private function formatHttpParams(array $params) {
 		$param = "";
 		if (count($params) > 0) {
@@ -135,12 +130,9 @@ class FileViewerApplication {
 	 * @return string
 	 */
 	public function getRootUrl(): string {
-		$url = $this->getUrl();
-		$url .= $this->formatHttpParams(array(
-				self::HTTP_PARAM_LANG => $this->appContext->getLanguage(),
-				self::HTTP_PARAM_LIST => $this->appContext->getDisplayList(),
-				self::HTTP_PARAM_HIDDEN => $this->appContext->getShowHidden(),
-		));
+		$context = $this->appContext->copy();
+		$context->setLocation(null);
+		$url = $this->getUrl().$this->formatHttpParams(array(self::HTTP_PARAM_CONTEXT => $context->encode()));
 		return $url;
 	}
 
@@ -149,12 +141,7 @@ class FileViewerApplication {
 	 * @return string
 	 */
 	public function getTreeUrl(): string {
-		$url = $this->getUrl("tree.php");
-		$url .= $this->formatHttpParams(array(
-			self::HTTP_PARAM_LANG => $this->appContext->getLanguage(),
-			self::HTTP_PARAM_LIST => $this->appContext->getDisplayList(),
-			self::HTTP_PARAM_HIDDEN => $this->appContext->getShowHidden(),
-		));
+		$url = $this->getUrl("tree.php").$this->formatHttpParams(array(self::HTTP_PARAM_CONTEXT => $this->appContext->encode()));
 		return $url;
 	}
 
@@ -163,14 +150,7 @@ class FileViewerApplication {
 	 * @return string
 	 */
 	public function getRefreshUrl(): string {
-		$url = $this->getUrl();
-		$url .= $this->formatHttpParams(array(
-			self::HTTP_PARAM_PATH => $this->appContext->getLocation(),
-			self::HTTP_PARAM_LANG => $this->appContext->getLanguage(),
-			self::HTTP_PARAM_LIST => $this->appContext->getDisplayList(),
-			self::HTTP_PARAM_HIDDEN => $this->appContext->getShowHidden(),
-			self::HTTP_PARAM_REFRESH => true,
-		));
+		$url = $this->getUrl().$this->formatHttpParams(array(self::HTTP_PARAM_CONTEXT => $this->appContext->encode()));
 		return $url;
 	}
 
@@ -180,13 +160,9 @@ class FileViewerApplication {
 	 * @return string
 	 */
 	public function getChangeLanguageUrl(string $language): string {
-		$url = $this->getUrl();
-		$url .= $this->formatHttpParams(array(
-			self::HTTP_PARAM_PATH => $this->appContext->getLocation(),
-			self::HTTP_PARAM_LANG => $language,
-			self::HTTP_PARAM_LIST => $this->appContext->getDisplayList(),
-			self::HTTP_PARAM_HIDDEN => $this->appContext->getShowHidden(),
-		));
+		$context = $this->appContext->copy();
+		$context->setLanguage($language);
+		$url = $this->getUrl().$this->formatHttpParams(array(self::HTTP_PARAM_CONTEXT => $context->encode()));
 		return $url;
 	}
 
@@ -195,13 +171,9 @@ class FileViewerApplication {
 	 * @return string
 	 */
 	public function getDisplayBlockUrl(): string {
-		$url = $this->getUrl();
-		$url .= $this->formatHttpParams(array(
-			self::HTTP_PARAM_PATH => $this->appContext->getLocation(),
-			self::HTTP_PARAM_LANG => $this->appContext->getLanguage(),
-			self::HTTP_PARAM_LIST => false,
-			self::HTTP_PARAM_HIDDEN => $this->appContext->getShowHidden(),
-		));
+		$context = $this->appContext->copy();
+		$context->setDisplayList(false);
+		$url = $this->getUrl().$this->formatHttpParams(array(self::HTTP_PARAM_CONTEXT => $context->encode()));
 		return $url;
 	}
 
@@ -210,13 +182,9 @@ class FileViewerApplication {
 	 * @return string
 	 */
 	public function getDisplayListUrl(): string {
-		$url = $this->getUrl();
-		$url .= $this->formatHttpParams(array(
-			self::HTTP_PARAM_PATH => $this->appContext->getLocation(),
-			self::HTTP_PARAM_LANG => $this->appContext->getLanguage(),
-			self::HTTP_PARAM_LIST => true,
-			self::HTTP_PARAM_HIDDEN => $this->appContext->getShowHidden(),
-		));
+		$context = $this->appContext->copy();
+		$context->setDisplayList(true);
+		$url = $this->getUrl().$this->formatHttpParams(array(self::HTTP_PARAM_CONTEXT => $context->encode()));
 		return $url;
 	}
 
@@ -226,13 +194,9 @@ class FileViewerApplication {
 	 * @return string
 	 */
 	public function getChangeFolderUrl(Folder $folder): string {
-		$url = $this->getUrl();
-		$url .= $this->formatHttpParams(array(
-			self::HTTP_PARAM_PATH => $folder->getLogicalPath(),
-			self::HTTP_PARAM_LANG => $this->appContext->getLanguage(),
-			self::HTTP_PARAM_LIST => $this->appContext->getDisplayList(),
-			self::HTTP_PARAM_HIDDEN => $this->appContext->getShowHidden(),
-		));
+		$context = $this->appContext->copy();
+		$context->setLocation($folder->getLogicalPath());
+		$url = $this->getUrl().$this->formatHttpParams(array(self::HTTP_PARAM_CONTEXT => $context->encode()));
 		return $url;
 	}
 
@@ -242,13 +206,9 @@ class FileViewerApplication {
 	 * @return string
 	 */
 	public function getShowHiddenUrl(bool $showHidden): string {
-		$url = $this->getUrl();
-		$url .= $this->formatHttpParams(array(
-			self::HTTP_PARAM_PATH => $this->appContext->getLocation(),
-			self::HTTP_PARAM_LANG => $this->appContext->getLanguage(),
-			self::HTTP_PARAM_LIST => $this->appContext->getDisplayList(),
-			self::HTTP_PARAM_HIDDEN => $showHidden,
-		));
+		$context = $this->appContext->copy();
+		$context->setShowHidden($showHidden);
+		$url = $this->getUrl().$this->formatHttpParams(array(self::HTTP_PARAM_CONTEXT => $context->encode()));
 		return $url;
 	}
 
