@@ -3,13 +3,18 @@
   --bs-primary: #337AB7;
 }
 
-#footer {
-	font-size: small;
+#filterfield::placeholder {
+	color: black;
+	opacity: 1; 
+}
+#filterfield::-ms-input-placeholder {
+	color: black;
 }
 
 .icon {
 	font-size: 3.5em;
 }
+
 table .icon {
 	font-size: 2.5em;
 }
@@ -30,7 +35,7 @@ table .preview img {
 
 .folder .icon,
 .tree-folder-icon {
-	color: orange !important;
+	color: orange;
 }
 
 .noext {

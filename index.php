@@ -135,7 +135,7 @@ $files = $currentFolder->getFileChildren();
 					</ul>
 					<ul class="navbar-nav ms-auto">
 						<form class="d-flex">
-							<input class="form-control bg-secondary text-white me-2" type="search" placeholder="<?php echo Translation::get('menu.filter') ?>" aria-label="Search" onkeyup="javascript:filter(this.value)" />
+							<input id="filterfield" class="form-control bg-secondary text-white me-2" type="search" placeholder="<?php echo Translation::get('menu.filter') ?>" aria-label="Search" onkeyup="javascript:filter(this.value)" />
 							<button class="btn btn-secondary" onclick="javascript:filter(); return false;"><?php echo Translation::get('menu.reset') ?></button>
 						</form>
 
@@ -195,7 +195,7 @@ $files = $currentFolder->getFileChildren();
 	</div>
 
 	<!-- FILE EXPLORER CONTENT -->
-	<div id="content" class="container-fluid py-4">
+	<div id="content" class="container-fluid py-4 bg-white">
 		<?php if ($app->getAppContext()->getDisplayList()) { ?>
 
 		<!-- LIST VIEW -->
