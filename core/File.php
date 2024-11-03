@@ -34,12 +34,18 @@ class File {
 				return "fa-solid fa-file-csv";
 			case "doc":
 			case "docx":
+			case "odt":
+			case "fodt":
 				return "fa-solid fa-file-word";
 			case "xls":
 			case "xlsx":
+			case "ods":
+			case "fods":
 				return "fa-solid fa-file-excel";
 			case "ppt":
 			case "pptx":
+			case "odp":
+			case "fodp":
 				return "fa-solid fa-file-powerpoint";
 			case "tif":
 			case "tiff":

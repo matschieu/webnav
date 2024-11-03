@@ -44,13 +44,13 @@ table .preview img {
 .pdf {
 	background-color: #E01B24 !important;
 }
-.csv, .xls, .xlsx {
+.csv, .xls, .xlsx, .ods, .fods {
 	background-color: #107A40 !important;
 }
-.doc, .docx {
+.doc, .docx, .odt, .fodt {
 	background-color: #185ABD !important;
 }
-.ppt, .pptx {
+.ppt, .pptx, .odp, .fodp {
 	background-color: #C43F1D !important;
 }
 .tif, .tiff, .gif, .jpeg, .jpg, .jif, .jfif, .jp2, .jpx, .j2k, .j2c, .fpx, .pcd, .png, .bmp {
