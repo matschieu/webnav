@@ -276,12 +276,12 @@ $files = $currentFolder->getFileChildren();
 				<?php foreach ($folders as $folder) { ?>
 				<div class="folder col-md-2">
 					<div class="row">
-						<div class="type col-md-3 text-primary text-center">
+						<div class="type col-3 text-primary text-center">
 							<div class="icon">
 								<span class="<?php echo $folder->getGlyphicon() ?>"></span>
 							</div>
 						</div>
-						<div class="info col-md-9 text-break">
+						<div class="info col-9 text-break">
 							<a href="<?php echo $app->getChangeFolderUrl($folder) ?>" title="<?php echo Translation::get('content.openFolder') ?>">
 								<span class="filename"><?php echo $folder->getDisplayName() ?></span>
 								<span class="fa-solid fa-right-to-bracket p-2"></span>
@@ -297,7 +297,7 @@ $files = $currentFolder->getFileChildren();
 				<?php foreach ($files as $file) { ?>
 				<div class="file col-md-2">
 					<div class="row">
-						<div class="type col-md-3 text-primary text-center">
+						<div class="type col-3 text-primary text-center">
 							<?php if (!$file->isImage()) { ?>
 							<div class="icon">
 								<span class="<?php echo $file->getGlyphicon() ?>"></span>
@@ -311,7 +311,7 @@ $files = $currentFolder->getFileChildren();
 								<?php echo $file->getExtension() ?>
 							</div>
 						</div>
-						<div class="info col-md-9 text-break">
+						<div class="info col-9 text-break">
 							<a href="<?php echo $file->getUrl() ?>" download="<?php echo $file->getName() ?>" title="<?php echo Translation::get('content.openFile') ?>">
 								<span class="filename"><?php echo $file->getName() ?></span>
 								<span class="fa-solid fa-up-right-from-square p-2"></span>
