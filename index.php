@@ -67,7 +67,7 @@ $files = $currentFolder->getFileChildren();
 	<div id="top" class="sticky-top bg-white">
 		<!-- HEADER -->
 		<div id="header">
-			<?php include $app->getHeader() ?>
+			<?php if ($app->getHeader() != null) include $app->getHeader() ?>
 		</div>
 
 		<!-- MENU -->
@@ -360,7 +360,7 @@ $files = $currentFolder->getFileChildren();
 		</div>
 		<!-- FOOTER -->
 		<div id="footer">
-			<?php include $app->getFooter() ?>
+			<?php if ($app->getFooter() != null) include $app->getFooter() ?>
 		</div>
 	</div>
 
