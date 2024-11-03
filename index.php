@@ -214,8 +214,10 @@ $files = $currentFolder->getFileChildren();
 				<!-- FOLDERS -->
 				<?php foreach ($folders as $folder) { ?>
 				<tr class="folder text-break">
-					<td class="icon text-primary">
-						<span class="<?php echo $folder->getGlyphicon() ?>"></span>
+					<td class="text-primary">
+						<div class="icon">
+							<span class="<?php echo $folder->getGlyphicon() ?>"></span>
+						</div>
 					</td>
 					<td>
 						<a href="<?php echo $app->getChangeFolderUrl($folder) ?>" title="<?php echo Translation::get('content.openFolder') ?>">
@@ -237,8 +239,10 @@ $files = $currentFolder->getFileChildren();
 				<?php foreach ($files as $file) { ?>
 				<tr class="file text-break">
 					<?php if (!$file->isImage()) { ?>
-					<td class="icon text-primary">
-						<span class="<?php echo $file->getGlyphicon() ?>"></span>
+					<td class="text-primary">
+						<div class="icon">
+							<span class="<?php echo $file->getGlyphicon() ?>"></span>
+						</div>
 					</td>
 					<?php } else { ?>
 					<td class="preview text-primary">

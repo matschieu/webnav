@@ -56,7 +56,7 @@ table .preview img {
 .tif, .tiff, .gif, .jpeg, .jpg, .jif, .jfif, .jp2, .jpx, .j2k, .j2c, .fpx, .pcd, .png, .bmp {
 	background-color: #286090 !important;
 }
-div.icon > .c, .cpp, .cs, .css, .html, .java, .js, .jsp, .ksh, .php, .py, .sh, .sql, .ts, .xml {
+.c, .cpp, .cs, .css, .html, .java, .js, .jsp, .ksh, .php, .py, .sh, .sql, .ts, .xml {
 	background-color: #813D9C !important;
 }
 .cfg, .json, .properties, .txt, .yml {
