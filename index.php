@@ -89,7 +89,7 @@ $files = $currentFolder->getFileChildren();
 							</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link" href="<?php echo $app->getRefreshUrl() ?>">
+							<a class="nav-link" href="<?php echo $app->getUrl() ?>">
 								<span class="fa-solid fa-rotate-right"></span>
 								<?php echo Translation::get('menu.refresh') ?>
 							</a>
@@ -108,12 +108,12 @@ $files = $currentFolder->getFileChildren();
 						</li>
 						<li class="nav-item">
 							<?php if ($app->getAppContext()->getShowHidden()) { ?>
-							<a class="nav-link" href="<?php echo $app->getShowHiddenUrl(false) ?>">
+							<a class="nav-link" href="<?php echo $app->getUrlWithShowHidden(false) ?>">
 								<span class="fa-solid fa-lock"></span>
 								<?php echo Translation::get('menu.hideHiddenFiles') ?>
 							</a>
 							<?php } else {?>
-							<a class="nav-link" href="<?php echo $app->getShowHiddenUrl(true) ?>">
+							<a class="nav-link" href="<?php echo $app->getUrlWithShowHidden(true) ?>">
 								<span class="fa-solid fa-lock-open"></span>
 								<?php echo Translation::get('menu.showHiddenFiles') ?>
 							</a>
@@ -121,12 +121,12 @@ $files = $currentFolder->getFileChildren();
 						</li>
 						<li class="nav-item">
 							<?php if ($app->getAppContext()->getDisplayList()) { ?>
-							<a class="nav-link" href="<?php echo $app->getDisplayBlockUrl() ?>">
+							<a class="nav-link" href="<?php echo $app->getUrlWithDisplayList(false) ?>">
 								<span class="fa-solid fa-table-cells"></span>
 								<?php echo Translation::get('menu.gridView') ?>
 							</a>
 							<?php } else {?>
-							<a class="nav-link" href="<?php echo $app->getDisplayListUrl() ?>">
+							<a class="nav-link" href="<?php echo $app->getUrlWithDisplayList(true) ?>">
 								<span class="fa-solid fa-list"></span>
 								<?php echo Translation::get('menu.listView') ?>
 							</a>
@@ -147,7 +147,7 @@ $files = $currentFolder->getFileChildren();
 							</a>
 							<ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDropdown">
 								<li>
-									<a class="dropdown-item" href="<?php echo $app->getChangeLanguageUrl("en") ?>">
+									<a class="dropdown-item" href="<?php echo $app->getUrlWithLanguage("en") ?>">
 										<i class="fi fi-gb"></i>
 										<?php echo Translation::get('menu.english') ?>
 										<?php if ($app->isSelectedLanguage("en")) { ?>
@@ -156,7 +156,7 @@ $files = $currentFolder->getFileChildren();
 									</a>
 								</li>
 								<li>
-									<a class="dropdown-item" href="<?php echo $app->getChangeLanguageUrl("fr") ?>">
+									<a class="dropdown-item" href="<?php echo $app->getUrlWithLanguage("fr") ?>">
 										<i class="fi fi-fr"></i>
 										<?php echo Translation::get('menu.french') ?>
 										<?php if ($app->isSelectedLanguage("fr")) { ?>
@@ -165,7 +165,7 @@ $files = $currentFolder->getFileChildren();
 									</a>
 								</li>
 								<li>
-									<a class="dropdown-item" href="<?php echo $app->getChangeLanguageUrl("de") ?>">
+									<a class="dropdown-item" href="<?php echo $app->getUrlWithLanguage("de") ?>">
 										<i class="fi fi-de"></i>
 										<?php echo Translation::get('menu.german') ?>
 										<?php if ($app->isSelectedLanguage("de")) { ?>
@@ -220,7 +220,7 @@ $files = $currentFolder->getFileChildren();
 						</div>
 					</td>
 					<td>
-						<a href="<?php echo $app->getChangeFolderUrl($folder) ?>" title="<?php echo Translation::get('content.openFolder') ?>">
+						<a href="<?php echo $app->getUrlWithFolder($folder) ?>" title="<?php echo Translation::get('content.openFolder') ?>">
 							<span class="filename"><?php echo $folder->getDisplayName() ?></span>
 							<span class="fa-solid fa-right-to-bracket p-2"></span>
 						</a>
@@ -286,7 +286,7 @@ $files = $currentFolder->getFileChildren();
 							</div>
 						</div>
 						<div class="info col-9 text-break">
-							<a href="<?php echo $app->getChangeFolderUrl($folder) ?>" title="<?php echo Translation::get('content.openFolder') ?>">
+							<a href="<?php echo $app->getUrlWithFolder($folder) ?>" title="<?php echo Translation::get('content.openFolder') ?>">
 								<span class="filename"><?php echo $folder->getDisplayName() ?></span>
 								<span class="fa-solid fa-right-to-bracket p-2"></span>
 							</a><br />

@@ -56,7 +56,7 @@ final class FileSystem {
 
 	/**
 	 *
-	 * @param boolean $includeHidden
+	 * @param bool $includeHidden
 	 * @return Folder
 	 */
 	final public static function getRootFolder(bool $includeHidden = false): Folder {
@@ -77,7 +77,7 @@ final class FileSystem {
 	/**
 	 *
 	 * @param string $logicalPath
-	 * @param boolean $includeHidden
+	 * @param bool $includeHidden
 	 * @return Folder
 	 */
 	final public static function getFolderFromLogicalPath(?string $logicalPath, bool $includeHidden = false): Folder {

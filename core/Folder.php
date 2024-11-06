@@ -19,7 +19,7 @@ class Folder extends File {
 	 *
 	 * @param string $path
 	 * @param string $name
-	 * @param boolean $includeHidden
+	 * @param bool $includeHidden
 	 */
 	public function __construct(string $path, string $name, bool $includeHidden = false) {
 		parent::__construct($path, $name);
@@ -35,7 +35,8 @@ class Folder extends File {
 
 	/**
 	 *
-	 * @return boolean
+	 * {@inheritDoc}
+	 * @see \core\File::isValid()
 	 */
 	public function isValid(): bool {
 		return file_exists($this->path) && is_dir($this->path);
@@ -227,7 +228,7 @@ class Folder extends File {
 
 	/**
 	 *
-	 * @return boolean
+	 * @return bool
 	 */
 	public function isRoot(): bool {
 		return $this == FileSystem::getRoot() || $this->getPath() === FileSystem::getRoot();

@@ -24,6 +24,7 @@ class File {
 		switch ($this->getExtension()) {
 			case "cfg":
 			case "json":
+			case "md":
 			case "properties":
 			case "txt":
 			case "yml":
@@ -209,7 +210,7 @@ class File {
 			case "ws":
 			case "wsf":
 			case "wsh":
-				return "fa-solid fa-terminal";
+				return "fa-solid fa-gears";
 			case "bz2":
 			case "f":
 			case "gz":
@@ -368,7 +369,7 @@ class File {
 
 	/**
 	 *
-	 * @return boolean
+	 * @return bool
 	 */
 	public function isValid(): bool {
 		return file_exists($this->path) && !is_dir($this->path);

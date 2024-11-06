@@ -59,7 +59,7 @@ table .preview img {
 .c, .cpp, .cs, .css, .html, .java, .js, .jsp, .ksh, .php, .py, .sh, .sql, .ts, .xml {
 	background-color: #813D9C !important;
 }
-.cfg, .json, .properties, .txt, .yml {
+.cfg, .json, .md, .properties, .txt, .yml {
 	background-color: #A8A8A1 !important;
 }
 .webm, .mkv, .flv, .flv, .vob, .ogv, .ogg, .drc, .gif, .gifv, .mng, .avi, .mov, .qt, .wmv, .yuv, .rm, .rmvb, .asf, .amv, 

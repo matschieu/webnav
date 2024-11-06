@@ -56,28 +56,28 @@ class AppContext implements \JsonSerializable {
 	}
 
 	/**
-	 * @param boolean $displayList
+	 * @param bool $displayList
 	 */
 	public function setDisplayList(bool $displayList) {
 		$this->displayList = $displayList;
 	}
 
 	/**
-	 * @return boolean
+	 * @return bool
 	 */
 	public function getDisplayList(): bool {
 		return $this->displayList;
 	}
 
 	/**
-	 * @param boolean $showHidden
+	 * @param bool $showHidden
 	 */
 	public function setShowHidden(bool $showHidden) {
 		$this->showHidden = $showHidden;
 	}
 
 	/**
-	 * @return boolean
+	 * @return bool
 	 */
 	public function getShowHidden(): bool {
 		return $this->showHidden;

@@ -9,7 +9,7 @@
 	</div>
 	<div class="col-6 text-end">
 		<small>
-			Developped by <a href="https://github.com/matschieu" target="new">Matschieu</a>
+			Developped by <a href="https://github.com/matschieu" target="new">Matschieu <span class="fa-brands fa-github"></span></a>
 		</small>
 	</div>
 </div>

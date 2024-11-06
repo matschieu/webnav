@@ -42,7 +42,7 @@ class FileViewerApplication {
 	 *
 	 */
 	private function __construct() {
-		$this->init();
+		$this->initDebug();
 		$this->startExecTime = microtime(true);
 		$this->appContext = AppContext::decode($this->getHttpParam(self::HTTP_PARAM_CONTEXT));
 		Translation::$language = $this->appContext->getLanguage();
@@ -52,7 +52,7 @@ class FileViewerApplication {
 	 *
 	 * Initializes the application and some options of PHP
 	 */
-	private function init(): void {
+	private function initDebug(): void {
 		date_default_timezone_set('Europe/Paris');
 
 		if(Config::debug()) {
@@ -138,19 +138,11 @@ class FileViewerApplication {
 
 	/**
 	 *
+	 * @param string $page
 	 * @return string
 	 */
-	public function getUrl($page = "index.php"): string {
+	public function getUrl(string $page = "index.php"): string {
 		$url = $this->buildUrl($page).$this->formatHttpParams(array(self::HTTP_PARAM_CONTEXT => $this->appContext->encode()));
-		return $url;
-	}
-
-	/**
-	 *
-	 * @return string
-	 */
-	public function getRefreshUrl(): string {
-		$url = $this->buildUrl().$this->formatHttpParams(array(self::HTTP_PARAM_CONTEXT => $this->appContext->encode()));
 		return $url;
 	}
 
@@ -159,7 +151,7 @@ class FileViewerApplication {
 	 * @param string $language
 	 * @return string
 	 */
-	public function getChangeLanguageUrl(string $language): string {
+	public function getUrlWithLanguage(string $language): string {
 		$context = $this->appContext->copy();
 		$context->setLanguage($language);
 		$url = $this->buildUrl().$this->formatHttpParams(array(self::HTTP_PARAM_CONTEXT => $context->encode()));
@@ -168,22 +160,12 @@ class FileViewerApplication {
 
 	/**
 	 *
+	 * @param bool $value
 	 * @return string
 	 */
-	public function getDisplayBlockUrl(): string {
+	public function getUrlWithDisplayList(bool $value): string {
 		$context = $this->appContext->copy();
-		$context->setDisplayList(false);
-		$url = $this->buildUrl().$this->formatHttpParams(array(self::HTTP_PARAM_CONTEXT => $context->encode()));
-		return $url;
-	}
-
-	/**
-	 *
-	 * @return string
-	 */
-	public function getDisplayListUrl(): string {
-		$context = $this->appContext->copy();
-		$context->setDisplayList(true);
+		$context->setDisplayList($value);
 		$url = $this->buildUrl().$this->formatHttpParams(array(self::HTTP_PARAM_CONTEXT => $context->encode()));
 		return $url;
 	}
@@ -193,7 +175,7 @@ class FileViewerApplication {
 	 * @param Folder $folder
 	 * @return string
 	 */
-	public function getChangeFolderUrl(Folder $folder): string {
+	public function getUrlWithFolder(Folder $folder): string {
 		$context = $this->appContext->copy();
 		$context->setLocation($folder->getLogicalPath());
 		$url = $this->buildUrl().$this->formatHttpParams(array(self::HTTP_PARAM_CONTEXT => $context->encode()));
@@ -202,10 +184,10 @@ class FileViewerApplication {
 
 	/**
 	 *
-	 * @param boolean $showHidden
+	 * @param bool $showHidden
 	 * @return string
 	 */
-	public function getShowHiddenUrl(bool $showHidden): string {
+	public function getUrlWithShowHidden(bool $showHidden): string {
 		$context = $this->appContext->copy();
 		$context->setShowHidden($showHidden);
 		$url = $this->buildUrl().$this->formatHttpParams(array(self::HTTP_PARAM_CONTEXT => $context->encode()));
@@ -271,7 +253,7 @@ class FileViewerApplication {
 	/**
 	 *
 	 * @param string $language
-	 * @return boolean
+	 * @return bool
 	 */
 	public function isSelectedLanguage(string $language): bool {
 		return $this->appContext->getLanguage() === $language || $this->appContext->getLanguage() == null && Translation::DEFAULT_LANGUAGE === $language;
