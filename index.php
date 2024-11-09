@@ -3,6 +3,7 @@
 use core\FileViewerApplication;
 use core\FileSystem;
 use core\Translation;
+use core\FileSort;
 
 require_once("./core/autoload.php");
 
@@ -132,6 +133,33 @@ $files = $currentFolder->getFileChildren();
 							</a>
 							<?php } ?>
 						</li>
+						<li class="nav-item dropdown">
+							<a class="nav-link dropdown-toggle" href="#" class="dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+								<span class="fa-solid fa-sort"></span>
+								<?php echo Translation::get('menu.sort') ?>
+								<span class="caret"></span>
+							</a>
+							<ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDropdown">
+								<li>
+									<a class="dropdown-item" href="<?php echo $app->getUrlWithFileSort(FileSort::NameAscending) ?>">
+										<span class="fa-solid fa-arrow-down-a-z"></span>
+										<?php echo Translation::get('menu.sort.name.ascending') ?>
+										<?php if ($app->getAppContext()->getFileSort() === FileSort::NameAscending) { ?>
+										<span class="fa-solid fa-check"></span>
+										<?php } ?>
+									</a>
+								</li>
+								<li>
+									<a class="dropdown-item" href="<?php echo $app->getUrlWithFileSort(FileSort::NameDescending) ?>">
+										<span class="fa-solid fa-arrow-down-z-a"></span>
+										<?php echo Translation::get('menu.sort.name.descending') ?>
+										<?php if ($app->getAppContext()->getFileSort() === FileSort::NameDescending) { ?>
+										<span class="fa-solid fa-check"></span>
+										<?php } ?>
+									</a>
+								</li>
+							</ul>
+						</li>
 					</ul>
 					<ul class="navbar-nav ms-auto">
 						<form class="d-flex">
@@ -148,7 +176,7 @@ $files = $currentFolder->getFileChildren();
 							<ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDropdown">
 								<li>
 									<a class="dropdown-item" href="<?php echo $app->getUrlWithLanguage("en") ?>">
-										<i class="fi fi-gb"></i>
+										<span class="fi fi-gb"></span>
 										<?php echo Translation::get('menu.english') ?>
 										<?php if ($app->isSelectedLanguage("en")) { ?>
 										<span class="fa-solid fa-check"></span>
@@ -157,7 +185,7 @@ $files = $currentFolder->getFileChildren();
 								</li>
 								<li>
 									<a class="dropdown-item" href="<?php echo $app->getUrlWithLanguage("fr") ?>">
-										<i class="fi fi-fr"></i>
+										<span class="fi fi-fr"></span>
 										<?php echo Translation::get('menu.french') ?>
 										<?php if ($app->isSelectedLanguage("fr")) { ?>
 										<span class="fa-solid fa-check"></span>
@@ -166,7 +194,7 @@ $files = $currentFolder->getFileChildren();
 								</li>
 								<li>
 									<a class="dropdown-item" href="<?php echo $app->getUrlWithLanguage("de") ?>">
-										<i class="fi fi-de"></i>
+										<span class="fi fi-de"></span>
 										<?php echo Translation::get('menu.german') ?>
 										<?php if ($app->isSelectedLanguage("de")) { ?>
 										<span class="fa-solid fa-check"></span>
@@ -204,7 +232,19 @@ $files = $currentFolder->getFileChildren();
 				<thead>
 					<tr>
 						<th></th>
-						<th><?php echo Translation::get('content.name') ?></th>
+						<th>
+							<?php if ($app->getAppContext()->getFileSort() === FileSort::NameAscending) { ?>
+							<a href="<?php echo $app->getUrlWithFileSort(FileSort::NameDescending) ?>">
+								<?php echo Translation::get('content.name') ?>
+								<span class="fa-solid fa-arrow-up"></span>
+							</a>
+							<?php } else if ($app->getAppContext()->getFileSort() === FileSort::NameDescending) { ?>
+							<a href="<?php echo $app->getUrlWithFileSort(FileSort::NameAscending) ?>">
+								<?php echo Translation::get('content.name') ?>
+								<span class="fa-solid fa-arrow-down"></span>
+							</a>
+							<?php } ?>
+						</th>
 						<th><?php echo Translation::get('content.type') ?></th>
 						<th><?php echo Translation::get('content.size') ?></th>
 						<th><?php echo Translation::get('content.date') ?></th>

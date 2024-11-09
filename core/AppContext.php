@@ -12,6 +12,7 @@ class AppContext implements \JsonSerializable {
 	private ?string $language;
 	private bool $displayList;
 	private bool $showHidden;
+	private int $fileSort;
 
 	/**
 	 *
@@ -19,12 +20,14 @@ class AppContext implements \JsonSerializable {
 	 * @param string $language
 	 * @param bool $displayList
 	 * @param bool $showHidden
+	 * @param FileSort $fileSort
 	 */
-	public function __construct(?string $location = null, ?string $language = null, bool $displayList = false, bool $showHidden = false) {
+	public function __construct(?string $location = null, ?string $language = null, bool $displayList = false, bool $showHidden = false, FileSort $fileSort = FileSort::NameAscending) {
 		$this->location = $location;
 		$this->language = $language;
 		$this->displayList = $displayList;
 		$this->showHidden = $showHidden;
+		$this->fileSort = $fileSort->value;
 	}
 
 	/**
@@ -84,6 +87,20 @@ class AppContext implements \JsonSerializable {
 	}
 
 	/**
+	 * @return \core\FileSort
+	 */
+	public function getFileSort(): FileSort {
+		return FileSort::from($this->fileSort);
+	}
+
+	/**
+	 * @param \core\FileSort $fileSort
+	 */
+	public function setFileSort($fileSort) {
+		$this->fileSort = $fileSort->value;
+	}
+
+	/**
 	 *
 	 * @return AppContext
 	 */
@@ -99,7 +116,7 @@ class AppContext implements \JsonSerializable {
 	/**
 	 *
 	 * {@inheritDoc}
-	 * @see JsonSerializable::jsonSerialize()
+	 * @see \JsonSerializable::jsonSerialize()
 	 */
 	public function jsonSerialize(): mixed {
 		return get_object_vars($this);

@@ -196,6 +196,18 @@ class FileViewerApplication {
 
 	/**
 	 *
+	 * @param FileSort $fileSort
+	 * @return string
+	 */
+	public function getUrlWithFileSort(FileSort $fileSort): string {
+		$context = $this->appContext->copy();
+		$context->setFileSort($fileSort);
+		$url = $this->buildUrl().$this->formatHttpParams(array(self::HTTP_PARAM_CONTEXT => $context->encode()));
+		return $url;
+	}
+
+	/**
+	 *
 	 * @return string
 	 */
 	public function getName(): string {
@@ -247,7 +259,7 @@ class FileViewerApplication {
 	 * @return Folder
 	 */
 	public function getCurrentFolder(): Folder {
-		return FileSystem::getFolderFromLogicalPath($this->appContext->getLocation(), $this->appContext->getShowHidden());
+		return FileSystem::getFolderFromLogicalPath($this->appContext->getLocation(), $this->appContext->getShowHidden(), $this->appContext->getFileSort());
 	}
 
 	/**

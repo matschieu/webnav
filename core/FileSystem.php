@@ -16,6 +16,22 @@ final class FileSystem {
 
 	/**
 	 *
+	 * @param FileSort $fileSort
+	 * @return int
+	 */
+	final private static function getScandirSort(FileSort $fileSort) : int {
+		switch ($fileSort) {
+			case FileSort::NameAscending:
+				return SCANDIR_SORT_ASCENDING;
+			case FileSort::NameDescending:
+				return SCANDIR_SORT_DESCENDING;
+			default:
+				return SCANDIR_SORT_NONE;
+		}
+	}
+
+	/**
+	 *
 	 * @return string
 	 */
 	final public static function getInstallationFolder(): ?string {
@@ -81,9 +97,10 @@ final class FileSystem {
 	 *
 	 * @param string $logicalPath
 	 * @param bool $includeHidden
+	 * @param FileSort $fileSort
 	 * @return Folder
 	 */
-	final public static function getFolderFromLogicalPath(?string $logicalPath, bool $includeHidden = false): Folder {
+	final public static function getFolderFromLogicalPath(?string $logicalPath, bool $includeHidden = false, FileSort $fileSort = FileSort::NameAscending): Folder {
 		$rootPath = self::getRoot();
 
 		// If a logical path is specified in the URL and is valid then it's added to the path.
@@ -98,7 +115,7 @@ final class FileSystem {
 			$path = $rootPath;
 		}
 
-		return new Folder($path, "/", false, self::getFolderChildren($path, $includeHidden), self::getFileChildren($path, $includeHidden));
+		return new Folder($path, "/", false, self::getFolderChildren($path, $includeHidden, $fileSort), self::getFileChildren($path, $includeHidden, $fileSort));
 	}
 
 	/**
@@ -180,18 +197,17 @@ final class FileSystem {
 	 *
 	 * @param string $path
 	 * @param bool $includeHidden
+	 * @param FileSort $fileSort
 	 * @return array
 	 */
-	final public static function getFolderChildren(string $path, bool $includeHidden): array {
-//		return array();
-//		echo "get folder content $path<br>";
+	final public static function getFolderChildren(string $path, bool $includeHidden, FileSort $fileSort = FileSort::NameAscending): array {
 		if (!self::isValidFolder($path)) {
 			return array();
 		}
 
 		$folderList = array();
 
-		foreach(scandir($path) as $file) {
+		foreach(scandir($path, self::getScandirSort($fileSort)) as $file) {
 			$filePath = $path . DIRECTORY_SEPARATOR . $file;
 			$appFolder = self::getInstallationFolder();
 
@@ -217,7 +233,7 @@ final class FileSystem {
 						continue;
 					}
 					if (file_exists($filePath) && is_dir($filePath)) {
-						array_push($folderList, new Folder($filePath, $file, false, self::getFolderChildren($filePath, $includeHidden), self::getFileChildren($filePath, $includeHidden)));
+						array_push($folderList, new Folder($filePath, $file, false, self::getFolderChildren($filePath, $includeHidden, $fileSort), self::getFileChildren($filePath, $includeHidden, $fileSort)));
 					}
 			}
 		}
@@ -225,14 +241,21 @@ final class FileSystem {
 		return $folderList;
 	}
 
-	final public static function getFileChildren(string $path, bool $includeHidden): array {
+	/**
+	 *
+	 * @param string $path
+	 * @param bool $includeHidden
+	 * @param FileSort $fileSort
+	 * @return array
+	 */
+	final public static function getFileChildren(string $path, bool $includeHidden, FileSort $fileSort = FileSort::NameAscending): array {
 		if (!self::isValidFolder($path)) {
 			return array();
 		}
 
 		$fileList = array();
 
-		foreach(scandir($path) as $file) {
+		foreach(scandir($path, self::getScandirSort($fileSort)) as $file) {
 			switch($file) {
 				case "":
 				case self::SELF_FOLDER:
