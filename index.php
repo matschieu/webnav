@@ -334,16 +334,11 @@ $files = $currentFolder->getFileChildren();
 		<?php if (count($folders) === 0 && count($files) === 0) { ?>
 		<!-- EMPTY CONTENT MESSAGE -->
 		<div id="noContent" class="row mt-3 ps-2 pe-2">
-			<div class="col-md-12">
-				<div class="alert alert-primar class="logo img-fluid"y" role="alert">
+			<div class="col-md">
+				<p class="fs-3">
+					<span class="fa-solid fa-ghost"></span>
 					<?php echo Translation::get('content.noContent') ?>
-				</div>
-			</div>
-			<div class="col-md-offset-11">
-				<a class="btn btn-primary" href="#" onclick="javascript:window.history.back();">
-					<span class="fa-solid fa-left-long"></span>
-					<?php echo Translation::get('menu.back') ?>
-				</a>
+				</p>
 			</div>
 		</div>
 		<?php } ?>

@@ -9,6 +9,9 @@ final class FileSystem {
 
 	const ROOT = "/";
 
+	const SELF_FOLDER = ".";
+	const PARENT_FOLDER = "..";
+
 	private static Folder $rootFolder;
 
 	/**
@@ -68,7 +71,7 @@ final class FileSystem {
 				$path = realpath(dirname($_SERVER['SCRIPT_FILENAME']) . DIRECTORY_SEPARATOR . Config::fileSystemRoot());
 			}
 
-			self::$rootFolder = new Folder($path, self::ROOT, $includeHidden);
+			self::$rootFolder = new Folder($path, self::ROOT, true, self::getFolderChildren($path, $includeHidden), self::getFileChildren($path, $includeHidden));
 		}
 
 		return self::$rootFolder;
@@ -95,7 +98,7 @@ final class FileSystem {
 			$path = $rootPath;
 		}
 
-		return new Folder($path, "/", $includeHidden);
+		return new Folder($path, "/", false, self::getFolderChildren($path, $includeHidden), self::getFileChildren($path, $includeHidden));
 	}
 
 	/**
@@ -124,4 +127,130 @@ final class FileSystem {
 		return !empty($fileSize) ? $fileSize . " " . $sizeUnit : "";
 	}
 
+	/**
+	 *
+	 * @param Folder $folder
+	 * @param int $level
+	 * @return array
+	 */
+	final public static function getFlatTree(Folder $folder = null, int $level = 0): array {
+		$folderArray = array();
+
+		if (isset($folder)) {
+			if ($folder->getName() !== self::PARENT_FOLDER) {
+				$folderArray = array(new TreeElement($level, $folder));
+				if ($folder->getChildrenCount() > 0) {
+					foreach ($folder->getFolderChildren() as $child) {
+						$folderArray = array_merge($folderArray, self::getFlatTree($child, $level + 1));
+					}
+				}
+			}
+		}
+
+		return $folderArray;
+	}
+
+	/**
+	 *
+	 * @param String $path
+	 * @return bool
+	 */
+	final public static function isValidFolder(String $path): bool {
+		return file_exists($path) && is_dir($path);
+	}
+
+	/**
+	 *
+	 * @param String $path
+	 * @return bool
+	 */
+	final public static function isValidFile(String $path): bool {
+		return file_exists($path) && !is_dir($path);
+	}
+
+	/**
+	 *
+	 * @return bool
+	 */
+	final public static function isRoot(String $path): bool {
+		return $path === FileSystem::getRoot();
+	}
+
+	/**
+	 *
+	 * @param string $path
+	 * @param bool $includeHidden
+	 * @return array
+	 */
+	final public static function getFolderChildren(string $path, bool $includeHidden): array {
+//		return array();
+//		echo "get folder content $path<br>";
+		if (!self::isValidFolder($path)) {
+			return array();
+		}
+
+		$folderList = array();
+
+		foreach(scandir($path) as $file) {
+			$filePath = $path . DIRECTORY_SEPARATOR . $file;
+			$appFolder = self::getInstallationFolder();
+
+			// If the folder is the one where the application is installed, it's not added to the list
+			if ($appFolder === $filePath) {
+				continue;
+			}
+
+			switch($file) {
+				case "":
+				case self::SELF_FOLDER:
+					break;
+				case self::PARENT_FOLDER:
+					if (self::isRoot($path)) {
+						break;
+					}
+					if (file_exists($filePath) && is_dir($filePath)) {
+						array_push($folderList, new Folder($filePath, $file));
+					}
+					break;
+				default:
+					if (!$includeHidden && substr($file, 0, 1) === "." && $file !== self::PARENT_FOLDER) {
+						continue;
+					}
+					if (file_exists($filePath) && is_dir($filePath)) {
+						array_push($folderList, new Folder($filePath, $file, false, self::getFolderChildren($filePath, $includeHidden), self::getFileChildren($filePath, $includeHidden)));
+					}
+			}
+		}
+
+		return $folderList;
+	}
+
+	final public static function getFileChildren(string $path, bool $includeHidden): array {
+		if (!self::isValidFolder($path)) {
+			return array();
+		}
+
+		$fileList = array();
+
+		foreach(scandir($path) as $file) {
+			switch($file) {
+				case "":
+				case self::SELF_FOLDER:
+				case self::PARENT_FOLDER:
+					continue;
+				default:
+					if (!$includeHidden && substr($file, 0, 1) === ".") {
+						continue;
+					}
+
+					$filePath = $path . DIRECTORY_SEPARATOR . $file;
+
+					if (file_exists($filePath) && !is_dir($filePath)) {
+						array_push($fileList, new File($filePath, $file));
+					}
+			}
+		}
+
+		return $fileList;
+	}
 }

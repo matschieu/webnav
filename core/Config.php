@@ -6,12 +6,14 @@ namespace core;
  */
 final class Config {
 
+	const CONFIG_FILE = './conf/app.ini';
+
 	private static ?Config $config = null;
 
 	private array $values = array();
 
-	private function __construct() {
-		$conf = parse_ini_file('./conf/app.ini', false, INI_SCANNER_RAW);
+	private function __construct(string $filepath) {
+		$conf = parse_ini_file($filepath, false, INI_SCANNER_RAW);
 		if ($conf) {
 			$this->values = $conf;
 		}
@@ -30,7 +32,7 @@ final class Config {
 
 	public static function get(): Config {
 		if (self::$config == null){
-			self::$config = new Config();
+			self::$config = new Config(self::CONFIG_FILE);
 		}
 		return self::$config;
 	}

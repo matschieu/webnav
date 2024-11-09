@@ -352,9 +352,9 @@ class File {
 		$this->logicalPath = FileSystem::getLogicalPath($this->path);
 		$this->url = (!empty($_SERVER['HTTPS']) ? "https" : "http") . "://" . $_SERVER['HTTP_HOST'] . FileSystem::getLogicalRoot() . $this->logicalPath;
 
-		if ($this->isValid()) {
+		if (FileSystem::isValidFile($this->path)) {
 			$pathinfo = pathinfo($this->path);
-			$this->extension =  isset($pathinfo['extension']) && ".".$pathinfo['extension'] !== $name ? strtolower($pathinfo['extension']) : null;
+			$this->extension = isset($pathinfo['extension']) && ".".$pathinfo['extension'] !== $name ? strtolower($pathinfo['extension']) : null;
 			$this->size = filesize($this->path);
 			$this->date = date(Config::dateFormat(), filectime($this->path));
 		} else {
@@ -365,14 +365,6 @@ class File {
 
 		$this->glyphicon = $this->determineGlyphicon();
 		$this->image = $this->determineImage();
-	}
-
-	/**
-	 *
-	 * @return bool
-	 */
-	public function isValid(): bool {
-		return file_exists($this->path) && !is_dir($this->path);
 	}
 
 	/**
