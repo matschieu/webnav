@@ -383,6 +383,12 @@ $files = $currentFolder->getFileChildren();
 		</div>
 		<?php } ?>
 
+		<div class="text-end">
+			<a href="#">
+				<span class="fa-solid fa-caret-up"></span>
+				<?php echo Translation::get('content.top') ?>
+			</a>
+		</div>
 	</div>
 
 	<div id="bottom" class="sticky-bottom bg-white text-primary">
