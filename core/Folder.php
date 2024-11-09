@@ -92,6 +92,12 @@ class Folder extends File {
 	 * @return number
 	 */
 	public function getFolderChildrenCount(): int {
+		foreach($this->folderChildren as $folder) {
+			// Don't count the parent folder in the content of the current folder
+			if ($folder->getName() === FileSystem::PARENT_FOLDER) {
+				return count($this->folderChildren) - 1;
+			}
+		}
 		return count($this->folderChildren);
 	}
 
