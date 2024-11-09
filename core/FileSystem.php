@@ -107,7 +107,7 @@ final class FileSystem {
 	 * @return string
 	 */
 	final public static function convertSize(?int $fileSize): string {
-		$sizeUnit = "octet";
+		$sizeUnit = Translation::get("filesize.byte");
 
 		if ($fileSize > 1) {
 			$sizeUnit .= "s";
@@ -115,13 +115,13 @@ final class FileSystem {
 
 		if ($fileSize / (1024 * 1024) >= 1024) {
 			$fileSize = round($fileSize / (1021 * 1024 * 1024), 2);
-			$sizeUnit = "Go";
+			$sizeUnit = Translation::get("filesize.gb");
 		} else if ($fileSize / 1024 >= 1024) {
 			$fileSize = round($fileSize / (1024 * 1024), 2);
-			$sizeUnit = "Mo";
+			$sizeUnit = Translation::get("filesize.mb");
 		} else if ($fileSize >= 1024) {
 			$fileSize = round($fileSize / 1024, 2);
-			$sizeUnit = "Ko";
+			$sizeUnit = Translation::get("filesize.kb");
 		}
 
 		return !empty($fileSize) ? $fileSize . " " . $sizeUnit : "";

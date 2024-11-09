@@ -48,7 +48,5 @@ class TreeElement {
 		$this->folder = $folder;
 	}
 
-
-
 }
 
