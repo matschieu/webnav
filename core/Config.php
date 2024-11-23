@@ -4,9 +4,9 @@ namespace core;
 /**
  * @author Matschieu
  */
-final class Config {
+class Config {
 
-	const CONFIG_FILE = './conf/app.ini';
+	protected const CONFIG_FILE = './conf/app.ini';
 
 	private static ?Config $config = null;
 
@@ -31,8 +31,8 @@ final class Config {
 	}
 
 	public static function get(): Config {
-		if (self::$config == null){
-			self::$config = new Config(self::CONFIG_FILE);
+		if (self::$config == null) {
+			self::$config = new Config(static::CONFIG_FILE);
 		}
 		return self::$config;
 	}

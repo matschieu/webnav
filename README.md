@@ -13,11 +13,18 @@ It can be used to expose files inside a larger application or website and can be
 The application is fully written in [PHP8](https://php.net).<br>
 The interface is built using [Bootstrap](https://getbootstrap.com) for responsives components and [Font-Awesome](https://fontawesome.com) for the set of icons.
 
-## Running with Docker
+## Running tests with Docker
+
+The tests can be executing with PHPUnit.
+
+1. To build the image containing the tests, run the command `docker build -f Dockerfile-test -t webnav-test .`
+2. Then run the application with `docker run webnav-test`
+
+## Running the app with Docker
 
 The application can be ran locally using Docker.
 
-1. To build the application, run the command `docker build . -t webnav`
+1. To build the image containing the application, run the command `docker build -f Dockerfile-run -t webnav .`
 2. Then run the application with `docker run -d -p 8080:80 webnav`
 3. The application can be displayed in a web browser at the URL [http://localhost:8080](http://localhost:8080)
 

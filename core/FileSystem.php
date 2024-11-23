@@ -32,14 +32,6 @@ final class FileSystem {
 
 	/**
 	 *
-	 * @return string
-	 */
-	final public static function getInstallationFolder(): ?string {
-		return dirname($_SERVER['SCRIPT_FILENAME']);
-	}
-
-	/**
-	 *
 	 * @param string $path
 	 * @return string
 	 */
@@ -69,7 +61,6 @@ final class FileSystem {
 		if (substr(Config::fileSystemRoot(), 0, 1) !== self::ROOT) {
 			return realpath(dirname($_SERVER['SCRIPT_FILENAME']) . DIRECTORY_SEPARATOR . Config::fileSystemRoot());
 		}
-
 		return Config::fileSystemRoot();
 	}
 
@@ -80,13 +71,7 @@ final class FileSystem {
 	 */
 	final public static function getRootFolder(bool $includeHidden = false): Folder {
 		if (!isset(self::$rootFolder)) {
-			$path = Config::fileSystemRoot();
-
-			// If the root is a relative path, then the path is transformed to an absolute path
-			if (substr(Config::fileSystemRoot(), 0, 1) !== self::ROOT) {
-				$path = realpath(dirname($_SERVER['SCRIPT_FILENAME']) . DIRECTORY_SEPARATOR . Config::fileSystemRoot());
-			}
-
+			$path = self::getRoot();
 			self::$rootFolder = new Folder($path, self::ROOT, true, self::getFolderChildren($path, $includeHidden), self::getFileChildren($path, $includeHidden));
 		}
 
@@ -115,7 +100,7 @@ final class FileSystem {
 			$path = $rootPath;
 		}
 
-		return new Folder($path, "/", false, self::getFolderChildren($path, $includeHidden, $fileSort), self::getFileChildren($path, $includeHidden, $fileSort));
+		return new Folder($path, "/", self::isRoot($path), self::getFolderChildren($path, $includeHidden, $fileSort), self::getFileChildren($path, $includeHidden, $fileSort));
 	}
 
 	/**
@@ -209,7 +194,7 @@ final class FileSystem {
 
 		foreach(scandir($path, self::getScandirSort($fileSort)) as $file) {
 			$filePath = $path . DIRECTORY_SEPARATOR . $file;
-			$appFolder = self::getInstallationFolder();
+			$appFolder = dirname($_SERVER['SCRIPT_FILENAME']);
 
 			// If the folder is the one where the application is installed, it's not added to the list
 			if ($appFolder === $filePath) {

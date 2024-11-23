@@ -7,72 +7,98 @@ namespace core;
  */
 class Translation {
 
-	const DEFAULT_LANGUAGE = "en";
+	public const DEFAULT_LANGUAGE = "en";
 
-	private static array $messages = array();
+	private const FILE_NAME_PATTERN = './i18n/%s.ini';
 
-	private static bool $init = false;
+	private static ?Translation $translation = null;
 
-	public static ?string $language = null;
+	private ?string $language = null;
 
-	private static function parse_i18n($language): array|bool {
-		return parse_ini_file('./i18n/'.strtolower($language).'.ini', false, INI_SCANNER_RAW);
+	private array $messages = array();
+
+	/**
+	 *
+	 * @param string $language
+	 * @return array|bool
+	 */
+	private static function parse_i18n(string $language): array|bool {
+		return parse_ini_file(sprintf(self::FILE_NAME_PATTERN, strtolower($language)), false, INI_SCANNER_RAW);
 	}
 
 	/**
 	 *
+	 * @param string $language
 	 */
-	private static function init(): void {
-		if (!self::$init) {
-			// If the language is not provided, set the default language
-			if (self::$language == null) {
-				self::$language = self::DEFAULT_LANGUAGE;
-			}
-
-			$ini = self::parse_i18n(self::$language);
-
-			// If the file doesn't exist, set the default language
-			if ($ini == false) {
-				self::$language = self::DEFAULT_LANGUAGE;
-				$ini = self::parse_i18n(self::$language);
-			}
-
-			if ($ini) {
-				self::$messages = $ini;
-			}
-
-			self::$init = true;
+	private function __construct(?string $language) {
+		// If the language is not provided, set the default language
+		if ($language == null) {
+			$this->language = self::DEFAULT_LANGUAGE;
+		} else {
+			$this->language = $language;
 		}
+
+		$ini = self::parse_i18n($this->language);
+
+		// If the file doesn't exist, set the default language
+		if ($ini == false) {
+			$this->language = self::DEFAULT_LANGUAGE;
+			$ini = self::parse_i18n($this->language);
+		}
+
+		if ($ini) {
+			$this->messages = $ini;
+		}
+	}
+
+	/**
+	 *
+	 * @return Translation
+	 */
+	public static function getInstance(): Translation {
+		if (self::$translation == null) {
+			self::init(self::DEFAULT_LANGUAGE);
+		}
+		return self::$translation;
+	}
+
+	public static function init(?string $language = null): void {
+		self::$translation = new Translation($language);
 	}
 
 	/**
 	 *
 	 * @return string
 	 */
-	public static function getLanguage(): string {
-		self::init();
-		return self::$language;
+	public function getLanguage(): string {
+		return $this->language;
 	}
 
 	/**
 	 *
 	 * @return array
 	 */
-	public static function getAllMessages(): array {
-		self::init();
-		return self::$messages;
+	public function getAllMessages(): array {
+		return $this->messages;
 	}
 
 	/**
 	 *
 	 * @return string
 	 */
-	public static function get($key): string {
-		self::init();
-		if (isset($key) && isset(self::$messages[$key])) {
-			return htmlspecialchars(self::$messages[$key]);
+	public function getLabel(string $key): string {
+		if (isset($key) && isset($this->messages[$key])) {
+			return htmlspecialchars($this->messages[$key]);
 		}
 		return $key;
 	}
 
+	/**
+	 *
+	 * @param string $key
+	 * @return string
+	 */
+	public static function get(string $key): string {
+		return self::getInstance()->getLabel($key);
+	}
 }

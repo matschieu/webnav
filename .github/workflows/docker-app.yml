@@ -1,0 +1,20 @@
+name: Docker Image CI
+
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: Unit tests
+      run: docker build -f Dockerfile-test -t webnav-test . && docker run webnav-test
+    - name: Webapp test
+      run: docker build -f Dockerfile-run -t webnav . && docker run -d -p 8080:80 webnav && sleep 2 && curl localhost:8080 | grep Matschieu

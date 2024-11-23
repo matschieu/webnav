@@ -6,7 +6,7 @@ namespace core;
  */
 class Folder extends File {
 
-	const GLYPHICON_FOLDER = "fa-solid fa-folder";
+	private const GLYPHICON_FOLDER = "fa-solid fa-folder";
 
 	private $rootFolder;
 

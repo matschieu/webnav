@@ -55,11 +55,13 @@ function autoloader(?string $classname): bool {
 	}
 
 	// Found using namespace
-	$r = scan(CURRENT_FOLDER, $classname);
-	if (!$r) {
-		// found by searching explicitly in the core/ folder
-		$r = scan(CURRENT_FOLDER . DIRECTORY_SEPARATOR . "core", $classname);
+	foreach (array("", "/src/core", "/tests/core", "core", "tests") as $path) {
+		$r = scan(CURRENT_FOLDER.$path, $classname);
+
+		if ($r) {
+			return true;
+		}
 	}
 
-	return $r;
+	return false;
 }

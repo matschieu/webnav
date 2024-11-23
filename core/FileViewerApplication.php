@@ -6,7 +6,7 @@ namespace core;
  */
 class FileViewerApplication {
 
-	const HTTP_PARAM_CONTEXT = "ctx";
+	private const HTTP_PARAM_CONTEXT = "ctx";
 
 	private static ?FileViewerApplication $application = null;
 
@@ -45,7 +45,7 @@ class FileViewerApplication {
 		$this->initDebug();
 		$this->startExecTime = microtime(true);
 		$this->appContext = AppContext::decode($this->getHttpParam(self::HTTP_PARAM_CONTEXT));
-		Translation::$language = $this->appContext->getLanguage();
+		Translation::init($this->appContext->getLanguage());
 	}
 
 	/**

@@ -1,0 +1,24 @@
+FROM php:8.3.10-apache
+
+LABEL maintainer=Matschieu
+
+WORKDIR /var/www/html/
+
+COPY ./*.php .
+COPY conf conf
+COPY core core
+COPY i18n i18n
+COPY img img
+COPY lib lib
+COPY styles styles
+COPY tests tests
+
+RUN apt update
+RUN apt install wget
+RUN wget -O phpunit.phar https://phar.phpunit.de/phpunit-10.phar
+RUN chmod 744 phpunit.phar
+RUN mv phpunit.phar /usr/local/bin/
+RUN ln -s /usr/local/bin/phpunit.phar /usr/local/bin/phpunit
+
+ENTRYPOINT ["phpunit" , "."]
+
