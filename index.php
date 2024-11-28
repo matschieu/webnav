@@ -38,6 +38,10 @@ $files = $currentFolder->getFileChildren();
 	<link rel="stylesheet" type="text/css" href="./styles/default.css" media="screen" />
 	<link rel="stylesheet" type="text/css" href="<?php echo $app->getCustomCss() ?>" media="screen" />
 	<script type="text/javascript">
+		function resetField(fieldId) {
+			document.getElementsByClassName(fieldId).reset();
+		}
+
 		function filter(value = "") {
 			var elements = document.getElementsByClassName("filename");
 			console.log(elements);
@@ -163,8 +167,10 @@ $files = $currentFolder->getFileChildren();
 					</ul>
 					<ul class="navbar-nav ms-auto">
 						<form class="d-flex">
-							<input id="filterfield" class="form-control bg-secondary text-white me-2" type="search" placeholder="<?php echo Translation::get('menu.filter') ?>" aria-label="Search" onkeyup="javascript:filter(this.value)" />
-							<button class="btn btn-secondary" onclick="javascript:filter(); return false;"><?php echo Translation::get('menu.reset') ?></button>
+							<input id="filterfield" class="form-control me-2" type="search" placeholder="<?php echo Translation::get('menu.filter') ?>" aria-label="<?php echo Translation::get('menu.filter') ?>" onkeyup="javascript:filter(this.value)" />
+							<button class="btn btn-primary me-4" onclick="javascript:resetField('filterfield'); filter(); return false;">
+								<?php echo Translation::get('menu.reset') ?>
+							</button>
 						</form>
 
 						<li class="nav-item dropdown">

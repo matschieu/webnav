@@ -1,3 +1,5 @@
+[![Docker Image CI](https://github.com/matschieu/webnav/actions/workflows/docker-app.yml/badge.svg)](https://github.com/matschieu/webnav/actions/workflows/docker-app.yml)
+
 # M-Webnav
 
 ## Description
@@ -7,6 +9,8 @@ It is only a view in read-only of the filesystem. It is not possible to create, 
 The application doesn't use any database and doesn't provide any right management or authentication.
 
 It can be used to expose files inside a larger application or website and can be customized to have the same look and feel. 
+
+![M-Webnav view](./webnav_screen.png "M-Webnav view")
 
 ## Third parties
 

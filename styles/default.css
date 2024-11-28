@@ -3,12 +3,17 @@
   --bs-primary: #337AB7;
 }
 
+.btn-primary {
+	--bs-btn-bg: #337AB7;
+ 	--bs-btn-border-color: #337AB7;
+}
+
 #filterfield::placeholder {
-	color: black;
+	color: #777;
 	opacity: 1; 
 }
 #filterfield::-ms-input-placeholder {
-	color: black;
+	color: #777;
 }
 
 .icon {
