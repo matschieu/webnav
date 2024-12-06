@@ -3,6 +3,10 @@
   --bs-primary: #337AB7;
 }
 
+a {
+	text-decoration: none;
+}
+
 .btn-primary {
 	--bs-btn-bg: #337AB7;
  	--bs-btn-border-color: #337AB7;
