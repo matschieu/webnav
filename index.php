@@ -37,35 +37,7 @@ $files = $currentFolder->getFileChildren();
 	<!-- Application styles -->
 	<link rel="stylesheet" type="text/css" href="./styles/default.css" media="screen" />
 	<link rel="stylesheet" type="text/css" href="<?php echo $app->getCustomCss() ?>" media="screen" />
-	<script type="text/javascript">
-		function resetField(fieldId) {
-			document.getElementsByClassName(fieldId).reset();
-		}
-
-		function filter(value = "") {
-			var elements = document.getElementsByClassName("filename");
-			console.log(elements);
-			for (let element of elements) {
-				var folder = element.closest(".folder");
-				var file = element.closest(".file");
-				var parent = null;
-
-				if (folder != null) {
-					parent = folder;
-				} else if (file != null) {
-					parent = file;
-				} else {
-					return;
-				}
-
-				parent.style.display = !element.innerText.includes(value) ? "none" : "";
-			};
-		}
-		fetch('<?php echo $app->getUrl("tree.php") ?>')
-			.then(response => response.text())
-			.then(html => document.getElementById('folderTreeModalContent').innerHTML = html)
-			.catch(error => console.error('Error:', error));
-	</script>
+	<script src="./js/functions.js"></script>
 </head>
 
 <body>
@@ -88,7 +60,7 @@ $files = $currentFolder->getFileChildren();
 				<div class="collapse navbar-collapse" id="navbarNav">>
 					<ul class="navbar-nav me-auto">
 						<li class="nav-item">
-							<a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#folderTreeModal">
+							<a class="nav-link" href="#" onclick="loadTree();return false;" data-bs-toggle="modal" data-bs-target="#folderTreeModal">
 								<span class="fa-solid fa-folder-tree"></span>
 								<?php echo Translation::get('menu.folderTree') ?>
 							</a>
@@ -166,9 +138,9 @@ $files = $currentFolder->getFileChildren();
 						</li>
 					</ul>
 					<ul class="navbar-nav ms-auto">
-						<form class="d-flex">
+						<form class="d-flex" onreset="javascript:resetField('filterfield'); return false;">
 							<input id="filterfield" class="form-control me-2" type="search" placeholder="<?php echo Translation::get('menu.filter') ?>" aria-label="<?php echo Translation::get('menu.filter') ?>" onkeyup="javascript:filter(this.value)" />
-							<button class="btn btn-primary me-4" onclick="javascript:resetField('filterfield'); filter(); return false;">
+							<button class="btn btn-primary me-4" type="reset">
 								<?php echo Translation::get('menu.reset') ?>
 							</button>
 						</form>

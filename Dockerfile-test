@@ -9,6 +9,7 @@ COPY conf conf
 COPY core core
 COPY i18n i18n
 COPY img img
+COPY js js
 COPY lib lib
 COPY styles styles
 COPY tests tests
