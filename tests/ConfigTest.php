@@ -28,6 +28,11 @@ class ConfigTest extends TestCase {
 		$this->assertFalse(Config::get()->debug());
 	}
 
+	public function testDefaultLanguage() {
+		$this->assertNotNull(Config::get()->defaultLanguage());
+		$this->assertEquals("fr", Config::get()->defaultLanguage());
+	}
+
 	public function testApplicationName() {
 		$this->assertNotNull(Config::get()->applicationName());
 		$this->assertEquals("M-WEBNAV TEST", Config::get()->applicationName());

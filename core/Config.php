@@ -49,6 +49,14 @@ class Config {
 	 *
 	 * @return string
 	 */
+	public static function defaultLanguage() : string {
+		return self::get()->getValue("application.default.language");
+	}
+
+	/**
+	 *
+	 * @return string
+	 */
 	public static function applicationName() : string {
 		return self::get()->getValue("application.name");
 	}

@@ -54,6 +54,9 @@ You can active the debug mode, set the root folder or customize the look and fee
 # To display some debug information on the page
 debug = false
 
+# Define the default language in which the application is displayed
+application.default.language = en
+
 # Application information
 # Will be displayed at least in the tab title
 application.name = M-WEBNAV
