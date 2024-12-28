@@ -57,6 +57,12 @@ debug = false
 # Define the default language in which the application is displayed
 application.default.language = en
 
+# Define if the hidden files are display by default or not, if true then display hidden files
+application.default.showhidden = false
+
+# Define the default view, if false then display block view, else display the list view
+application.default.listview = false
+
 # Application information
 # Will be displayed at least in the tab title
 application.name = M-WEBNAV
@@ -76,6 +82,39 @@ application.header = ./header.php
 # Footer of the file explorer, can contains some HTML
 # Empty value means that no footer will be displayed
 application.footer = ./footer.php
+
+# Enable to display the menu 
+application.enable.menu = true
+
+# Enable to display the menu to display folder tree 
+application.enable.menu.foldertree = true
+
+# Enable to display the menu to refresh the page 
+application.enable.menu.refresh = true
+
+# Enable to display the menu to go back to the previous page 
+application.enable.menu.back = true
+
+# Enable to display the menu to go forward to the next page 
+application.enable.menu.next = true
+
+# Enable to display the menu to show the hidden files 
+application.enable.menu.showhidden = true
+
+# Enable to display the menu to change the view type
+application.enable.menu.changeview = true
+
+# Enable to display the menu to sort the file
+application.enable.menu.sort = true
+
+# Enable to display the menu to change the language
+application.enable.menu.changelanguage = true
+
+# Enable to display the menu to close the page
+application.enable.menu.close = true
+
+# Enable to display the textfield to filter the files 
+application.enable.menu.filter = true
 
 # The root dir of the file system to explore
 # It can be a relative to the index.php path or an absolute path

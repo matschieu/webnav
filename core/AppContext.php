@@ -135,17 +135,23 @@ class AppContext implements \JsonSerializable {
 	 * @param string $token
 	 * @return AppContext
 	 */
-	public static function decode(?string $token): AppContext {
-		if ($token == null) {
-			return new AppContext();
-		}
-		$vars = json_decode(base64_decode($token), true);
+	public static function decode(?string $token, Config $config): AppContext {
 		$appContext = new AppContext();
-		if ($vars != null) {
-			foreach(array_keys($vars) as $key) {
-				$appContext->$key = $vars[$key];
+
+		if ($token != null) {
+			$vars = json_decode(base64_decode($token), true);
+
+			if ($vars != null) {
+				foreach(array_keys($vars) as $key) {
+					$appContext->$key = $vars[$key];
+				}
 			}
+		} else {
+			$appContext->setLanguage($config->defaultLanguage());
+			$appContext->setShowHidden($config->defaultShowHidden());
+			$appContext->setDisplayList($config->defaultListView());
 		}
+
 		return $appContext;
 	}
 

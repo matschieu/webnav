@@ -33,6 +33,14 @@ class ConfigTest extends TestCase {
 		$this->assertEquals("fr", Config::get()->defaultLanguage());
 	}
 
+	public function testDefaultShowHidden() {
+		$this->assertTrue(Config::get()->defaultShowHidden());
+	}
+
+	public function testDefaultListView() {
+		$this->assertTrue(Config::get()->defaultListView());
+	}
+
 	public function testApplicationName() {
 		$this->assertNotNull(Config::get()->applicationName());
 		$this->assertEquals("M-WEBNAV TEST", Config::get()->applicationName());
@@ -66,6 +74,22 @@ class ConfigTest extends TestCase {
 	public function testDateFormat() {
 		$this->assertNotNull(Config::get()->dateFormat());
 		$this->assertEquals("Y-m-d G:i", Config::get()->dateFormat());
+	}
+
+	public function testEnableMenu(): void {
+		$this->assertTrue(Config::get()->enableMenu());
+		$this->assertTrue(Config::get()->enableMenu(""));
+		$this->assertTrue(Config::get()->enableMenu("foldertree"));
+		$this->assertTrue(Config::get()->enableMenu("refresh"));
+		$this->assertTrue(Config::get()->enableMenu("back"));
+		$this->assertTrue(Config::get()->enableMenu("next"));
+		$this->assertTrue(Config::get()->enableMenu("showhidden"));
+		$this->assertTrue(Config::get()->enableMenu("changeview"));
+		$this->assertTrue(Config::get()->enableMenu("sort"));
+		$this->assertTrue(Config::get()->enableMenu("changelanguage"));
+		$this->assertTrue(Config::get()->enableMenu("close"));
+		$this->assertTrue(Config::get()->enableMenu("filter"));
+		$this->assertFalse(Config::get()->enableMenu("foo"));
 	}
 
 }

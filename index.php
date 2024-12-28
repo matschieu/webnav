@@ -1,5 +1,6 @@
 <?php
 
+use core\Config;
 use core\FileViewerApplication;
 use core\FileSystem;
 use core\Translation;
@@ -48,6 +49,7 @@ $files = $currentFolder->getFileChildren();
 		</div>
 
 		<!-- MENU -->
+		<?php if (Config::enableMenu()) { ?>
 		<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
 			<div class="container-fluid">
 				<a class="navbar-brand" href="<?php echo $app->getRootUrl() ?>" >
@@ -59,30 +61,39 @@ $files = $currentFolder->getFileChildren();
 				</button>
 				<div class="collapse navbar-collapse" id="navbarNav">>
 					<ul class="navbar-nav me-auto">
+						<?php if (Config::enableMenu("foldertree")) { ?>
 						<li class="nav-item">
 							<a class="nav-link" href="#" onclick="loadTree();return false;" data-bs-toggle="modal" data-bs-target="#folderTreeModal">
 								<span class="fa-solid fa-folder-tree"></span>
 								<?php echo Translation::get('menu.folderTree') ?>
 							</a>
 						</li>
+						<?php } ?>
+						<?php if (Config::enableMenu("refresh")) { ?>
 						<li class="nav-item">
 							<a class="nav-link" href="<?php echo $app->getUrl() ?>">
 								<span class="fa-solid fa-rotate-right"></span>
 								<?php echo Translation::get('menu.refresh') ?>
 							</a>
 						</li>
+						<?php } ?>
+						<?php if (Config::enableMenu("back")) { ?>
 						<li class="nav-item">
 							<a class="nav-link" href="#" onclick="javascript:window.history.back();">
 								<span class="fa-solid fa-left-long"></span>
 								<?php echo Translation::get('menu.back') ?>
 							</a>
 						</li>
+						<?php } ?>
+						<?php if (Config::enableMenu("next")) { ?>
 						<li class="nav-item">
 							<a class="nav-link" href="#" onclick="javascript:window.history.forward();">
 								<span class="fa-solid fa-right-long"></span>
 								<?php echo Translation::get('menu.next') ?>
 							</a>
 						</li>
+						<?php } ?>
+						<?php if (Config::enableMenu("showhidden")) { ?>
 						<li class="nav-item">
 							<?php if ($app->getAppContext()->getShowHidden()) { ?>
 							<a class="nav-link" href="<?php echo $app->getUrlWithShowHidden(false) ?>">
@@ -96,6 +107,8 @@ $files = $currentFolder->getFileChildren();
 							</a>
 							<?php } ?>
 						</li>
+						<?php } ?>
+						<?php if (Config::enableMenu("changeview")) { ?>
 						<li class="nav-item">
 							<?php if ($app->getAppContext()->getDisplayList()) { ?>
 							<a class="nav-link" href="<?php echo $app->getUrlWithDisplayList(false) ?>">
@@ -109,6 +122,8 @@ $files = $currentFolder->getFileChildren();
 							</a>
 							<?php } ?>
 						</li>
+						<?php } ?>
+						<?php if (Config::enableMenu("sort")) { ?>
 						<li class="nav-item dropdown">
 							<a class="nav-link dropdown-toggle" href="#" class="dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
 								<span class="fa-solid fa-sort"></span>
@@ -136,15 +151,19 @@ $files = $currentFolder->getFileChildren();
 								</li>
 							</ul>
 						</li>
+						<?php } ?>
 					</ul>
 					<ul class="navbar-nav ms-auto">
+						<?php if (Config::enableMenu("filter")) { ?>
 						<form class="d-flex" onreset="javascript:resetField('filterfield'); return false;">
 							<input id="filterfield" class="form-control me-2" type="search" placeholder="<?php echo Translation::get('menu.filter') ?>" aria-label="<?php echo Translation::get('menu.filter') ?>" onkeyup="javascript:filter(this.value)" />
 							<button class="btn btn-primary me-4" type="reset">
 								<?php echo Translation::get('menu.reset') ?>
 							</button>
 						</form>
+						<?php } ?>
 
+						<?php if (Config::enableMenu("changelanguage")) { ?>
 						<li class="nav-item dropdown">
 							<a class="nav-link dropdown-toggle" href="#" class="dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
 								<span class="fa-solid fa-flag"></span>
@@ -181,16 +200,20 @@ $files = $currentFolder->getFileChildren();
 								</li>
 							</ul>
 						</li>
+						<?php } ?>
+						<?php if (Config::enableMenu("close")) { ?>
 						<li class="nav-item">
 							<a class="nav-link" href="#" onclick="javascript:open(location, '_self').close(); return true;">
 								<span class="fa-solid fa-xmark"></span>
 								<?php echo Translation::get('menu.close') ?>
 							</a>
 						</li>
+						<?php } ?>
 					</ul>
 				</div>
 			</div>
 		</nav>
+		<?php } ?>
 
 		<!-- TOP STATE BAR -->
 		<div id="statebarTop" class="bg-primary p-1 text-white">

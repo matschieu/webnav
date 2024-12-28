@@ -55,6 +55,22 @@ class Config {
 
 	/**
 	 *
+	 * @return bool
+	 */
+	public static function defaultShowHidden() : bool {
+		return filter_var(self::get()->getValue("application.default.showhidden"), FILTER_VALIDATE_BOOLEAN);
+	}
+
+	/**
+	 *
+	 * @return bool
+	 */
+	public static function defaultListView() : bool {
+		return filter_var(self::get()->getValue("application.default.listview"), FILTER_VALIDATE_BOOLEAN);
+	}
+
+	/**
+	 *
 	 * @return string
 	 */
 	public static function applicationName() : string {
@@ -107,6 +123,24 @@ class Config {
 	 */
 	public static function dateFormat() : string {
 		return self::get()->getValue("date.format");
+	}
+
+	/**
+	 *
+	 * @return bool
+	 */
+	public static function enableMenu(string $key = "") : bool {
+		$realKey = "application.enable.menu";
+
+		if (!empty($key)) {
+			$realKey .= ".".$key;
+		}
+
+		if (self::get()->getValue($realKey) == null) {
+			return false;
+		}
+
+		return filter_var(self::get()->getValue($realKey), FILTER_VALIDATE_BOOLEAN);
 	}
 
 }

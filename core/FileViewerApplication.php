@@ -44,7 +44,7 @@ class FileViewerApplication {
 	private function __construct() {
 		$this->initDebug();
 		$this->startExecTime = microtime(true);
-		$this->appContext = AppContext::decode($this->getHttpParam(self::HTTP_PARAM_CONTEXT));
+		$this->appContext = AppContext::decode($this->getHttpParam(self::HTTP_PARAM_CONTEXT), Config::get());
 		Translation::init($this->appContext->getLanguage());
 	}
 
