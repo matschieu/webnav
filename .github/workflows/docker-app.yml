@@ -1,10 +1,16 @@
 name: Docker Image CI
 
+permissions:
+  actions: read
+  contents: read
+
 on:
   push:
     branches: [ "master" ]
   pull_request:
     branches: [ "master" ]
+  schedule:
+    - cron: '0 20 * * 1'
 
 jobs:
 
