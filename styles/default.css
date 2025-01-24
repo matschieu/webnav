@@ -47,51 +47,310 @@ table .preview img {
 	color: orange;
 }
 
-.noext {
+.badge.noext {
 	background-color: transparent !important;
 }
-.pdf {
+
+.badge.pdf {
 	background-color: #E01B24 !important;
 }
-.csv, .xls, .xlsx, .ods, .fods {
+
+.badge.csv,
+.badge.xls,
+.badge.xlsx,
+.badge.ods,
+.badge.fods {
 	background-color: #107A40 !important;
 }
-.doc, .docx, .odt, .fodt {
+
+.badge.doc,
+.badge.docx,
+.badge.odt,
+.badge.fodt {
 	background-color: #185ABD !important;
 }
-.ppt, .pptx, .odp, .fodp {
+
+.badge.ppt,
+.badge.pptx,
+.badge.odp,
+.badge.fodp {
 	background-color: #C43F1D !important;
 }
-.tif, .tiff, .gif, .jpeg, .jpg, .jif, .jfif, .jp2, .jpx, .j2k, .j2c, .fpx, .pcd, .png, .bmp {
+
+.badge.tif,
+.badge.tiff,
+.badge.gif,
+.badge.jpeg,
+.badge.jpg,
+.badge.jif,
+.badge.jfif,
+.badge.jp2,
+.badge.jpx,
+.badge.j2k,
+.badge.j2c,
+.badge.fpx,
+.badge.pcd,
+.badge.png,
+.badge.bmp {
 	background-color: #286090 !important;
 }
-.c, .cpp, .cs, .css, .html, .java, .js, .jsp, .ksh, .php, .py, .sh, .sql, .ts, .xml {
+
+.badge.c,
+.badge.cpp,
+.badge.cs,
+.badge.css,
+.badge.html,
+.badge.java,
+.badge.js,
+.badge.jsp,
+.badge.ksh,
+.badge.php,
+.badge.py,
+.badge.sh,
+.badge.sql,
+.badge.ts,
+.badge.xml {
 	background-color: #813D9C !important;
 }
-.cfg, .json, .md, .properties, .txt, .yml {
+
+.badge.cfg,
+.badge.json,
+.badge.md,
+.badge.properties,
+.badge.txt,
+.badge.yml {
 	background-color: #A8A8A1 !important;
 }
-.webm, .mkv, .flv, .flv, .vob, .ogv, .ogg, .drc, .gif, .gifv, .mng, .avi, .mov, .qt, .wmv, .yuv, .rm, .rmvb, .asf, .amv, 
-.mp4, .m4p, .m4v, .mpg, .mp2, .mpeg, .mpe, .mpv, .mpg, .mpeg, .m2v, .m4v, .svi, .mxf, .roq, .nsv, .flv, .f4v, 
-.f4p, .f4a, .f4b { 
+
+.badge.webm,
+.badge.mkv,
+.badge.flv,
+.badge.flv,
+.badge.vob,
+.badge.ogv,
+.badge.ogg,
+.badge.drc,
+.badge.gif,
+.badge.gifv,
+.badge.mng,
+.badge.avi,
+.badge.mov,
+.badge.qt,
+.badge.wmv,
+.badge.yuv,
+.badge.rm,
+.badge.rmvb,
+.badge.asf,
+.badge.amv, 
+.badge.mp4,
+.badge.m4p,
+.badge.m4v,
+.badge.mpg,
+.badge.mp2,
+.badge.mpeg,
+.badge.mpe,
+.badge.mpv,
+.badge.mpg,
+.badge.mpeg,
+.badge.m2v,
+.badge.m4v,
+.badge.svi,
+.badge.mxf,
+.badge.roq,
+.badge.nsv,
+.badge.flv,
+.badge.f4v, 
+.badge.f4p,
+.badge.f4a,
+.badge.f4b { 
 	background-color: #3584E4 !important;
 }
-.aa, .aac, .aax, .act, .aiff, .amr, .ape, .au, .awb, .dct, .dss, .dvf, .flac, .gsm, .iklax, .ivs, .m4a, .m4b, .m4p, .mmf, 
-.mp3, .mpc, .msv, .ogg, .oga, .opus, .ra, .rm, .raw, .sln, .tta, .vox, .wav, .wma, .wv, .webm {
+
+.badge.aa,
+.badge.aac,
+.badge.aax,
+.badge.act,
+.badge.aiff,
+.badge.amr,
+.badge.ape,
+.badge.au,
+.badge.awb,
+.badge.dct,
+.badge.dss,
+.badge.dvf,
+.badge.flac,
+.badge.gsm,
+.badge.iklax,
+.badge.ivs,
+.badge.m4a,
+.badge.m4b,
+.badge.m4p,
+.badge.mmf, 
+.badge.mp3,
+.badge.mpc,
+.badge.msv,
+.badge.ogg,
+.badge.oga,
+.badge.opus,
+.badge.ra,
+.badge.rm,
+.badge.raw,
+.badge.sln,
+.badge.tta,
+.badge.vox,
+.badge.wav,
+.badge.wma,
+.badge.wv,
+.badge.webm {
 	background-color: #26A269 !important;
 }
-.action, .apk, .app, .bat, .bin, .cmd, .com, .command, .cpl, .csh, .exe, .gadget, .inf1, .ins, .inx, .ipa, .isu, .job, .jse, 
-.ksh, .lnk, .msc, .msi, .msp, .mst, .osx, .out, .paf, .pif, .prg, .ps1, .reg, .rgs, .run, .scr, .sct, .shb, .shs, .u3p, .vb, 
-.vbe, .vbs, .vbscript, .workflow, .ws, .wsf, .wsh {
+
+.badge.action,
+.badge.apk,
+.badge.app,
+.badge.bat,
+.badge.bin,
+.badge.cmd,
+.badge.com,
+.badge.command,
+.badge.cpl,
+.badge.csh,
+.badge.exe,
+.badge.gadget,
+.badge.inf1,
+.badge.ins,
+.badge.inx,
+.badge.ipa,
+.badge.isu,
+.badge.job,
+.badge.jse, 
+.badge.ksh,
+.badge.lnk,
+.badge.msc,
+.badge.msi,
+.badge.msp,
+.badge.mst,
+.badge.osx,
+.badge.out,
+.badge.paf,
+.badge.pif,
+.badge.prg,
+.badge.ps1,
+.badge.reg,
+.badge.rgs,
+.badge.run,
+.badge.scr,
+.badge.sct,
+.badge.shb,
+.badge.shs,
+.badge.u3p,
+.badge.vb, 
+.badge.vbe,
+.badge.vbs,
+.badge.vbscript,
+.badge.workflow,
+.badge.ws,
+.badge.wsf,
+.badge.wsh {
 	background-color: #5e5c64 !important; 
 }
-.bz2, .f, .gz, .lz, .lzma, .lzo, .rz, .sfark, .sz, .xz, .z, .Z, .infl, .s7z, .ace, .afa, .alz, .apk, .arc, .arj, .b1, 
-.ba, .bh, .cab, .car, .cfs, .cpt, .dar, .dd, .dgc, .dmg, .ear, .gca, .ha, .hki, .ice, .jar, .kgb, .lzh, .lha, .lzx, .pak, 
-.partimg, .paq6, .paq7, .paq8, .pea, .pim, .pit, .qda, .rar, .rk, .sda, .sea, .sen, .sfx, .shk, .sit, .sitx, .sqx, .targz, 
-.tgz, .tarZ, .tarbz2, .tbz2, .tarlzma, .tlz, .uc, .uc0, .uc2, .ucn, .ur2, .ue2, .uca, .uha, .war, .wim, .xar, .xp3, .yz1, 
-.zip, .zipx, .zoo, .zpaq, .zz {
+
+.badge.bz2,
+.badge.f,
+.badge.gz,
+.badge.lz,
+.badge.lzma,
+.badge.lzo,
+.badge.rz,
+.badge.sfark,
+.badge.sz,
+.badge.xz,
+.badge.z,
+.badge.Z,
+.badge.infl,
+.badge.s7z,
+.badge.ace,
+.badge.afa,
+.badge.alz,
+.badge.apk,
+.badge.arc,
+.badge.arj,
+.badge.b1, 
+.badge.ba,
+.badge.bh,
+.badge.cab,
+.badge.car,
+.badge.cfs,
+.badge.cpt,
+.badge.dar,
+.badge.dd,
+.badge.dgc,
+.badge.dmg,
+.badge.ear,
+.badge.gca,
+.badge.ha,
+.badge.hki,
+.badge.ice,
+.badge.jar,
+.badge.kgb,
+.badge.lzh,
+.badge.lha,
+.badge.lzx,
+.badge.pak, 
+.badge.partimg,
+.badge.paq6,
+.badge.paq7,
+.badge.paq8,
+.badge.pea,
+.badge.pim,
+.badge.pit,
+.badge.qda,
+.badge.rar,
+.badge.rk,
+.badge.sda,
+.badge.sea,
+.badge.sen,
+.badge.sfx,
+.badge.shk,
+.badge.sit,
+.badge.sitx,
+.badge.sqx,
+.badge.targz, 
+.badge.tgz,
+.badge.tarZ,
+.badge.tarbz2,
+.badge.tbz2,
+.badge.tarlzma,
+.badge.tlz,
+.badge.uc,
+.badge.uc0,
+.badge.uc2,
+.badge.ucn,
+.badge.ur2,
+.badge.ue2,
+.badge.uca,
+.badge.uha,
+.badge.war,
+.badge.wim,
+.badge.xar,
+.badge.xp3,
+.badge.yz1, 
+.badge.zip,
+.badge.zipx,
+.badge.zoo,
+.badge.zpaq,
+.badge.zz {
 	background-color: #E5A50A !important; 
 }
-.a, .ar, .cpio, .shar, .lbr, .iso, .lbr, .mar, .tar {
+
+.badge.a,
+.badge.ar,
+.badge.cpio,
+.badge.shar,
+.badge.lbr,
+.badge.iso,
+.badge.lbr,
+.badge.mar,
+.badge.tar {
 	background-color: #ff7800 !important;
 }

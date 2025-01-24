@@ -38,8 +38,8 @@ class FileSystemTest extends TestCase {
 		$folder = FileSystem::getRootFolder();
 		$this->assertSame("/", $folder->getName());
 		$this->assertSame("/", $folder->getLogicalPath());
-		$this->assertEquals(15, $folder->getChildrenCount());
-		$this->assertEquals(14, $folder->getFileChildrenCount());
+		$this->assertEquals(16, $folder->getChildrenCount());
+		$this->assertEquals(15, $folder->getFileChildrenCount());
 		$this->assertEquals(1, $folder->getFolderChildrenCount());
 		$this->assertEquals($folder->getChildrenCount(), count($folder->getChildren()));
 		$this->assertEquals($folder->getFileChildrenCount(), count($folder->getFileChildren()));
@@ -117,14 +117,14 @@ class FileSystemTest extends TestCase {
 		$fileSize = count($files);
 
 		$this->assertNotNull($files);
-		$this->assertEquals(14, $fileSize);
+		$this->assertEquals(15, $fileSize);
 		$this->assertGreaterThan(0, $fileSize);
 
 		$allFiles = FileSystem::getFileChildren(FileSystem::getRoot(), true);
 		$allFilesSize = count($allFiles);
 
 		$this->assertNotNull($allFiles);
-		$this->assertEquals(15, $allFilesSize);
+		$this->assertEquals(16, $allFilesSize);
 		$this->assertGreaterThan($fileSize, $allFilesSize);
 	}
 }

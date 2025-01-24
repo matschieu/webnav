@@ -8,6 +8,8 @@ class FileViewerApplication {
 
 	private const HTTP_PARAM_CONTEXT = "ctx";
 
+	private const NOEXT = "noext";
+
 	private static ?FileViewerApplication $application = null;
 
 	private float $startExecTime;
@@ -269,6 +271,15 @@ class FileViewerApplication {
 	 */
 	public function isSelectedLanguage(string $language): bool {
 		return $this->appContext->getLanguage() === $language || $this->appContext->getLanguage() == null && Translation::DEFAULT_LANGUAGE === $language;
+	}
+
+	/**
+	 *
+	 * @param File $file
+	 * @return string
+	 */
+	public function getExtensionOrNoExt(File $file = null): string {
+		return $file != null && $file->getExtension() != null ? $file->getExtension() : self::NOEXT;
 	}
 
 }

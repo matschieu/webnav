@@ -281,7 +281,7 @@ $files = $currentFolder->getFileChildren();
 				<tr class="file text-break">
 					<?php if (!$file->isImage()) { ?>
 					<td class="text-primary">
-						<div class="icon">
+						<div class="icon <?php echo $app->getExtensionOrNoExt($file) ?>">
 							<span class="<?php echo $file->getGlyphicon() ?>"></span>
 						</div>
 					</td>
@@ -297,7 +297,7 @@ $files = $currentFolder->getFileChildren();
 						</a>
 					</td>
 					<td>
-						<div class="badge bg-primary <?php echo $file->getExtension() != null ? $file->getExtension() : "noext" ?>">
+						<div class="badge bg-primary <?php echo $app->getExtensionOrNoExt($file) ?>">
 							<?php echo $file->getExtension() ?>
 						</div>
 					</td>
@@ -344,7 +344,7 @@ $files = $currentFolder->getFileChildren();
 					<div class="row">
 						<div class="type col-3 text-primary text-center">
 							<?php if (!$file->isImage()) { ?>
-							<div class="icon">
+							<div class="icon <?php echo $app->getExtensionOrNoExt($file) ?>">
 								<span class="<?php echo $file->getGlyphicon() ?>"></span>
 							</div>
 							<?php } else { ?>
@@ -352,7 +352,7 @@ $files = $currentFolder->getFileChildren();
 								<img src="<?php echo $file->getUrl() ?>" class="logo img-fluid" />
 							</div>
 							<?php } ?>
-							<div class="badge bg-primary mt-2 <?php echo $file->getExtension() != null ? $file->getExtension() : "noext" ?>">
+							<div class="badge bg-primary mt-2 <?php echo $app->getExtensionOrNoExt($file) ?>">
 								<?php echo $file->getExtension() ?>
 							</div>
 						</div>

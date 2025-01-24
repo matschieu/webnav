@@ -210,7 +210,7 @@ class File {
 			case "ws":
 			case "wsf":
 			case "wsh":
-				return "fa-solid fa-gears";
+				return "fa-solid fa-gear";
 			case "bz2":
 			case "f":
 			case "gz":
