@@ -79,10 +79,18 @@ class Config {
 
 	/**
 	 *
+	 * @return bool
+	 */
+	public static function applicationStyleGradient() : bool {
+		return filter_var(self::get()->getValue("application.style.gradient"), FILTER_VALIDATE_BOOLEAN);
+	}
+
+	/**
+	 *
 	 * @return string
 	 */
 	public static function applicationCustomCss() : ?string {
-		return self::get()->getValue("application.custom.css");
+		return self::get()->getValue("application.style.customcss");
 	}
 
 	/**

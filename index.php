@@ -37,6 +37,9 @@ $files = $currentFolder->getFileChildren();
 	<link rel="stylesheet" type="text/css" href="./lib/flag-icons/flag-icons.min.css">
 	<!-- Application styles -->
 	<link rel="stylesheet" type="text/css" href="./styles/default.css" media="screen" />
+	<?php if (Config::applicationStyleGradient()) { ?>
+	<link rel="stylesheet" type="text/css" href="./styles/gradient.css" media="screen" />
+	<?php } ?>
 	<link rel="stylesheet" type="text/css" href="<?php echo $app->getCustomCss() ?>" media="screen" />
 	<script src="./js/functions.js"></script>
 </head>

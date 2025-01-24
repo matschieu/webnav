@@ -46,6 +46,11 @@ class ConfigTest extends TestCase {
 		$this->assertEquals("M-WEBNAV TEST", Config::get()->applicationName());
 	}
 
+	public function testApplicationStyleGradient() {
+		$this->assertNotNull(Config::get()->applicationCustomCss());
+		$this->assertTrue(Config::get()->applicationStyleGradient());
+	}
+
 	public function testApplicationCustomCss() {
 		$this->assertNotNull(Config::get()->applicationCustomCss());
 		$this->assertEquals("./styles/custom.css", Config::get()->applicationCustomCss());

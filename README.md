@@ -15,7 +15,16 @@ It can be used to expose files inside a larger application or website and can be
 ## Third parties
 
 The application is fully written in [PHP8](https://php.net).<br>
-The interface is built using [Bootstrap](https://getbootstrap.com) for responsives components and [Font-Awesome](https://fontawesome.com) for the set of icons.
+The interface is built using [Bootstrap](https://getbootstrap.com) for responsives components and [Font-Awesome](https://fontawesome.com) for the set of icons.<br>
+Testing is performed using [Docker](https://www.docker.com) and [PHPUnit](https://phpunit.de).
+
+<p>
+	<img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/php/php-original.svg" height="50" />
+	&nbsp;&nbsp;
+	<img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/bootstrap/bootstrap-original-wordmark.svg" height="50" />
+	&nbsp;&nbsp;
+	<img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/docker/docker-plain-wordmark.svg" height="50" />
+</p>
 
 ## Running tests with Docker
 
@@ -66,6 +75,9 @@ application.default.listview = false
 # Application information
 # Will be displayed at least in the tab title
 application.name = M-WEBNAV
+
+# Enable the gradient style for icons
+application.style.gradient = true
 
 # Relative path to the custom CSS file, should be in ./styles
 # Empty value means that no custom CSS will be used

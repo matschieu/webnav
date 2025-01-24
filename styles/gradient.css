@@ -1,0 +1,355 @@
+
+.file .icon {
+	background: -webkit-linear-gradient(cornflowerblue, var(--bs-primary));
+	background-clip: border-box;
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;	
+}
+
+.folder .icon,
+.tree-folder-icon {
+	background: -webkit-linear-gradient(gold, orange);
+	background-clip: border-box;
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+}
+
+.file .icon.pdf {
+	background: -webkit-linear-gradient(orangered, #E01B24);
+	background-clip: border-box;
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+}
+
+.file .icon.csv,
+.file .icon.xls,
+.file .icon.xlsx,
+.file .icon.ods,
+.file .icon.fods {
+	background: -webkit-linear-gradient(green, #107A40);
+	background-clip: border-box;
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+}
+
+.file .icon.doc,
+.file .icon.docx,
+.file .icon.odt,
+.file .icon.fodt {
+	background: -webkit-linear-gradient(dodgerblue, #185ABD);
+	background-clip: border-box;
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+}
+
+.file .icon.ppt,
+.file .icon.pptx,
+.file .icon.odp,
+.file .icon.fodp {
+	background: -webkit-linear-gradient(orangered, #C43F1D);
+	background-clip: border-box;
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+}
+
+.file .icon.tif,
+.file .icon.tiff,
+.file .icon.gif,
+.file .icon.jpeg,
+.file .icon.jpg,
+.file .icon.jif,
+.file .icon.jfif,
+.file .icon.jp2,
+.file .icon.jpx,
+.file .icon.j2k,
+.file .icon.j2c,
+.file .icon.fpx,
+.file .icon.pcd,
+.file .icon.png,
+.file .icon.bmp {
+	background: -webkit-linear-gradient(royalblue, #286090);
+	background-clip: border-box;
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+}
+
+.file .icon.c,
+.file .icon.cpp,
+.file .icon.cs,
+.file .icon.css,
+.file .icon.html,
+.file .icon.java,
+.file .icon.js,
+.file .icon.jsp,
+.file .icon.ksh,
+.file .icon.php,
+.file .icon.py,
+.file .icon.sh,
+.file .icon.sql,
+.file .icon.ts,
+.file .icon.xml {
+	background: -webkit-linear-gradient(slateblue, #813D9C);
+	background-clip: border-box;
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+}
+
+.file .icon.cfg,
+.file .icon.json,
+.file .icon.md,
+.file .icon.properties,
+.file .icon.txt,
+.file .icon.yml {
+	background: -webkit-linear-gradient(silver, #A8A8A1);
+	background-clip: border-box;
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+}
+
+.file .icon.webm,
+.file .icon.mkv,
+.file .icon.flv,
+.file .icon.flv,
+.file .icon.vob,
+.file .icon.ogv,
+.file .icon.ogg,
+.file .icon.drc,
+.file .icon.gif,
+.file .icon.gifv,
+.file .icon.mng,
+.file .icon.avi,
+.file .icon.mov,
+.file .icon.qt,
+.file .icon.wmv,
+.file .icon.yuv,
+.file .icon.rm,
+.file .icon.rmvb,
+.file .icon.asf,
+.file .icon.amv, 
+.file .icon.mp4,
+.file .icon.m4p,
+.file .icon.m4v,
+.file .icon.mpg,
+.file .icon.mp2,
+.file .icon.mpeg,
+.file .icon.mpe,
+.file .icon.mpv,
+.file .icon.mpg,
+.file .icon.mpeg,
+.file .icon.m2v,
+.file .icon.m4v,
+.file .icon.svi,
+.file .icon.mxf,
+.file .icon.roq,
+.file .icon.nsv,
+.file .icon.flv,
+.file .icon.f4v, 
+.file .icon.f4p,
+.file .icon.f4a,
+.file .icon.f4b { 
+	background: -webkit-linear-gradient(dodgerblue, #3584E4);
+	background-clip: border-box;
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+}
+
+.file .icon.aa,
+.file .icon.aac,
+.file .icon.aax,
+.file .icon.act,
+.file .icon.aiff,
+.file .icon.amr,
+.file .icon.ape,
+.file .icon.au,
+.file .icon.awb,
+.file .icon.dct,
+.file .icon.dss,
+.file .icon.dvf,
+.file .icon.flac,
+.file .icon.gsm,
+.file .icon.iklax,
+.file .icon.ivs,
+.file .icon.m4a,
+.file .icon.m4b,
+.file .icon.m4p,
+.file .icon.mmf, 
+.file .icon.mp3,
+.file .icon.mpc,
+.file .icon.msv,
+.file .icon.ogg,
+.file .icon.oga,
+.file .icon.opus,
+.file .icon.ra,
+.file .icon.rm,
+.file .icon.raw,
+.file .icon.sln,
+.file .icon.tta,
+.file .icon.vox,
+.file .icon.wav,
+.file .icon.wma,
+.file .icon.wv,
+.file .icon.webm {
+	background: -webkit-linear-gradient(mediumseagreen, #26A269);
+	background-clip: border-box;
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+}
+
+.file .icon.action,
+.file .icon.apk,
+.file .icon.app,
+.file .icon.bat,
+.file .icon.bin,
+.file .icon.cmd,
+.file .icon.com,
+.file .icon.command,
+.file .icon.cpl,
+.file .icon.csh,
+.file .icon.exe,
+.file .icon.gadget,
+.file .icon.inf1,
+.file .icon.ins,
+.file .icon.inx,
+.file .icon.ipa,
+.file .icon.isu,
+.file .icon.job,
+.file .icon.jse, 
+.file .icon.ksh,
+.file .icon.lnk,
+.file .icon.msc,
+.file .icon.msi,
+.file .icon.msp,
+.file .icon.mst,
+.file .icon.osx,
+.file .icon.out,
+.file .icon.paf,
+.file .icon.pif,
+.file .icon.prg,
+.file .icon.ps1,
+.file .icon.reg,
+.file .icon.rgs,
+.file .icon.run,
+.file .icon.scr,
+.file .icon.sct,
+.file .icon.shb,
+.file .icon.shs,
+.file .icon.u3p,
+.file .icon.vb, 
+.file .icon.vbe,
+.file .icon.vbs,
+.file .icon.vbscript,
+.file .icon.workflow,
+.file .icon.ws,
+.file .icon.wsf,
+.file .icon.wsh {
+	background: -webkit-linear-gradient(darkgray, #5e5c64);
+	background-clip: border-box;
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+}
+
+.file .icon.bz2,
+.file .icon.f,
+.file .icon.gz,
+.file .icon.lz,
+.file .icon.lzma,
+.file .icon.lzo,
+.file .icon.rz,
+.file .icon.sfark,
+.file .icon.sz,
+.file .icon.xz,
+.file .icon.z,
+.file .icon.Z,
+.file .icon.infl,
+.file .icon.s7z,
+.file .icon.ace,
+.file .icon.afa,
+.file .icon.alz,
+.file .icon.apk,
+.file .icon.arc,
+.file .icon.arj,
+.file .icon.b1, 
+.file .icon.ba,
+.file .icon.bh,
+.file .icon.cab,
+.file .icon.car,
+.file .icon.cfs,
+.file .icon.cpt,
+.file .icon.dar,
+.file .icon.dd,
+.file .icon.dgc,
+.file .icon.dmg,
+.file .icon.ear,
+.file .icon.gca,
+.file .icon.ha,
+.file .icon.hki,
+.file .icon.ice,
+.file .icon.jar,
+.file .icon.kgb,
+.file .icon.lzh,
+.file .icon.lha,
+.file .icon.lzx,
+.file .icon.pak, 
+.file .icon.partimg,
+.file .icon.paq6,
+.file .icon.paq7,
+.file .icon.paq8,
+.file .icon.pea,
+.file .icon.pim,
+.file .icon.pit,
+.file .icon.qda,
+.file .icon.rar,
+.file .icon.rk,
+.file .icon.sda,
+.file .icon.sea,
+.file .icon.sen,
+.file .icon.sfx,
+.file .icon.shk,
+.file .icon.sit,
+.file .icon.sitx,
+.file .icon.sqx,
+.file .icon.targz, 
+.file .icon.tgz,
+.file .icon.tarZ,
+.file .icon.tarbz2,
+.file .icon.tbz2,
+.file .icon.tarlzma,
+.file .icon.tlz,
+.file .icon.uc,
+.file .icon.uc0,
+.file .icon.uc2,
+.file .icon.ucn,
+.file .icon.ur2,
+.file .icon.ue2,
+.file .icon.uca,
+.file .icon.uha,
+.file .icon.war,
+.file .icon.wim,
+.file .icon.xar,
+.file .icon.xp3,
+.file .icon.yz1, 
+.file .icon.zip,
+.file .icon.zipx,
+.file .icon.zoo,
+.file .icon.zpaq,
+.file .icon.zz {
+	background: -webkit-linear-gradient(orange, #E5A50A);
+	background-clip: border-box;
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+}
+
+.file .icon.a,
+.file .icon.ar,
+.file .icon.cpio,
+.file .icon.shar,
+.file .icon.lbr,
+.file .icon.iso,
+.file .icon.lbr,
+.file .icon.mar,
+.file .icon.tar {
+	background: -webkit-linear-gradient(darkorange, #ff7800);
+	background-clip: border-box;
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+}
