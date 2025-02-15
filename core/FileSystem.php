@@ -46,7 +46,8 @@ final class FileSystem {
 	 */
 	final public static function getLogicalRoot(): string {
 		if (substr(Config::fileSystemRoot(), 0, 1) !== self::ROOT) {
-			return dirname($_SERVER['SCRIPT_NAME']) . DIRECTORY_SEPARATOR . Config::fileSystemRoot();
+			$path = Config::get()->getValue("webapp.context") . DIRECTORY_SEPARATOR . Config::fileSystemRoot();
+			return str_replace("./", "", $path);
 		}
 
 		return SELF::ROOT;
@@ -59,7 +60,7 @@ final class FileSystem {
 	final public static function getRoot(): string {
 		// If the root is a relative path, then the path is transformed to an absolute path
 		if (substr(Config::fileSystemRoot(), 0, 1) !== self::ROOT) {
-			return realpath(dirname($_SERVER['SCRIPT_FILENAME']) . DIRECTORY_SEPARATOR . Config::fileSystemRoot());
+			return realpath(APP_ROOT . DIRECTORY_SEPARATOR . Config::fileSystemRoot());
 		}
 		return Config::fileSystemRoot();
 	}
@@ -194,7 +195,7 @@ final class FileSystem {
 
 		foreach(scandir($path, self::getScandirSort($fileSort)) as $file) {
 			$filePath = $path . DIRECTORY_SEPARATOR . $file;
-			$appFolder = dirname($_SERVER['SCRIPT_FILENAME']);
+			$appFolder = APP_ROOT;
 
 			// If the folder is the one where the application is installed, it's not added to the list
 			if ($appFolder === $filePath) {

@@ -73,7 +73,7 @@ class ConfigTest extends TestCase {
 
 	public function testFileSystemRoot() {
 		$this->assertNotNull(Config::get()->fileSystemRoot());
-		$this->assertEquals("./example", Config::get()->fileSystemRoot());
+		$this->assertEquals("./tests/example", Config::get()->fileSystemRoot());
 	}
 
 	public function testDateFormat() {

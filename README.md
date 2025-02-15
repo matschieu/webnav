@@ -63,6 +63,16 @@ You can active the debug mode, set the root folder or customize the look and fee
 # To display some debug information on the page
 debug = false
 
+# This is the context where the webapp is deployed
+# It must start with a '/'
+# Empty value means that the app is deployed to the root of the server
+webapp.context = /webnav
+
+# The root dir of the file system to explore
+# It can be a relative to the index.php path or an absolute path
+# Must be set
+filesystem.root = .
+
 # Define the default language in which the application is displayed
 application.default.language = en
 
@@ -128,12 +138,7 @@ application.enable.menu.close = true
 # Enable to display the textfield to filter the files 
 application.enable.menu.filter = true
 
-# The root dir of the file system to explore
-# It can be a relative to the index.php path or an absolute path
-# Must be set
-filesystem.root = .
-
 # Date format used to display file date/time
 # Must be set
-date.format = Y-m-d G:i
+application.date.format = Y-m-d G:i
 ```

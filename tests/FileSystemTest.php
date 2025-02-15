@@ -27,11 +27,11 @@ class FileSystemTest extends TestCase {
 	}
 
 	public function testGetLogicalRoot() {
-		$this->assertSame(getcwd().DIRECTORY_SEPARATOR."tests".DIRECTORY_SEPARATOR.Config::fileSystemRoot(), FileSystem::getLogicalRoot());
+		$this->assertSame("/tests/example", FileSystem::getLogicalRoot());
 	}
 
 	public function testGetRoot() {
-		$this->assertSame(realpath(getcwd().DIRECTORY_SEPARATOR."tests".DIRECTORY_SEPARATOR.Config::fileSystemRoot()), FileSystem::getRoot());
+		$this->assertSame(realpath(getcwd().DIRECTORY_SEPARATOR.Config::fileSystemRoot()), FileSystem::getRoot());
 	}
 
 	public function testGetRootFolder() {

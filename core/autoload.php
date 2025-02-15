@@ -1,8 +1,10 @@
 <?php
 
 const PHP_EXT = ".php";
-const CURRENT_FOLDER = ".";
 const DEBUG = false;
+
+// This can be used anywhere to identify the root folder of the app
+define("APP_ROOT", realpath(dirname(__FILE__)."/../"));
 
 spl_autoload_register('autoloader');
 
@@ -18,7 +20,7 @@ function scan(string $filepath, ?string $classname): bool {
 		$filename = $filepath . DIRECTORY_SEPARATOR . str_replace('\\', '/', $classname) . PHP_EXT;
 
 		if (DEBUG) {
-			echo "&nbsp;".$filename."<br>";
+			echo "Trying to load ".$filename."<br>";
 		}
 
 		if (is_file($filename)) {
@@ -51,16 +53,24 @@ function autoloader(?string $classname): bool {
 	}
 
 	if (DEBUG) {
-		echo "*".$classname."<br>";
+		echo "Autoload ".$classname."<br>";
 	}
 
 	// Found using namespace
 	foreach (array("", "/src/core", "/tests/core", "core", "tests") as $path) {
-		$r = scan(CURRENT_FOLDER.$path, $classname);
+		$r = scan(APP_ROOT.$path, $classname);
 
 		if ($r) {
+			if (DEBUG) {
+				echo "Found<br>";
+			}
+
 			return true;
 		}
+	}
+
+	if (DEBUG) {
+		echo "Not found<br>";
 	}
 
 	return false;

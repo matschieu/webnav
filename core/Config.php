@@ -4,16 +4,16 @@ namespace core;
 /**
  * @author Matschieu
  */
-class Config {
+class Config implements \JsonSerializable {
 
-	protected const CONFIG_FILE = './conf/app.ini';
+	protected const CONFIG_FILE = APP_ROOT.'/conf/app.ini';
 
 	private static ?Config $config = null;
 
 	private array $values = array();
 
 	private function __construct(string $filepath) {
-		$conf = parse_ini_file($filepath, false, INI_SCANNER_RAW);
+		$conf = parse_ini_file($filepath, false, INI_SCANNER_TYPED);
 		if ($conf) {
 			$this->values = $conf;
 		}
@@ -23,7 +23,7 @@ class Config {
 	 *
 	 * @return string
 	 */
-	public function getValue($key): ?string {
+	public function getValue($key): string|bool|null {
 		if (isset($key) && isset($this->values[$key])) {
 			return $this->values[$key];
 		}
@@ -130,7 +130,7 @@ class Config {
 	 * @return string
 	 */
 	public static function dateFormat() : string {
-		return self::get()->getValue("date.format");
+		return self::get()->getValue("application.date.format");
 	}
 
 	/**
@@ -149,6 +149,15 @@ class Config {
 		}
 
 		return filter_var(self::get()->getValue($realKey), FILTER_VALIDATE_BOOLEAN);
+	}
+
+	/**
+	 *
+	 * {@inheritDoc}
+	 * @see \core\File::jsonSerialize()
+	 */
+	public function jsonSerialize() {
+		return array_filter($this->values, function ($key) { return str_starts_with($key, "application."); }, ARRAY_FILTER_USE_KEY);
 	}
 
 }
