@@ -1,6 +1,6 @@
 <?php
 
-use core\FileViewerApplication;
+use core\gui\FileViewerApplication;
 use core\FileSystem;
 
 require_once("./core/autoload.php");

@@ -1,5 +1,12 @@
 <?php
-namespace core;
+namespace core\gui;
+
+use core\Config;
+use core\File;
+use core\FileSort;
+use core\FileSystem;
+use core\Folder;
+use core\Translation;
 
 /**
  * @author Matschieu

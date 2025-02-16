@@ -1,5 +1,8 @@
 <?php
-namespace core;
+namespace core\gui;
+
+use core\FileSort;
+use core\Config;
 
 /**
  *

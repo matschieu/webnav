@@ -1,7 +1,7 @@
 <?php
 
 use core\Config;
-use core\FileViewerApplication;
+use core\gui\FileViewerApplication;
 use core\FileSystem;
 use core\Translation;
 use core\FileSort;
