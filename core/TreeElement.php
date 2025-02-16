@@ -5,7 +5,7 @@ namespace core;
  * @author Matschieu
  *
  */
-class TreeElement {
+class TreeElement implements \JsonSerializable {
 
 	private int $level;
 	private Folder $folder;
@@ -48,5 +48,13 @@ class TreeElement {
 		$this->folder = $folder;
 	}
 
+	/**
+	 *
+	 * {@inheritDoc}
+	 * @see \JsonSerializable::jsonSerialize()
+	 */
+	public function jsonSerialize() {
+		return get_object_vars($this);
+	}
 }
 

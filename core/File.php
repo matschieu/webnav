@@ -4,7 +4,7 @@ namespace core;
 /**
  * @author Matschieu
  */
-class File {
+class File implements \JsonSerializable {
 
 	protected string $path;
 	protected string $logicalPath;
@@ -445,6 +445,17 @@ class File {
 	 */
 	public function __toString(): string {
 		return $this->path;
+	}
+
+	/**
+	 *
+	 * {@inheritDoc}
+	 * @see \JsonSerializable::jsonSerialize()
+	 */
+	public function jsonSerialize() {
+		$attr = get_object_vars($this);
+		unset($attr["path"]); // security
+		return $attr;
 	}
 
 }

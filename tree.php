@@ -2,7 +2,6 @@
 
 use core\FileViewerApplication;
 use core\FileSystem;
-use core\Translation;
 
 require_once("./core/autoload.php");
 

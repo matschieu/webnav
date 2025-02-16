@@ -4,7 +4,7 @@ namespace core;
 /**
  * @author Matschieu
  */
-class Folder extends File {
+class Folder extends File implements \JsonSerializable {
 
 	private const GLYPHICON_FOLDER = "fa-solid fa-folder";
 
@@ -162,6 +162,23 @@ class Folder extends File {
 	 */
 	public function __toString(): string {
 		return $this->getDisplayName();
+	}
+
+	/**
+	 *
+	 * {@inheritDoc}
+	 * @see \core\File::jsonSerialize()
+	 */
+	public function jsonSerialize() {
+		$attr = get_object_vars($this);
+		unset($attr["path"]); // security
+		$attr["folderChildrenSize"] = $this->getFolderChildrenSize();
+		$attr["fileChildrenSize"] = $this->getFileChildrenSize();
+		$attr["childrenSize"] = $this->getChildrenSize();
+		$attr["fileChildrenCount"] = $this->getFileChildrenCount();
+		$attr["folderChildrenCount"] = $this->getFolderChildrenCount();
+		$attr["childrenCount"] = $this->getChildrenCount();
+		return $attr;
 	}
 
 }

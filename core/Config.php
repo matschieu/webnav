@@ -154,7 +154,7 @@ class Config implements \JsonSerializable {
 	/**
 	 *
 	 * {@inheritDoc}
-	 * @see \core\File::jsonSerialize()
+	 * @see \JsonSerializable::jsonSerialize()
 	 */
 	public function jsonSerialize() {
 		return array_filter($this->values, function ($key) { return str_starts_with($key, "application."); }, ARRAY_FILTER_USE_KEY);
