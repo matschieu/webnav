@@ -5,8 +5,9 @@
 			<a href="https://php.net" target="new"><span class="fs-5 fa-brands fa-php" style="color: #7A86B8"></span></a>
 			<a href="https://getbootstrap.com" target="new"><span class="fs-5 fa-brands fa-bootstrap" style="color: #712cf9"></span></a>
 			<a href="https://fontawesome.com" target="new"><span class="fs-5 fa-brands fa-font-awesome" style="color: rgb(83,141,215)"></span></a>
-			Compatible with
+			, compatible with
 			<a href="https://www.linux.org" target="new"><span class="fs-5 fa-brands fa-linux" style="color: #000"></span></a>
+			<a href="https://www.docker.com" target="new"><span class="fs-5 fa-brands fa-docker" style="color: #1D63ED;"></span></a>
 		</small>
 	</div>
 	<div class="col-6 text-end">
