@@ -6,6 +6,9 @@ docker-test:
 	docker build -f Dockerfile-test -t webnav-test .
 	docker run --rm webnav-test
 docker-clean:
-	for i in `docker ps -a | grep webnav | cut -d " " -f 1`; do docker rm $i; done
-	for i in `docker ps -a | grep "phpunit ." | cut -d " " -f 1`; do docker rm $i; done
+	for i in `docker ps -a | grep webnav | cut -d " " -f 1`; do docker rm $$i; done
+	for i in `docker ps -a | grep "phpunit ." | cut -d " " -f 1`; do docker rm $$i; done
 	docker system prune -f --volumes
+docker-full-clean: docker-clean
+	docker rmi webnav-test webnav
+
