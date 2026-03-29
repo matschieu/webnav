@@ -1,24 +1,21 @@
 
 .file .icon {
 	background: -webkit-linear-gradient(cornflowerblue, var(--bs-primary));
-	background-clip: border-box;
-	-webkit-background-clip: text;
+	background-clip: text;
 	-webkit-text-fill-color: transparent;	
 }
 
 .folder .icon,
 .tree-folder-icon {
 	background: -webkit-linear-gradient(gold, orange);
-	background-clip: border-box;
-	-webkit-background-clip: text;
-	-webkit-text-fill-color: transparent;
+	background-clip: text;
+	-webkit-text-fill-color: transparent;	
 }
 
 .file .icon.pdf {
 	background: -webkit-linear-gradient(orangered, #E01B24);
-	background-clip: border-box;
-	-webkit-background-clip: text;
-	-webkit-text-fill-color: transparent;
+	background-clip: text;
+	-webkit-text-fill-color: transparent;	
 }
 
 .file .icon.csv,
@@ -27,9 +24,8 @@
 .file .icon.ods,
 .file .icon.fods {
 	background: -webkit-linear-gradient(green, #107A40);
-	background-clip: border-box;
-	-webkit-background-clip: text;
-	-webkit-text-fill-color: transparent;
+	background-clip: text;
+	-webkit-text-fill-color: transparent;	
 }
 
 .file .icon.doc,
@@ -37,9 +33,8 @@
 .file .icon.odt,
 .file .icon.fodt {
 	background: -webkit-linear-gradient(dodgerblue, #185ABD);
-	background-clip: border-box;
-	-webkit-background-clip: text;
-	-webkit-text-fill-color: transparent;
+	background-clip: text;
+	-webkit-text-fill-color: transparent;	
 }
 
 .file .icon.ppt,
@@ -47,9 +42,8 @@
 .file .icon.odp,
 .file .icon.fodp {
 	background: -webkit-linear-gradient(orangered, #C43F1D);
-	background-clip: border-box;
-	-webkit-background-clip: text;
-	-webkit-text-fill-color: transparent;
+	background-clip: text;
+	-webkit-text-fill-color: transparent;	
 }
 
 .file .icon.tif,
@@ -68,9 +62,8 @@
 .file .icon.png,
 .file .icon.bmp {
 	background: -webkit-linear-gradient(royalblue, #286090);
-	background-clip: border-box;
-	-webkit-background-clip: text;
-	-webkit-text-fill-color: transparent;
+	background-clip: text;
+	-webkit-text-fill-color: transparent;	
 }
 
 .file .icon.c,
@@ -89,9 +82,8 @@
 .file .icon.ts,
 .file .icon.xml {
 	background: -webkit-linear-gradient(slateblue, #813D9C);
-	background-clip: border-box;
-	-webkit-background-clip: text;
-	-webkit-text-fill-color: transparent;
+	background-clip: text;
+	-webkit-text-fill-color: transparent;	
 }
 
 .file .icon.cfg,
@@ -101,9 +93,8 @@
 .file .icon.txt,
 .file .icon.yml {
 	background: -webkit-linear-gradient(silver, #A8A8A1);
-	background-clip: border-box;
-	-webkit-background-clip: text;
-	-webkit-text-fill-color: transparent;
+	background-clip: text;
+	-webkit-text-fill-color: transparent;	
 }
 
 .file .icon.webm,
@@ -148,9 +139,8 @@
 .file .icon.f4a,
 .file .icon.f4b { 
 	background: -webkit-linear-gradient(dodgerblue, #3584E4);
-	background-clip: border-box;
-	-webkit-background-clip: text;
-	-webkit-text-fill-color: transparent;
+	background-clip: text;
+	-webkit-text-fill-color: transparent;	
 }
 
 .file .icon.aa,
@@ -190,9 +180,8 @@
 .file .icon.wv,
 .file .icon.webm {
 	background: -webkit-linear-gradient(mediumseagreen, #26A269);
-	background-clip: border-box;
-	-webkit-background-clip: text;
-	-webkit-text-fill-color: transparent;
+	background-clip: text;
+	-webkit-text-fill-color: transparent;	
 }
 
 .file .icon.action,
@@ -243,9 +232,8 @@
 .file .icon.wsf,
 .file .icon.wsh {
 	background: -webkit-linear-gradient(darkgray, #5e5c64);
-	background-clip: border-box;
-	-webkit-background-clip: text;
-	-webkit-text-fill-color: transparent;
+	background-clip: text;
+	-webkit-text-fill-color: transparent;	
 }
 
 .file .icon.bz2,
@@ -334,9 +322,8 @@
 .file .icon.zpaq,
 .file .icon.zz {
 	background: -webkit-linear-gradient(orange, #E5A50A);
-	background-clip: border-box;
-	-webkit-background-clip: text;
-	-webkit-text-fill-color: transparent;
+	background-clip: text;
+	-webkit-text-fill-color: transparent;	
 }
 
 .file .icon.a,
@@ -349,7 +336,6 @@
 .file .icon.mar,
 .file .icon.tar {
 	background: -webkit-linear-gradient(darkorange, #ff7800);
-	background-clip: border-box;
-	-webkit-background-clip: text;
-	-webkit-text-fill-color: transparent;
+	background-clip: text;
+	-webkit-text-fill-color: transparent;	
 }
