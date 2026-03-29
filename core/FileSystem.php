@@ -32,10 +32,10 @@ final class FileSystem {
 
 	/**
 	 *
-	 * @param unknown $path
+	 * @param string $path
 	 * @return string
 	 */
-	final public static function normalizePath($path) {
+	final public static function normalizePath(string $path): string {
 		$parts = explode(DIRECTORY_SEPARATOR, $path);
 		$safeParts = [];
 
