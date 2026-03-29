@@ -32,12 +32,35 @@ final class FileSystem {
 
 	/**
 	 *
+	 * @param unknown $path
+	 * @return string
+	 */
+	final public static function normalizePath($path) {
+		$parts = explode(DIRECTORY_SEPARATOR, $path);
+		$safeParts = [];
+
+		foreach ($parts as $part) {
+			if ($part === '.' || $part === '') {
+				continue;
+			}
+			if ($part === '..') {
+				array_pop($safeParts);
+			} else {
+				$safeParts[] = $part;
+			}
+		}
+
+		return (str_starts_with($path, DIRECTORY_SEPARATOR) ? DIRECTORY_SEPARATOR : "") . implode(DIRECTORY_SEPARATOR, $safeParts);
+	}
+
+	/**
+	 *
 	 * @param string $path
 	 * @return string
 	 */
 	final public static function getLogicalPath(string $path): string {
 		$rootPathes = array(self::getRoot() . DIRECTORY_SEPARATOR, self::getRoot());
-		return str_replace($rootPathes, self::ROOT, $path);
+		return self::normalizePath(str_replace($rootPathes, self::ROOT, $path));
 	}
 
 	/**
@@ -47,7 +70,7 @@ final class FileSystem {
 	final public static function getLogicalRoot(): string {
 		if (substr(Config::fileSystemRoot(), 0, 1) !== self::ROOT) {
 			$path = Config::get()->getValue("webapp.context") . DIRECTORY_SEPARATOR . Config::fileSystemRoot();
-			return str_replace("./", "", $path);
+			return self::normalizePath($path);
 		}
 
 		return SELF::ROOT;

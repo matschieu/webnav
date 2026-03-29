@@ -350,7 +350,7 @@ class File implements \JsonSerializable {
 		$this->name = $name;
 
 		$this->logicalPath = FileSystem::getLogicalPath($this->path);
-		$this->url = (!empty($_SERVER['HTTPS']) ? "https" : "http") . "://" . $_SERVER['HTTP_HOST'] . FileSystem::getLogicalRoot() . $this->logicalPath;
+		$this->url = (!empty($_SERVER['HTTPS']) ? "https" : "http") . "://" . $_SERVER['HTTP_HOST'] . FileSystem::normalizePath(FileSystem::getLogicalRoot() . $this->logicalPath);
 
 		if (FileSystem::isValidFile($this->path)) {
 			$pathinfo = pathinfo($this->path);
