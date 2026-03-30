@@ -44,7 +44,9 @@ table .preview img {
 
 .folder .icon,
 .tree-folder-icon {
-	color: orange;
+	background-color: orange;
+	background-clip: text;
+	-webkit-text-fill-color: transparent;
 }
 
 .badge.noext {

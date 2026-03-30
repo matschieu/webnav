@@ -2,20 +2,17 @@
 .file .icon {
 	background: -webkit-linear-gradient(cornflowerblue, var(--bs-primary));
 	background-clip: text;
-	-webkit-text-fill-color: transparent;	
 }
 
 .folder .icon,
 .tree-folder-icon {
 	background: -webkit-linear-gradient(gold, orange);
 	background-clip: text;
-	-webkit-text-fill-color: transparent;	
 }
 
 .file .icon.pdf {
 	background: -webkit-linear-gradient(orangered, #E01B24);
 	background-clip: text;
-	-webkit-text-fill-color: transparent;	
 }
 
 .file .icon.csv,
@@ -25,7 +22,6 @@
 .file .icon.fods {
 	background: -webkit-linear-gradient(green, #107A40);
 	background-clip: text;
-	-webkit-text-fill-color: transparent;	
 }
 
 .file .icon.doc,
@@ -34,7 +30,6 @@
 .file .icon.fodt {
 	background: -webkit-linear-gradient(dodgerblue, #185ABD);
 	background-clip: text;
-	-webkit-text-fill-color: transparent;	
 }
 
 .file .icon.ppt,
@@ -43,7 +38,6 @@
 .file .icon.fodp {
 	background: -webkit-linear-gradient(orangered, #C43F1D);
 	background-clip: text;
-	-webkit-text-fill-color: transparent;	
 }
 
 .file .icon.tif,
@@ -63,7 +57,6 @@
 .file .icon.bmp {
 	background: -webkit-linear-gradient(royalblue, #286090);
 	background-clip: text;
-	-webkit-text-fill-color: transparent;	
 }
 
 .file .icon.c,
@@ -83,7 +76,6 @@
 .file .icon.xml {
 	background: -webkit-linear-gradient(slateblue, #813D9C);
 	background-clip: text;
-	-webkit-text-fill-color: transparent;	
 }
 
 .file .icon.cfg,
@@ -94,7 +86,6 @@
 .file .icon.yml {
 	background: -webkit-linear-gradient(silver, #A8A8A1);
 	background-clip: text;
-	-webkit-text-fill-color: transparent;	
 }
 
 .file .icon.webm,
@@ -140,7 +131,6 @@
 .file .icon.f4b { 
 	background: -webkit-linear-gradient(dodgerblue, #3584E4);
 	background-clip: text;
-	-webkit-text-fill-color: transparent;	
 }
 
 .file .icon.aa,
@@ -181,7 +171,6 @@
 .file .icon.webm {
 	background: -webkit-linear-gradient(mediumseagreen, #26A269);
 	background-clip: text;
-	-webkit-text-fill-color: transparent;	
 }
 
 .file .icon.action,
@@ -233,7 +222,6 @@
 .file .icon.wsh {
 	background: -webkit-linear-gradient(darkgray, #5e5c64);
 	background-clip: text;
-	-webkit-text-fill-color: transparent;	
 }
 
 .file .icon.bz2,
@@ -323,7 +311,6 @@
 .file .icon.zz {
 	background: -webkit-linear-gradient(orange, #E5A50A);
 	background-clip: text;
-	-webkit-text-fill-color: transparent;	
 }
 
 .file .icon.a,
@@ -337,5 +324,4 @@
 .file .icon.tar {
 	background: -webkit-linear-gradient(darkorange, #ff7800);
 	background-clip: text;
-	-webkit-text-fill-color: transparent;	
 }

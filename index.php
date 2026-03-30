@@ -227,7 +227,7 @@ $files = $currentFolder->getFileChildren();
 	</div>
 
 	<!-- FILE EXPLORER CONTENT -->
-	<div id="content" class="container-fluid py-4 bg-white">
+	<div id="content" class="container-fluid px-4 py-4 bg-white">
 		<?php if ($app->getAppContext()->getDisplayList()) { ?>
 
 		<!-- LIST VIEW -->
@@ -324,7 +324,7 @@ $files = $currentFolder->getFileChildren();
 				<?php foreach ($folders as $folder) { ?>
 				<div class="folder col-md-2">
 					<div class="row">
-						<div class="type col-3 text-primary text-center">
+						<div class="type col-3 px-0 text-primary text-center">
 							<div class="icon">
 								<span class="<?php echo $folder->getGlyphicon() ?>"></span>
 							</div>
@@ -345,7 +345,7 @@ $files = $currentFolder->getFileChildren();
 				<?php foreach ($files as $file) { ?>
 				<div class="file col-md-2">
 					<div class="row">
-						<div class="type col-3 text-primary text-center">
+						<div class="type col-3 px-0 text-primary text-center">
 							<?php if (!$file->isImage()) { ?>
 							<div class="icon <?php echo $app->getExtensionOrNoExt($file) ?>">
 								<span class="<?php echo $file->getGlyphicon() ?>"></span>
