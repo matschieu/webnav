@@ -30,9 +30,9 @@ $files = $currentFolder->getFileChildren();
 	<script src="./lib/bootstrap-5.2.3-dist/js/bootstrap.bundle.min.js"></script>
 	<!-- Glyphicons -->
 	<!-- Icons list: https://fontawesome.com -->
-	<link rel="stylesheet" type="text/css" href="./lib/fontawesome-6.6.0/css/fontawesome.min.css" />
-	<link rel="stylesheet" type="text/css" href="./lib/fontawesome-6.6.0/css/solid.min.css" />
-	<link rel="stylesheet" type="text/css" href="./lib/fontawesome-6.6.0/css/brands.min.css" />
+	<link rel="stylesheet" type="text/css" href="./lib/fontawesome-7.2.0/css/fontawesome.min.css" />
+	<link rel="stylesheet" type="text/css" href="./lib/fontawesome-7.2.0/css/solid.min.css" />
+	<link rel="stylesheet" type="text/css" href="./lib/fontawesome-7.2.0/css/brands.min.css" />
 	<!-- Country flags -->
 	<link rel="stylesheet" type="text/css" href="./lib/flag-icons/flag-icons.min.css">
 	<!-- Application styles -->
